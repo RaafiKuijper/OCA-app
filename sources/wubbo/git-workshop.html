@@ -1,0 +1,379 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>git_workshop</title><style></style></head><body id="preview">
+<h1 class="code-line" data-line-start="0" data-line-end="1"><a id="Workshop_Git_0"></a>Workshop Git</h1>
+<h2 class="code-line" data-line-start="5" data-line-end="6"><a id="Overzicht_van_de_gedachtengang_van_deze_tutorial_5"></a>Overzicht van de gedachtengang van deze tutorial</h2>
+<ol>
+<li class="has-line-data" data-line-start="7" data-line-end="8">Git is erg nuttig</li>
+<li class="has-line-data" data-line-start="8" data-line-end="9">Het is dus handig ergens een Git repository te kunnen aanmaken; normaal heb je zowel een Git repository lokaal als op een externe server, omdat je lokale computer kapot kan gaan of gestolen kan worden. En voor samenwerking met anderen is een remote Git repository gewoon noodzakelijk als je niet met z’n allen op 1 laptop wilt typen…</li>
+<li class="has-line-data" data-line-start="9" data-line-end="10">Één van die externe servers is GitHub (andere zijn bv BitBucket van Atlassian, en CodeCommit op AWS; CodeBerg als FOSS-alternatief, verder Gitea en GitLab - al zijn die twee meestal Self-Hosted (anders moet je betalen…))</li>
+<li class="has-line-data" data-line-start="10" data-line-end="11">Het doel van deze oefening is leren een Git repository aan te maken op GitHub, het te kunnen gebruiken voor updates, en te leren om te gaan met problemen die je tegenkomt als je in een groep werkt en/of per ongeluk bugs naar de hoofdbranch pusht.</li>
+<li class="has-line-data" data-line-start="11" data-line-end="13">Ook zal ik ingaan op hoe je een GitHub-repository voor een groep kunt managen.</li>
+</ol>
+<h2 class="code-line" data-line-start="13" data-line-end="14"><a id="Hoofdpunten_om_te_lerenoefenen_13"></a>Hoofdpunten om te leren/oefenen</h2>
+<ol>
+<li class="has-line-data" data-line-start="14" data-line-end="17">Hoe Git in een groep te managen, dat wil zeggen:
+<ul>
+<li class="has-line-data" data-line-start="15" data-line-end="16">met branch-beveiliging</li>
+<li class="has-line-data" data-line-start="16" data-line-end="17">met pull requests</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="17" data-line-end="18">Hoe om te gaan met conflicterende commits / merge conflicts</li>
+<li class="has-line-data" data-line-start="18" data-line-end="19">Hoe om te gaan met fouten in je eigen branch (git reset)</li>
+<li class="has-line-data" data-line-start="19" data-line-end="20">Hoe om te gaan met fouten die al naar main gepusht zijn (git revert)</li>
+<li class="has-line-data" data-line-start="20" data-line-end="21">Hoe branches te managen (dat je ze ook delete)</li>
+<li class="has-line-data" data-line-start="21" data-line-end="23">Een niet-geneste monorepo te maken</li>
+</ol>
+<p class="has-line-data" data-line-start="23" data-line-end="24"><strong>Noot</strong>: Deze tutorial is voor Windows geschreven: als je Linux gebruikt, is veel hetzelfde, maar moet je de equivalenten van de File Explorer en de Command Prompt en Notepad gebruiken.</p>
+<h2 class="code-line" data-line-start="25" data-line-end="26"><a id="Stap_1_een_GitHub_repository_aanmaken_25"></a>Stap 1: een GitHub repository aanmaken</h2>
+<p class="has-line-data" data-line-start="27" data-line-end="28"><em>Noot</em>: vaak maak je een nieuw project in IntelliJ, en van daaruit commit je naar GitHub. Dat werkt natuurlijk, maar nu doen we het op een andere manier, ook omdat dat handiger is als je een fullstack project maakt met aparte frontend en backend folders.</p>
+<ol>
+<li class="has-line-data" data-line-start="29" data-line-end="30">Ga naar je GitHub account</li>
+<li class="has-line-data" data-line-start="30" data-line-end="31">Ga naar Repositories</li>
+<li class="has-line-data" data-line-start="31" data-line-end="32">Druk op de <code>New</code>-knop</li>
+<li class="has-line-data" data-line-start="32" data-line-end="33">Maak een nieuwe <em>public</em> repository, “shoppinglist”</li>
+<li class="has-line-data" data-line-start="33" data-line-end="34">Als dat is aangemaakt kijk ik naar de optie “…or create a new repository on the command line”</li>
+<li class="has-line-data" data-line-start="34" data-line-end="36">…Maar het kan simpeler</li>
+</ol>
+<p class="has-line-data" data-line-start="36" data-line-end="37"><em>Reflectie</em>: is er een stap hier die onverwacht voor je was?</p>
+<h2 class="code-line" data-line-start="38" data-line-end="39"><a id="Stap_2_Het_repository_synchroniseren_naar_jouw_computer_38"></a>Stap 2: Het repository synchroniseren naar jouw computer</h2>
+<p class="has-line-data" data-line-start="40" data-line-end="41"><em>Noot</em>: Je hebt natuurlijk altijd TWEE repositories nodig; één op de Git server (in dit geval GitHub) en één op je locale machine. En die twee moeten met elkaar gesynchroniseerd worden. Dat kàn met alle Git-commando’s die GitHub geeft. Maar het kan ook eenvoudiger.</p>
+<ol>
+<li class="has-line-data" data-line-start="42" data-line-end="43">kopieer de link die je bovenin je repository ziet (iets als <code>https://github.com/${MIJN_GITHUB_HANDLE}/shoppinglist</code>. In mijn geval dus <code>https://github.com/EWLameijer/shoppinglist</code>)</li>
+<li class="has-line-data" data-line-start="43" data-line-end="44">Ga via de Explorer naar de directory waarin je het repository wilt zetten</li>
+<li class="has-line-data" data-line-start="44" data-line-end="45">In de adresbalk van de Explorer, druk rechts van het path (bijvoorbeeld <code>C:\Personal\JavaProjects</code>). Als het goed is zie je het filepath nu als tekst, als blauw geselecteerd.</li>
+<li class="has-line-data" data-line-start="45" data-line-end="46">type “cmd” in en druk op <code>Enter</code>; dat opent de command prompt.</li>
+<li class="has-line-data" data-line-start="46" data-line-end="47">Gebruik nu <code>git clone REPOSITORYNAAM</code>, in mijn geval dus <code>git clone https://github.com/ewlameijer/shoppinglist</code></li>
+<li class="has-line-data" data-line-start="47" data-line-end="48">Git waarschuwt dat het repository leeg lijkt te zijn. Maar dat is geen probleem.</li>
+<li class="has-line-data" data-line-start="48" data-line-end="50">Ga nadat je gecloond hebt, ga naar je nieuwe lokale repository met <code>cd shoppinglist</code> (<code>cd</code> betekent ‘change directory’)</li>
+</ol>
+<p class="has-line-data" data-line-start="50" data-line-end="51"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="52" data-line-end="53"><a id="Stap_3_folders_aanmaken_en_je_eerste_commit_52"></a>Stap 3: folders aanmaken en je eerste commit</h2>
+<ol>
+<li class="has-line-data" data-line-start="53" data-line-end="54">Kijk voor de lol eens met de File Explorer naar je nieuwe directory. Zie je de .git directory (mogelijk moet je hidden files laten zien in de viewer)? Kijk eens 3 minuten in de .git directory en probeer te raden waar de verschillende directories en files voor zijn.</li>
+<li class="has-line-data" data-line-start="54" data-line-end="55">op de command prompt (of in de explorer) maak twee directories, <code>frontend</code> en <code>backend</code>. Maak ook een <a href="http://README.md">README.md</a> met als tekst “Shopping list Git demo” (het is makkelijk die file te maken door <code>notepad README.md</code> in te typen)</li>
+<li class="has-line-data" data-line-start="55" data-line-end="60">Op de command prompt: voer uit <code>git status</code>. Je ziet nu vier dingen:
+<ul>
+<li class="has-line-data" data-line-start="56" data-line-end="57">dat je op branch <code>main</code> bent</li>
+<li class="has-line-data" data-line-start="57" data-line-end="58">dat er nog geen commits zijn</li>
+<li class="has-line-data" data-line-start="58" data-line-end="59">dat er één ‘untracked file’ is, <a href="http://README.md">README.md</a></li>
+<li class="has-line-data" data-line-start="59" data-line-end="60">dat er niets is toegevoegd aan de commit maar er untracked files aanwezig zijn.</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="60" data-line-end="61">Zoals je mogelijk weet of kunt raden, betekent ‘untracked file’ zoiets als dat Git een file ziet, maar niet weet wat hij ermee moet; de file zit niet in het repository als onderdeel van een commit, maar de file wordt ook niet ignored.</li>
+<li class="has-line-data" data-line-start="61" data-line-end="62">We gaan de file adden aan de toekomstige commit, we volgen de instructie (use “git add” to track)</li>
+<li class="has-line-data" data-line-start="62" data-line-end="63">We doen dus &quot;git add <a href="http://README.md">README.md</a>&quot; - dit addt, trackt of staget de file, afhankelijk van hoe je het wilt noemen. Hoe dan ook, het betekent dat <a href="http://README.md">README.md</a> meegaat naar de volgende commit.</li>
+<li class="has-line-data" data-line-start="63" data-line-end="64">Merkte je overigens ook op dat Git niks zegt over de backend en frontend directories?</li>
+<li class="has-line-data" data-line-start="64" data-line-end="65">We doen git commit -m &quot;Adding <a href="http://README.md">README.md</a>&quot; (-m betekent: geef als message het volgende - elke commit <em>moet</em> namelijk een commit message hebben)</li>
+<li class="has-line-data" data-line-start="65" data-line-end="66">We zien iets als</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="67" data-line-end="71">[main (root-commit) f46fa66] Adding README.md
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+</code></pre>
+<p class="has-line-data" data-line-start="71" data-line-end="72">Kun je raden wat al deze dingen betekenen? Vermoedelijk wel, f46fa66 is de hashcode van de commit.</p>
+<p class="has-line-data" data-line-start="73" data-line-end="74"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="75" data-line-end="76"><a id="Stap_4_we_gaan_pushen_naar_GitHub_75"></a>Stap 4: we gaan pushen naar GitHub</h2>
+<p class="has-line-data" data-line-start="77" data-line-end="78"><em>Noot</em> Je hebt weinig aan een versiebeheersysteem als je alleen lokaal versies kunt beheren. Allereerst ben je dan niet beveiligd tegen verlies of computerdefecten, maar ten tweede kan je dan niet samenwerken met anderen! Tijd dus om je lokale repository met je online repository te synchroniseren.</p>
+<ol>
+<li class="has-line-data" data-line-start="79" data-line-end="80">Check je online repository. Zie je daar je files al staan?</li>
+<li class="has-line-data" data-line-start="80" data-line-end="81">Inderdaad, ze staan er nog niet. Op de command prompt, doe <code>git push</code></li>
+<li class="has-line-data" data-line-start="81" data-line-end="82">Je ziet allemaal tekst als</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="83" data-line-end="91">git: 'credential-manager-core' is not a git command. See 'git --help'.
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 252 bytes | 252.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/EWLameijer/shoppinglist
+ * [new branch]      main -&gt; main
+</code></pre>
+<p class="has-line-data" data-line-start="91" data-line-end="92">Best interessant om eens door te lezen.</p>
+<ol start="4">
+<li class="has-line-data" data-line-start="93" data-line-end="94">Check opnieuw! F5 in de browser laat nu je repository zien! Waar overigens nog steeds geen folders <code>frontend</code> of <code>backend</code> in staan. <strong>Belangrijke les</strong>: Git slaat alleen files met hun paden op, <em>geen</em> losse/lege directories.</li>
+<li class="has-line-data" data-line-start="94" data-line-end="95">Delete de backend folder, maak een standaard Java-project ShoppingList via de Spring initialzr (JPA en Postgres hoeven niet, dit gaat even voor de demo. Web is wel een handige dependency hier, misschien met Lombok), en zorg dat die in de hoofdfolder van het repository komt (waar de README staat)</li>
+<li class="has-line-data" data-line-start="95" data-line-end="96">Hernoem de hoofd-Java-folder (die bij mij shoppinglist heet) tot <code>backend</code>.</li>
+<li class="has-line-data" data-line-start="96" data-line-end="97">Maak een eenvoudige controller waarvan het GET-endpoint een lijst van “boter”, “kaas” en “eieren” teruggeeft, die, voor de oefening straks, op verschillende regels staan. Bij mij ziet de code er zo uit:</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="98" data-line-end="111">@RestController
+@RequestMapping(&quot;api/v1/shopping-list-items&quot;)
+public class ShoppingListController {
+    @GetMapping
+    public List&lt;String&gt; get() {
+        return List.of(
+                &quot;boter&quot;,
+                &quot;kaas&quot;,
+                &quot;eieren&quot;
+        );
+    }
+}
+</code></pre>
+<ol start="8">
+<li class="has-line-data" data-line-start="111" data-line-end="112">Run de code en test het endpoint.</li>
+<li class="has-line-data" data-line-start="112" data-line-end="113">Run weer op de command prompt “git status”: wat zie je?</li>
+<li class="has-line-data" data-line-start="113" data-line-end="114">Je ziet in elk geval dat de backend folder zijn eigen .gitignore heeft. Dat is eigenlijk best netjes, dan zijn de ignores van Java en JavaScript gescheiden.</li>
+<li class="has-line-data" data-line-start="114" data-line-end="115">Je KUNT alle untracked files toevoegen met git add, maar het kan ook via IntelliJ (Alt+0). Als je dubbelklikt op files kan je zien hoe ze eruit zien of wat er veranderd is, wat vaak verstandig is- in elk geval bij codefiles.</li>
+<li class="has-line-data" data-line-start="115" data-line-end="116">Let wel: zelf vind ik Git Extensions (<a href="https://gitextensions.github.io/">https://gitextensions.github.io/</a>) handiger omdat ik dan niet hoef te dubbelklikken om de changes in een file te bekijken. Anderen gebruiken SmartGit, SourceTree of GitHub Desktop. Het is denk ik een goede investering om eens een uur of twee te besteden aan het downloaden en vergelijken van die vier alternatieven. Maar dat gaan we nu niet doen!</li>
+<li class="has-line-data" data-line-start="116" data-line-end="117">De Spring Initializr maakt overigens een heel goede .gitignore-file, als je <em>niet</em> de Spring initialzr gebruikt (bijvoorbeeld als je met een eenvoudig Java-project bezig bent), onthoud dan:</li>
+</ol>
+<ul>
+<li class="has-line-data" data-line-start="117" data-line-end="118">WEL: source files (.java) en alle Maven en Gradle files (ook de Maven/Gradle .jar-files). Verder ongeveer alle tekstfiles die er zijn (zoals de application.properties, .md files, .xml files, etc.)</li>
+<li class="has-line-data" data-line-start="118" data-line-end="119">NIET: de .class files (of out/results folder) of .jar files buiten die van Maven of Gradle. Niet de specifieke editor (.idea) files.</li>
+</ul>
+<ol start="14">
+<li class="has-line-data" data-line-start="119" data-line-end="120">Ik check alle files (ik doe dat dus met Git Extensions, maar gebruik gerust IntelliJ daarvoor), commit met als message iets als ‘Backend works’, en push.</li>
+<li class="has-line-data" data-line-start="120" data-line-end="122">Check op GitHub: zie je nu wel de backend folder? Als het goed is wel.</li>
+</ol>
+<p class="has-line-data" data-line-start="122" data-line-end="123"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="124" data-line-end="125"><a id="Stap_5_Nu_nog_even_een_frontend_124"></a>Stap 5: Nu nog even een frontend</h2>
+<p class="has-line-data" data-line-start="126" data-line-end="127"><em>Noot</em>: We maken een frontend. Zowel voor de lol, als om te oefenen met een 1-repo-2-folder-structuur, die best nuttig is. Als je verschillende teams hebt heb je vaak 2 of meer aparte repositories, maar de 1-repo, 2-folders (die NIET genest zijn) is vaak een best wel prettig werkend alternatief!</p>
+<ol>
+<li class="has-line-data" data-line-start="128" data-line-end="129">Je kent mogelijk de drill: je delete de frontend folder, je gaat naar de hoofdfolder van de app en maakt met <code>npm create vite@latest</code> een Vite React-JS+SWC (of TS+SWC)-project dat je frontend noemt, volgt alle stappen, en vervang dan de App.jsx door iets als:</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="130" data-line-end="144">import { useEffect, useState } from 'react'
+
+const App = () =&gt; {
+  const [items, setItems] = useState([])
+
+  useEffect(() =&gt; {
+    fetch(&quot;http://localhost:8080/api/v1/shopping-list-items&quot;).then(result =&gt; result.json().then(setItems))
+  })
+
+  return &lt;ul&gt;{items.map(item =&gt; &lt;li key={item}&gt;{item}&lt;/li&gt;)}&lt;/ul&gt;;
+}
+
+export default App;
+</code></pre>
+<p class="has-line-data" data-line-start="144" data-line-end="145">(vergeet niet @CrossOrigin(&quot;<a href="http://localhost:5173">http://localhost:5173</a>&quot;) bij de @RestController te zetten en de backend opnieuw te runnen!)</p>
+<ol start="2">
+<li class="has-line-data" data-line-start="145" data-line-end="146">Ik check de files (en maak van de gelegenheid gebruik om de .css files en .svg files en de imports daarvan te verwijderen), commit dan met een message als “Frontend works” en push.</li>
+<li class="has-line-data" data-line-start="146" data-line-end="148">Check dat er nu ook een frontend folder op GitHub staat!</li>
+</ol>
+<p class="has-line-data" data-line-start="148" data-line-end="149"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="150" data-line-end="151"><a id="Stap_6_Aan_de_slag_met_branches_en_branchebeveiliging_150"></a>Stap 6: Aan de slag met branches en branche-beveiliging!</h2>
+<p class="has-line-data" data-line-start="152" data-line-end="153"><em>Noot</em>: Git branches zijn onnodig voor eenvoudige projecten en worden zelden gebruikt door beginners. Maar een iets gevorderder programmeur zal vaak branches aanmaken voor experimenten, en als je in een groep werkt zijn aparte branches meestal noodzakelijk (al gebruiken sommige groepen maar één branch, maar dan moet iedereen wel héél goed programmeren en moeten er veel beveiligingsmechanismen gemaakt zijn!) Nu heb ik tot nog toe alles gedaan in de main branch. Dat gaan we veranderen. En dat kan ook met GitHub!</p>
+<ol>
+<li class="has-line-data" data-line-start="154" data-line-end="155">Ik ga naar GitHub &gt; Settings &gt; Rules &gt; Rulesets &gt; New ruleset</li>
+<li class="has-line-data" data-line-start="155" data-line-end="157">Ik maak een nieuwe ruleset (ik noem hem <code>mainbranch</code>), zet die op active, en verander de settings: ik require een pull request before merging, met 1 approval, and conversation resolution before merging, en ik add als target branch de default branch</li>
+</ol>
+<p class="has-line-data" data-line-start="157" data-line-end="158"><strong>Noot</strong>: doe dit <em>alleen</em> voor groepsprojecten! Voor persoonlijke projecten zijn er geen baten en alleen maar nadelen aan zulke extra beveiliging! Maar we oefenen nu voor het komende groepsproject!</p>
+<ol start="3">
+<li class="has-line-data" data-line-start="159" data-line-end="160">Ik druk Create (en moet dan authenticeren)</li>
+<li class="has-line-data" data-line-start="160" data-line-end="161">Ik maak een triviale verandering in mijn code (bijvoorbeeld een commentaarregel toevoegen), en probeer weer te pushen: ik krijg een foutmelding: <code>changes must be made through a pull request</code></li>
+<li class="has-line-data" data-line-start="161" data-line-end="162">Ik ga weer naar de command prompt. In de hoofdfolder doe ik een <code>git checkout -b minor_changes</code> (al zou ik ook een nieuwe branch aan kunnen maken via IntelliJ of Git Extensions). Ik doe een <code>git push</code></li>
+<li class="has-line-data" data-line-start="162" data-line-end="163">Git klaagt:</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="164" data-line-end="172">fatal: The current branch minor_changes has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin minor_changes
+
+To have this happen automatically for branches without a tracking
+upstream, see 'push.autoSetupRemote' in 'git help config'.
+</code></pre>
+<p class="has-line-data" data-line-start="172" data-line-end="173">Ik doe dus wat Git vraagt: <code>git push --set-upstream origin minor_changes</code> (of liever<code>git push -u origin minor_changes</code>, dat doet hetzelfde maar is dus wat korter)</p>
+<ol start="7">
+<li class="has-line-data" data-line-start="173" data-line-end="174">
+<p class="has-line-data" data-line-start="173" data-line-end="174">In GitHub zie ik nu op het hoofdscherm van mijn repo: “minor_changes had recent pushes 46 seconds ago”. Ik druk op de “Compare &amp; pull request” knop ernaast. Ik voeg een description toe, en druk op “Create pull request”</p>
+</li>
+<li class="has-line-data" data-line-start="174" data-line-end="176">
+<p class="has-line-data" data-line-start="174" data-line-end="175">Ik ga naar de “Files Changed”&quot;, check de boxen van elke gewijzigde file aan als “Viewed”, druk op “Review changes”, schrijf iets als review en druk dan op “Submit review”. Helaas kan ik het review niet approven, dus hoewel zulke branch protection handig is voor echte groepsprojecten, ga ik voor deze oefening terug naar de ruleset en zet <code>required approvals</code> op 0.</p>
+</li>
+<li class="has-line-data" data-line-start="176" data-line-end="177">
+<p class="has-line-data" data-line-start="176" data-line-end="177">Nu kan ik het pull request mergen, en de merge confirmen.</p>
+</li>
+<li class="has-line-data" data-line-start="177" data-line-end="178">
+<p class="has-line-data" data-line-start="177" data-line-end="178">En nu delete ik de branch, zowel op GitHub via de knop die nu verschijnt, als lokaal via mijn Git GUI of via de command line.</p>
+</li>
+<li class="has-line-data" data-line-start="178" data-line-end="179">
+<p class="has-line-data" data-line-start="178" data-line-end="179">Maar als ik het in de command line doe met <code>git checkout main</code> krijg ik</p>
+</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="180" data-line-end="184">Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use &quot;git push&quot; to publish your local commits)
+</code></pre>
+<p class="has-line-data" data-line-start="184" data-line-end="185">En natuurlijk kan ik niet pushen, dat was juist verboden! Ik doe dus een <code>git pull</code>. Tenslotte de <code>git branch -d minor_changes</code></p>
+<p class="has-line-data" data-line-start="186" data-line-end="187"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="188" data-line-end="189"><a id="Stap_7_Een_mergeconflict_veroorzaken_deel_1_188"></a>Stap 7: Een merge-conflict veroorzaken: deel 1</h2>
+<p class="has-line-data" data-line-start="190" data-line-end="191"><em>Noot</em>: Als je in je eentje programmeert werkt Git meestal vlekkeloos. Maar in een team kunnen merge-conflicten ontstaan, zeker als er òf weinig files zijn òf pull requests groot zijn en veel files omvatten. Meestal kan je met een goede taakverdeling, een goede architectuur en taken die klein genoeg zijn (een half uur tot 2 dagen) bijna alle mergeconflicten vermijden. Maar dus niet allemaal - dus moet je leren hoe je ermee om moet gaan!</p>
+<ol>
+<li class="has-line-data" data-line-start="192" data-line-end="193">De koster komt op bezoek – ik heb een andere lijst nodig. Ik maak dus een branch <code>de_koster_komt</code> (ehm… <code>the_sexton_is_coming</code>) en ga daarnaar toe.</li>
+<li class="has-line-data" data-line-start="193" data-line-end="195">Zoals je misschien weet, lust de koster geen eieren, maar wel spek (<a href="https://www.oudersenzo.nl/bim-bam-beieren/">https://www.oudersenzo.nl/bim-bam-beieren/</a>) vervang de<br>
+“eieren” in je lokale ShoppingListController naar “spek”</li>
+<li class="has-line-data" data-line-start="195" data-line-end="196">Doe op de command prompt <code>git status</code>. Je ziet nu iets als</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="197" data-line-end="205">On branch the_sexton_is_coming
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   backend/src/main/java/org/ericwubbo/shoppinglist/ShoppingListController.java
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre>
+<ol start="4">
+<li class="has-line-data" data-line-start="205" data-line-end="206">Dit geeft een goede hint: ik zal nu git commit -am gebruiken om die wijziging toe te passen en gelijk te committen <code>git commit -am &quot;The sexton does not like eggs&quot;</code></li>
+<li class="has-line-data" data-line-start="206" data-line-end="207">Dan <code>git push -u origin the_sexton_is_coming</code></li>
+<li class="has-line-data" data-line-start="207" data-line-end="208">Kijkend op mijn Code pagina van GitHub zie ik inderdaad dat ik nu twee branches heb.</li>
+<li class="has-line-data" data-line-start="208" data-line-end="210">Ik ga naar de <code>the_sexton_is_coming</code> branch en check dat die inderdaad geen eieren meer bevat, maar spek!</li>
+</ol>
+<p class="has-line-data" data-line-start="210" data-line-end="211"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="212" data-line-end="213"><a id="Stap_8_Een_mergeconflict_veroorzaken_deel_2_212"></a>Stap 8: Een merge-conflict veroorzaken: deel 2</h2>
+<ol>
+<li class="has-line-data" data-line-start="214" data-line-end="215">We gaan nu een merge-conflict veroorzaken. Doe alsof je een huisgenoot bent en check de main-branch weer uit.</li>
+<li class="has-line-data" data-line-start="215" data-line-end="216">Maak een nieuwe branch aan (healthy_shopping), en schakel daarnaar over.</li>
+<li class="has-line-data" data-line-start="216" data-line-end="217">Kijkend in IntelliJ wil je de lijst gezonder hebben! Vervang eieren door “scharreleieren” en voeg biologisch sinaasappelsap toe.</li>
+<li class="has-line-data" data-line-start="217" data-line-end="218">Deze branch ga je in master mergen, weer via een pull request…</li>
+<li class="has-line-data" data-line-start="218" data-line-end="219">En dan delete je de branch op GitHub en lokaal.</li>
+<li class="has-line-data" data-line-start="219" data-line-end="221">Check op GitHub dat de healthy_shopping-branch echt niet meer bestaat, maar dat main wel de veranderingen heeft!</li>
+</ol>
+<h2 class="code-line" data-line-start="221" data-line-end="222"><a id="Stap_9_Een_mergeconflict_veroorzaken_deel_3_221"></a>Stap 9: Een merge-conflict veroorzaken: deel 3</h2>
+<ol>
+<li class="has-line-data" data-line-start="223" data-line-end="224">Als mezelf ga ik terug naar de sexton-branch. (ik was even vergeten hoe die precies heette, maar met <code>git branch</code> zie ik alle branches) Ik wil ook wat voor bij de koffie voor met de koster, en voeg kletskoppen toe aan de lijst. Ik maak een commit. Met <code>git status</code> zie ik dat ik 1 commit ahead ben van de <code>origin/the_sexton_is_coming</code>.</li>
+<li class="has-line-data" data-line-start="224" data-line-end="225">Dan check ik bij de vrouw van de koster – en hij blijkt geen kletskoppen te lusten! Ik ga in mijn GUI naar de laatste goede commit en doe een harde reset. Of, als ik het via de commandline wil: <code>git log</code> om alle commits te zien, ik krijg iets als</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="226" data-line-end="257">commit 748548de6905aadf3c32c18d3c5d0adecd633d0e (HEAD -&gt; the_sexton_is_coming)
+Author: Eric-Wubbo Lameijer &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bfee9f2f8c4eceef9f9f4dbf3f4eff6faf2f7b5f8f4f6">[email&#160;protected]</a>&gt;
+Date:   Thu Dec 14 22:01:00 2023 +0100
+
+    for the coffee!
+
+commit faf5d1a9d2524a384613838452304d6fbabd5007 (origin/the_sexton_is_coming)
+Author: Eric-Wubbo Lameijer &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86e3f4efe5d9f1f3e4e4e9c6eee9f2ebe7efeaa8e5e9eb">[email&#160;protected]</a>&gt;
+Date:   Thu Dec 14 21:47:07 2023 +0100
+
+    The sexton does not like eggs
+
+commit 65daee05d96fa582603f0aecdfc966bf4af1daf8
+Author: Eric-Wubbo Lameijer &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89ecfbe0ead6fefcebebe6c9e1e6fde4e8e0e5a7eae6e4">[email&#160;protected]</a>&gt;
+Date:   Thu Dec 14 21:38:15 2023 +0100
+
+    Better page title
+
+commit ef3a1b715cf62bed28fa4d2afcd23acccc7215e9
+Merge: 7097f09 77fcda9
+Author: Eric-Wubbo Lameijer &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2d7c0dbd1edc5c7d0d0ddf2daddc6dfd3dbde9cd1dddf">[email&#160;protected]</a>&gt;
+Date:   Thu Dec 14 21:32:04 2023 +0100
+
+    Merge pull request #1 from EWLameijer/minor_changes
+
+    Small app changes
+
+commit 77fcda9cd3e9da319781f73ef49113029d6f1993
+Author: Eric-Wubbo Lameijer &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6603140f05391113040409260e09120b070f0a4805090b">[email&#160;protected]</a>&gt;
+:
+</code></pre>
+<p class="has-line-data" data-line-start="257" data-line-end="259">Ik druk op ‘q’ (dat is het Linux-tekstverwerkerssymbool voor quit)<br>
+En <code>git reset --hard faf5d1</code> gaat dan terug naar de juiste commit!</p>
+<ol start="3">
+<li class="has-line-data" data-line-start="260" data-line-end="262">
+<p class="has-line-data" data-line-start="260" data-line-end="261">in de GUI en met <code>git status</code> lijkt alles weer okee! Ook in de file zijn de kletskoppen verdwenen.</p>
+</li>
+<li class="has-line-data" data-line-start="262" data-line-end="264">
+<p class="has-line-data" data-line-start="262" data-line-end="263">Ik heb voldoende gedaan, vind ik, en ik besluit in main te mergen. Als ervaren programmeur pull ik eerst main (ik check main uit, dan pull ik hem).</p>
+</li>
+<li class="has-line-data" data-line-start="264" data-line-end="273">
+<p class="has-line-data" data-line-start="264" data-line-end="265">Het officiële proces, zoals ik weet, is</p>
+<ul>
+<li class="has-line-data" data-line-start="265" data-line-end="266">check main uit</li>
+<li class="has-line-data" data-line-start="266" data-line-end="267">pull main</li>
+<li class="has-line-data" data-line-start="267" data-line-end="268">check de feature-branch uit</li>
+<li class="has-line-data" data-line-start="268" data-line-end="269">merge main in de feature branch</li>
+<li class="has-line-data" data-line-start="269" data-line-end="270">los eventuele merge-conflicten op</li>
+<li class="has-line-data" data-line-start="270" data-line-end="271">check dat de feature-branch nog werkt</li>
+<li class="has-line-data" data-line-start="271" data-line-end="272">push de nieuwe feature-branch</li>
+<li class="has-line-data" data-line-start="272" data-line-end="273">maak een pull request</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="273" data-line-end="274">
+<p class="has-line-data" data-line-start="273" data-line-end="274">Ik check nu dus de feature branch uit en merge de main erin met <code>git merge main</code>. Maar ik krijg nu</p>
+</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="275" data-line-end="279">Auto-merging backend/src/main/java/org/ericwubbo/shoppinglist/ShoppingListController.java
+CONFLICT (content): Merge conflict in backend/src/main/java/org/ericwubbo/shoppinglist/ShoppingListController.java
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+<ol start="7">
+<li class="has-line-data" data-line-start="279" data-line-end="280">Ik check IntelliJ: mijn file ziet er nu akelig uit, als</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="281" data-line-end="300">@RestController
+@CrossOrigin(&quot;http://localhost:5173&quot;)
+@RequestMapping(&quot;api/v1/shopping-list-items&quot;)
+public class ShoppingListController {
+    @GetMapping
+    public List&lt;String&gt; get() {
+        return List.of(
+                &quot;boter&quot;,
+                &quot;kaas&quot;,
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+                &quot;spek&quot;
+=======
+                &quot;scharreleieren&quot;,
+                &quot;biologisch sinaasappelsap&quot;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main
+        );
+    }
+}
+</code></pre>
+<p class="has-line-data" data-line-start="300" data-line-end="301">En <em>ik</em> moet zien te onthouden wat hier de bedoeling is! Nu <em>kan</em> ik dit editen in IntelliJ, maar het is beter dan in IntelliJ of GitExtensions het op te lossen. In IntelliJ: Het Commit-window heeft nu <code>Merge Conflicts</code>, ik klik op <code>Resolve</code>, dan <code>Merge</code>, druk op de juiste pijltjes en voeg een komma toe zodat ik een geünificeerde lijst krijg met spek, scharreleieren èn biologisch sinaasappelsap. Ik druk op <code>Apply</code> en doe een <code>Commit and Push</code>. En via een pull request krijg ik het in mijn hoofdbranch.</p>
+<ol start="8">
+<li class="has-line-data" data-line-start="302" data-line-end="304">Ik check de hoofdbranch en zie dat het goed is. Volgens mij dan :)</li>
+</ol>
+<p class="has-line-data" data-line-start="304" data-line-end="305"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende? Ook: als er een ‘harde’ reset is, wat voor andere resets zijn er dan? En wanneer zou je die gebruiken?</p>
+<h2 class="code-line" data-line-start="306" data-line-end="307"><a id="Stap_9_Waarin_we_zien_dat_een_harde_reset_niet_alles_op_kan_lossen_306"></a>Stap 9: Waarin we zien dat een harde reset niet alles op kan lossen</h2>
+<p class="has-line-data" data-line-start="308" data-line-end="309"><em>Noot</em> Ondanks je beste inspanningen komt er weleens een fout op de hoofdbranch terecht. Als ik me goed herinner was bij Microsoft de regel dat als een developer de eerste keer de hoofdbranch zo brak dat hij niet meer compileerde, hij of zij de hele afdeling op taart moest trakteren. Bij de tweede keer werd hij ontslagen. Bij ITvitae ontslaan we niemand, maar laten we de committer en de reviewer <em>samen</em> op taart trakteren. Maar dat terzijde: je kan je hoofdbranch verpesten. Wat dan?</p>
+<ol>
+<li class="has-line-data" data-line-start="310" data-line-end="312">
+<p class="has-line-data" data-line-start="310" data-line-end="311">Mijn huisgenoot ziet spek op de lijst staan en is woedend, wil die troep eraf. Ik besluit mijn main te resetten op de vroegere waarde (zonder de spek, maar met de scharreleieren) (via de command line dus weer met <code>git log</code>, en, in mijn geval <code>git reset --hard 77b4972f</code>)</p>
+</li>
+<li class="has-line-data" data-line-start="312" data-line-end="313">
+<p class="has-line-data" data-line-start="312" data-line-end="313">Ik probeer weer te pushen! Maar ik krijg</p>
+</li>
+</ol>
+<pre><code class="has-line-data" data-line-start="314" data-line-end="323">git: 'credential-manager-core' is not a git command. See 'git --help'.
+To https://github.com/EWLameijer/shoppinglist
+ ! [rejected]        main -&gt; main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/EWLameijer/shoppinglist'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</code></pre>
+<p class="has-line-data" data-line-start="323" data-line-end="325">Dat is ergens ook wel logisch. Stel dat ik wèl zou kunnen pushen en de main zou kunnen overschrijven: als ik een slome updater was die vergeten was de main eerst te pullen voor ik mergde zou het werk van heel wat collega’s verloren gaan!<br>
+(mocht je overigens denken: niemand is zo dom om zoiets te proberen: ik heb dit een keer of 2 a 3 geprobeerd bij mijn eerste baan met Git, bij IntelliMagic. Ik heb toen meerdere keren een Git-expert van een andere groep moeten raadplegen omdat ik niet wist hoe ik dat moest oplossen… Pas veel later leerde ik via de think-like-a-git-site de oplossing van de expert te begrijpen…)</p>
+<ol start="3">
+<li class="has-line-data" data-line-start="326" data-line-end="328">
+<p class="has-line-data" data-line-start="326" data-line-end="327">Ik doe een git pull om mijn main weer ‘up to date’ te krijgen.</p>
+</li>
+<li class="has-line-data" data-line-start="328" data-line-end="330">
+<p class="has-line-data" data-line-start="328" data-line-end="329">Omdat ik hier met pull requests moet werken, maak ik een fix_it branch en ga daarheen. Ik revert de huidige commit, push de branch en maak een pull request, voer die uit en delete de origin/fix_it en lokale fix_it.</p>
+</li>
+<li class="has-line-data" data-line-start="330" data-line-end="332">
+<p class="has-line-data" data-line-start="330" data-line-end="331">Op GitHub check ik de code in main (nu weer zonder spek), en in IntelliJ zie ik bij Git log nu de grillige lijntjes lopen. Maar het reverten is gelukt!</p>
+</li>
+</ol>
+<p class="has-line-data" data-line-start="332" data-line-end="333"><em>Reflectie</em>: Check de stappen hierboven nog eens; begrijp je <em>waarom</em> je elke stap hebt gedaan en wat elke stap doet? Waren en stappen/‘trucs’ die je nog niet kende?</p>
+<h2 class="code-line" data-line-start="335" data-line-end="336"><a id="Stap_10_Opruimen_335"></a>Stap 10: Opruimen</h2>
+<ol>
+<li class="has-line-data" data-line-start="337" data-line-end="338">Is alles gelukt? Verwijder dan het shoppinglist-project van GitHub (dat kan via Settings, onderaan, als je dat toevallig nog niet wist)</li>
+</ol>
+<h2 class="code-line" data-line-start="340" data-line-end="341"><a id="Stap_11_Eindreflectie_340"></a>Stap 11: Eindreflectie</h2>
+<p class="has-line-data" data-line-start="341" data-line-end="342">Kijk eens terug naar de “Hoofdpunten om te leren/oefenen (voor Stap 1)” In hoeverre heb je ze naar je mening gehaald? Kijk eventueel terug naar specifieke onderdelen als je merkt dat je dingen vergeten bent.</p>
+<p class="has-line-data" data-line-start="343" data-line-end="344">Sowieso kan het handig zijn dit de week voor het eindproject nog eens door te scannen…</p>
+<h2 class="code-line" data-line-start="345" data-line-end="346"><a id="Nawoord_algemene_gedachten_over_Git_345"></a>Nawoord: algemene gedachten over Git</h2>
+<ol>
+<li class="has-line-data" data-line-start="346" data-line-end="347">Bovenstaande is lang niet alles over Git. Op zijn minst zijn er nog rebase, squash en cherrypick. Beschouw die (en andere tools) als bonussen als je nieuwsgierig bent maar niet nodig voor het tussenproject of eindproject. Het kan wel handig zijn die dingen later eens uitgebreider te bekijken, er zijn teams die (om de commit-history schoner te maken) uitgebreid werken met squash en rebase, hoewel het de meeste teams volgens mij niet voldoende uitmaakt om de standaardmerge te verlaten…</li>
+<li class="has-line-data" data-line-start="347" data-line-end="348">Vaker nuttig zijn tags: meestal bookmark je daarmee de commits van belangrijke versies zodat je die makkelijk kunt terugvinden in de codebase. Als je geen tags hebt moet je ergens noteren dat versie 1.0.5 de hash 10284f1e had en 1.0.6 de tag 72feb5 en dat je dus die commits moet vergelijken om de oorzaak te vinden van de bug die in 1.0.6 bleek te bestaan maar niet in 1.0.5. Met tags is dat veel makkelijker!</li>
+<li class="has-line-data" data-line-start="348" data-line-end="349">Git stashes bestaan ook; voor als je snel naar een andere branch moet, maar je huidige wijzigingen nog niet wilt committen. Al moet ik zeggen dat ik persoonlijk zo weinig met stashes werk dat ik het makkelijker vind om desnoods een draft-branch te maken en uit te checken en later te mergen; zaken zijn zelden urgent genoeg om iets te moeten stashen. IntelliJ ‘shelft’ overigens in plaats van te stashen. Hoe dan ook, weet dat het bestaat, maar het is naar mijn mening zeker niet het belangrijkste om meester van te worden!</li>
+<li class="has-line-data" data-line-start="349" data-line-end="350">Meer informatie: <a href="https://think-like-a-git.net/">https://think-like-a-git.net/</a> , <a href="https://www.youtube.com/watch?v=1ffBJ4sVUb4">https://www.youtube.com/watch?v=1ffBJ4sVUb4</a> , <a href="https://www.atlassian.com/git">https://www.atlassian.com/git</a> . Er is ook een groot Git-boek <a href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a> - waar ik zelf tot nog toe nauwelijks doorheen ben gekomen. Maar ik denk dat voor de gemiddelde developer Git tot en met revert essentieel is, de andere dingen kun je meestal vermijden of leer je van je team als die dat belangrijk vindt.</li>
+<li class="has-line-data" data-line-start="350" data-line-end="353">Bij een commit: het is handig te kijken wat je precies gewijzigd hebt door dubbel te klikken op de namen van de gewijzigde files.<br>
+Alternatief kun je ook gemakkelijk(er) de wijzigingen zien via een git-tool als Git Extensions.<br>
+Er zijn een paar vuistregels die nuttig zijn bij committen</li>
+</ol>
+<ul>
+<li class="has-line-data" data-line-start="353" data-line-end="355">Commit regelmatig (ieder uur, iedere twee uur, of telkens als je naar je gevoel wat functionaliteit hebt toegevoegd). Vaak is 50<br>
+gewijzigde regels code meer dan genoeg voor een commit. Als je de commits kort houdt, is punt 2 ook makkelijker.</li>
+<li class="has-line-data" data-line-start="355" data-line-end="357">Check je commit op onduidelijke, slordig opgemaakte, foutief gespelde of mogelijk foute code, en corrigeer de fouten meteen,<br>
+dus voordat je commit.</li>
+<li class="has-line-data" data-line-start="357" data-line-end="359">Commit nooit als je haast hebt of moe bent – dan kan je namelijk niet goed je code controleren. Sommige bedrijven willen dat<br>
+je aan het eind van de dag commit – maar meestal is het geen probleem als je in plaats daarvan elk uur/elke twee uur commit.</li>
+</ul>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body></html>
