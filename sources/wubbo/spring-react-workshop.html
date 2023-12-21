@@ -1,0 +1,605 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>spring_javascript_en_react</title><style></style></head><body id="preview">
+<h3 class="code-line" data-line-start="0" data-line-end="1"><a id="Versie_100_20231220_0"></a>Versie 1.0.0 2023-12-20</h3>
+<h1 class="code-line" data-line-start="3" data-line-end="4"><a id="Spring_3"></a>Spring</h1>
+<h2 class="code-line" data-line-start="5" data-line-end="6"><a id="Spring_Initializr_5"></a>Spring Initializr</h2>
+<ul>
+<li class="has-line-data" data-line-start="6" data-line-end="7"><a href="https://start.spring.io/">https://start.spring.io/</a></li>
+<li class="has-line-data" data-line-start="7" data-line-end="8">Maven vs Gradle Groovy vs Gradle Kotlin</li>
+<li class="has-line-data" data-line-start="8" data-line-end="9">artifact vs name</li>
+<li class="has-line-data" data-line-start="9" data-line-end="11">JPA, Web, PostgreSQL, Lombok</li>
+</ul>
+<h2 class="code-line" data-line-start="11" data-line-end="12"><a id="Springproject_maken_met_database_11"></a>Spring-project maken met database</h2>
+<ul>
+<li class="has-line-data" data-line-start="12" data-line-end="13">in main/resources zit een application.properties</li>
+<li class="has-line-data" data-line-start="13" data-line-end="14">die moet er ongeveer uitzien als:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="15" data-line-end="23">spring.datasource.url=jdbc:postgresql://localhost:5432/books
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.jpa.show-sql=true
+
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto = update
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="23" data-line-end="24">als je commit naar Git zou ik aanraden de gebruikersnaam en wachtwoord e.d. op te slaan als environment-variabele/systeemvariabele, bv PG_BOOKS, PG_USERNAME, PG_PASSWORD. application.properties wordt dan</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="25" data-line-end="33">spring.datasource.url=${PG_BOOKS}
+spring.datasource.username=${PG_USERNAME}
+spring.datasource.password=${PG_PASSWORD}
+spring.jpa.show-sql=true
+
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto = update
+</code></pre>
+<h2 class="code-line" data-line-start="34" data-line-end="35"><a id="Het_seeden_van_een_database_34"></a>Het seeden van een database</h2>
+<ul>
+<li class="has-line-data" data-line-start="35" data-line-end="36">Vaak wil je data in je database hebben, om je programma te kunnen uittesten.</li>
+<li class="has-line-data" data-line-start="36" data-line-end="37">Die <em>kan</em> je erin zetten met SQL-scripts door een file data.sql in de resources te zetten.</li>
+<li class="has-line-data" data-line-start="37" data-line-end="38">Het kan echter ook met Java-code, bijvoorbeeld met een seeder-klasse:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="39" data-line-end="54">@Component
+@RequiredArgsConstructor
+public class Seeder implements CommandLineRunner {
+
+    private final ApplicationRepository applicationRepository;
+    
+    @Override
+    public void run(String... args) throws Exception {
+        if (applicationRepository.count() == 0) {
+            applicationRepository.save(new Application(&quot;game&quot;, &quot;secret&quot;));
+        }
+
+    }
+}
+</code></pre>
+<h2 class="code-line" data-line-start="55" data-line-end="56"><a id="Basic_controller_commands_55"></a>Basic controller commands</h2>
+<ul>
+<li class="has-line-data" data-line-start="56" data-line-end="57">@RestController</li>
+<li class="has-line-data" data-line-start="57" data-line-end="58">@RequestMapping</li>
+<li class="has-line-data" data-line-start="58" data-line-end="59">api/v1/movies - patroon</li>
+<li class="has-line-data" data-line-start="59" data-line-end="61">@GetMapping</li>
+</ul>
+<h2 class="code-line" data-line-start="61" data-line-end="62"><a id="HTTP_Basics_61"></a>HTTP Basics</h2>
+<ul>
+<li class="has-line-data" data-line-start="62" data-line-end="63">requests vs responses</li>
+<li class="has-line-data" data-line-start="63" data-line-end="64">start line - headers - empty line - body</li>
+<li class="has-line-data" data-line-start="64" data-line-end="65">verbs: GET PUT POST DELETE PATCH (en OPTIONS, later voor CORS)</li>
+<li class="has-line-data" data-line-start="65" data-line-end="66">status code: 200s (success) 300s (redirects) 400s (client error) 500s (server error)</li>
+<li class="has-line-data" data-line-start="66" data-line-end="67">HTTP verb in start line request</li>
+<li class="has-line-data" data-line-start="67" data-line-end="69">status code in start line response</li>
+</ul>
+<h2 class="code-line" data-line-start="69" data-line-end="70"><a id="Basaal_JPAgebruik_69"></a>Basaal JPA-gebruik</h2>
+<ul>
+<li class="has-line-data" data-line-start="70" data-line-end="71">@Entity</li>
+<li class="has-line-data" data-line-start="71" data-line-end="72">@Id</li>
+<li class="has-line-data" data-line-start="72" data-line-end="73">@GeneratedValue</li>
+<li class="has-line-data" data-line-start="73" data-line-end="74">id type Long or UUID</li>
+<li class="has-line-data" data-line-start="74" data-line-end="76">interface XRepository extends JpaRepository &lt;X, TypeOfId&gt; {}</li>
+</ul>
+<h2 class="code-line" data-line-start="76" data-line-end="77"><a id="Basaal_Lombokgebruik_76"></a>Basaal Lombok-gebruik</h2>
+<ul>
+<li class="has-line-data" data-line-start="77" data-line-end="78">@DefaultConstructor // nodig voor @Entity</li>
+<li class="has-line-data" data-line-start="78" data-line-end="79">@RequiredArgsConstructor // handig voor injectie in Controllers en Services</li>
+<li class="has-line-data" data-line-start="79" data-line-end="80">@Getter</li>
+<li class="has-line-data" data-line-start="80" data-line-end="81">@Setter</li>
+<li class="has-line-data" data-line-start="81" data-line-end="83">NOOT: vermijd @Data</li>
+</ul>
+<h2 class="code-line" data-line-start="83" data-line-end="84"><a id="Basic_Dependency_Injection_83"></a>Basic Dependency Injection</h2>
+<ul>
+<li class="has-line-data" data-line-start="84" data-line-end="85">normaal geeft een “stereotype annotatie” als @Component (of @Controller, @RestController, @Service) aan dat de klasse geinjecteerd kan worden.</li>
+<li class="has-line-data" data-line-start="85" data-line-end="86">echter: @Component enzo is zinloos bij een interface. Interfaces die bepaalde interfaces extenden (zoals JpaRepository en CrudRepository) worden door Spring/JPA automatisch geinjecteerd (of beter gezegd, door Spring gemaakte klassen die die interface annoteren)</li>
+<li class="has-line-data" data-line-start="86" data-line-end="87">Je kunt alleen dependencies injecten IN klassen die een ‘stereotype annotation’ hebben (@Component/@Repository/@Service/@Controller/@RestController)</li>
+<li class="has-line-data" data-line-start="87" data-line-end="88">Er zijn drie soorten Dependency Injection mogelijk in Spring: setter injection (bijna nooit gebruikt), @Autowired boven fields (gebruikt in demos), en injectie via de constructor. Die laatste staat final fields toe en geeft meer flexibiliteit voor bv unittests, en krijgt in professionele omgevingen voor zover ik begrijp meestal de voorkeur.</li>
+<li class="has-line-data" data-line-start="88" data-line-end="90">Als er maar één constructor is, wordt die door Spring automatisch @AutoWired.</li>
+</ul>
+<h2 class="code-line" data-line-start="90" data-line-end="91"><a id="Basic_codestructuur_90"></a>Basic code-structuur</h2>
+<ul>
+<li class="has-line-data" data-line-start="91" data-line-end="92">altijd nodig: entity, repository, controller.</li>
+<li class="has-line-data" data-line-start="92" data-line-end="93">discussiepunt: horizontale versus vertikale packages. Sommige groepen gebruiken packages als ‘controllers’, ‘repositories’, ‘models’ en ‘services’ (horizontaal: alles in dezelfde logische laag zit in hetzelfde package). Andere groepen gebruiken packages voor bv ‘movies’, ‘actors’, ‘reviews’, in elk package zit de entity, de repository en de controller. Dat worden ook wel ‘vertikale packages’ genoemd. Omdat je in de praktijk vaak bezig bent heen en weer te springen tussen de controller en de repository en data model ervan, hebben vertikale packages mijn persoonlijke voorkeur, maar het is vermoedelijk geen grote handicap om horizontale packages te gebruiken.</li>
+<li class="has-line-data" data-line-start="93" data-line-end="95">discussiepunt: het gebruik van services. In principe kan een controller rechtstreeks een repository geinjecteerd krijgen en data naar de database schrijven en inlezen. Maar in sommige gevallen krijg je dan allerlei gedupliceerde code of hulpmethoden in de controller, of wordt de controller erg groot en ingewikkeld. Voor dat probleem worden ook wel services gebruikt: de controller roept een service aan, die op zijn beurt de repository aanroept. De discussie is in dit geval niet of services nuttig kunnen zijn, maar of je <em>altijd</em> een service moet gebruiken ook als het de code groter, ingewikkelder en moeilijker veranderbaar maakt. Sommige programmeurs vinden de voordelen van een uniforme structuur opwegen tegen de nadelen. Ik ben echter iemand die ooit moest werken aan een project waar de uniforme structuur voldoende lagen had voor zelfs de meest ingewikkelde usecase, dus ik ben zelf minder enthousiast. Ook omdat “code is not an asset, it’s a liability”. Mogelijk dat je in een klein project en beginfasen beter services beter kan vermijden tenzij een controller echt te complex wordt of omdat je fouten maakt omdat instantiatie van een object ofzo relatief complex is. Maar als je overal een service voor wil maken is dat zeker niet objectief fout, al kan het je ontwikkel- en debugsnelheid verminderen.</li>
+</ul>
+<h2 class="code-line" data-line-start="95" data-line-end="96"><a id="Endpoints_95"></a>Endpoints:</h2>
+<ul>
+<li class="has-line-data" data-line-start="96" data-line-end="100">basisstructuur: /api/v1/items
+<ul>
+<li class="has-line-data" data-line-start="97" data-line-end="98">API: geeft aan dat dit endpoint geen mooie webpagina’s (HTML) voor menselijke consumptie geeft, maar door computers te lezen data in JSON of andere formaten</li>
+<li class="has-line-data" data-line-start="98" data-line-end="99">v1: als je ooit een nieuwe versie van de API maakt kan je dat v2 noemen, en programma’s die v1 gebruiken zullen niet gelijk gaan falen (dus geen boze collega’s/klanten)</li>
+<li class="has-line-data" data-line-start="99" data-line-end="100">companies: normaal geef je een endpoint in het meervoud. Conventies zijn: /companies: geeft alle companies, /companies/4 geeft de company met id 4, POST /companies voegt een bedrijf toe, DELETE companies/4 verwijdert bedrijf 4, PATCH of PUT /companies/4 update de informatie van company 4.</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="100" data-line-end="107">De endpoints in een @RestController geven per default een 200 OK-code terug. Maar vaak wil je dat veranderen:
+<ul>
+<li class="has-line-data" data-line-start="101" data-line-end="102">GET (all) geeft altijd 200 terug, zelfs al kan het request body een lege lijst bevatten</li>
+<li class="has-line-data" data-line-start="102" data-line-end="103">GET (by id)/DELETE/PUT/PATCH geven een 404 (not found) terug als het gezochte item niet gevonden is.</li>
+<li class="has-line-data" data-line-start="103" data-line-end="104">Je kunt ervoor kiezen een PUT/PATCH/POST een 400 (Bad Request) terug te laten geven als er data ontbreekt, inconsistent of ongeldig is.</li>
+<li class="has-line-data" data-line-start="104" data-line-end="105">Een succesvolle PUT of DELETE kan een No Content (204) teruggeven</li>
+<li class="has-line-data" data-line-start="105" data-line-end="106">Een succesvolle PATCH kan je (net als GET) een 200 laten teruggeven met het nieuwe item in de body.</li>
+<li class="has-line-data" data-line-start="106" data-line-end="107">Een successvolle POST hoort officieel een Location-header te hebben, die kan je maken via</li>
+</ul>
+</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="108" data-line-end="118">@PostMapping
+private ResponseEntity&lt;Void&gt; createMovie(@RequestBody Movie newMovie, UriComponentsBuilder ucb) {
+   Movie savedMovie = cashCardRepository.save(newMovie);
+   URI locationOfNewMovie = ucb
+            .path(&quot;movies/{id}&quot;)
+            .buildAndExpand(savedMovie.id())
+            .toUri();
+   return ResponseEntity.created(locationOfNewMovie).body(savedMovie);
+}
+</code></pre>
+<p class="has-line-data" data-line-start="118" data-line-end="119">(het is meestal ook handig om het nieuwe object terug te geven, vaak heeft de code die het POST-request doet tenminste de id van het nieuwe object nodig, soms ook andere data die is ingevoegd door de backend)</p>
+<ul>
+<li class="has-line-data" data-line-start="119" data-line-end="120">
+<p class="has-line-data" data-line-start="119" data-line-end="120">Andere statuscodes dan 200 regel je door de methode een ResponseEntity te laten returnen. “No Content” kan via <code>ResponseEntity&lt;Void&gt;</code>, een item teruggeven kan via <code>ResponseEntity&lt;Movie&gt;</code> en dergelijke.</p>
+</li>
+<li class="has-line-data" data-line-start="120" data-line-end="123">
+<p class="has-line-data" data-line-start="120" data-line-end="122">In de methode zelf kan je de ResponsEntity maken via<br>
+ResponseEntity.noContent()/.created()/.body(item)/.notFound(). Soms heb je .build() nodig om de ResponseEntity af te maken.</p>
+</li>
+<li class="has-line-data" data-line-start="123" data-line-end="127">
+<p class="has-line-data" data-line-start="123" data-line-end="124">waarden uit het HTTP-request krijgen:</p>
+<ul>
+<li class="has-line-data" data-line-start="124" data-line-end="125">Uit het pad: <code>@GetMapping(&quot;{id}&quot;) public ResponseEntity&lt;Item&gt; getById(@PathVariable long id) {...</code></li>
+<li class="has-line-data" data-line-start="125" data-line-end="126">uit de body body: @PostMapping public ResponseEntity&lt;Item&gt; post(@RequestBody Item item) { …</li>
+<li class="has-line-data" data-line-start="126" data-line-end="127">van de params (<code>api/v1/movies?name-includes=&quot;up&quot;&amp;release-date-after=2000</code>):</li>
+</ul>
+</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="128" data-line-end="131">@GetMapping 
+Iterable&lt;Movie&gt; getAll(@RequestParam(required=false, name=&quot;name-includes&quot; String nameIncludes, @RequestParam(required=false, name=&quot;release-date-after&quot; Integer releaseDateAfter) {...
+</code></pre>
+<h2 class="code-line" data-line-start="133" data-line-end="134"><a id="DTOs_133"></a>DTOs</h2>
+<ul>
+<li class="has-line-data" data-line-start="134" data-line-end="140">vaak wil je je databaseobjecten niet letterlijk naar de frontend sturen:
+<ul>
+<li class="has-line-data" data-line-start="135" data-line-end="136">sommige informatie is overbodig en wil je niet meesturen om dataverbruik van je server te besparen</li>
+<li class="has-line-data" data-line-start="136" data-line-end="137">sommige informatie is mogelijk vertrouwelijk</li>
+<li class="has-line-data" data-line-start="137" data-line-end="138">sommige informatie is in een formaat dat handig is voor de database, maar niet voor de frontend.</li>
+<li class="has-line-data" data-line-start="138" data-line-end="139">Vaak wil je niet dat alle clients breken als je de structuur van het object in de database verandert.</li>
+<li class="has-line-data" data-line-start="139" data-line-end="140">Soms heb je problemen dat een object niet letterlijk kan worden verstuurd omdat het ‘recursieve’ relaties bevat, een bedrijf kan een lijst werknemers hebben, en elke werknemer kan naar zijn of haar werkgever (dat bedrijf) wijzen. Als de controller een bedrijf naar de front-end wil sturen, stuurt het eerst de bedrijfsnaam, dan een werknemer, dan het bedrijf waar die werknemer werkt, en dan dus weer de bedrijfsnaam, dan dezelfde werknemer…</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="140" data-line-end="141">Een aantal van deze problemen kunnen in eenvoudige gevallen worden opgelost met annotaties in de Entityklasse, zoals @JsonIgnore (stuur dit niet naar de frontend, en als de frontend een waarde stuurt, let daar dan niet op en zet hem op 0), @JsonBackReference(stuur dit niet naar de frontend, maar als de frontend een waarde stuurt, lees die dan wel in!), en @JsonManagedReference(wordt normaal gecombineerd met een @JsonBackReference aan de andere kant. Bijvoorbeeld een Movie zal een @JsonManagedReference hebben naar een <code>Collection&lt;Role&gt;</code>, maar de Role zal een @JsonBackReference hebben naar Movie)</li>
+<li class="has-line-data" data-line-start="141" data-line-end="142">Maar flexibeler is een DTO, een Data Transfer Object. Normaal een klasse (of, in modern Java, een record) waarmee je kunt aangeven wat er precies naar de frontend gestuurd wordt. Bijvoorbeeld dat een review, die naar een User wijst, niet het hele User-object zal bevatten, maar alleen de name, die dan kan worden weergegeven met bijvoorbeeld “username”. Voorbeeld:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="143" data-line-end="145">public record ReviewDto(String username, int rating, String text) {}
+</code></pre>
+<h2 class="code-line" data-line-start="146" data-line-end="147"><a id="Paginatie_en_sorteren_146"></a>Paginatie en sorteren</h2>
+<ul>
+<li class="has-line-data" data-line-start="147" data-line-end="148">meestal wil je niet letterlijk een ‘getAll’-endpoint maken; duizenden items per keer over het netwerk sturen is duur, maakt je applicatie traag, en kan het geheugen van de client/browser overbelasten.</li>
+<li class="has-line-data" data-line-start="148" data-line-end="149">Net zoals bij Amazon of Google krijg je normaal slechts 10, 20 tot maximaal 50 resultaten te zien; als je meer wilt, vraag je een de volgende pagina op.</li>
+<li class="has-line-data" data-line-start="149" data-line-end="150">Normaal werkt dat doordat de URL parameters krijgt als ?page=1&amp;size=20, wat dan zegt dat je de <em>tweede</em> pagina opvraagt, aannemende dat de resultaten in pagina’s van 20 zijn opgedeeld.</li>
+<li class="has-line-data" data-line-start="150" data-line-end="151">Vaak kan je ook nog een sort-parameter toevoegen, bijvoorbeeld page=1&amp;size=20&amp;sort=name,desc</li>
+<li class="has-line-data" data-line-start="151" data-line-end="152">Spring’s JpaRepository (NIET de CrudRepository) heeft ingebouwde methoden om pagina’s terug te geven. Code als</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="153" data-line-end="158">    @GetMapping
+    public Iterable&lt;Book&gt; getAll(Pageable pageable) { // Pageable van import org.springframework.data.domain.Pageable;
+        return bookRepository.findAll(pageable); // voorbeeld: http://localhost:8080/api/v1/books?page=0&amp;size=10&amp;sort=title,desc
+    }
+</code></pre>
+<p class="has-line-data" data-line-start="159" data-line-end="160">werkt gewoon. page en size krijgen default waarden als je ze niet invult (page=0, size=20)</p>
+<ul>
+<li class="has-line-data" data-line-start="160" data-line-end="161">Vaak wil je meer controle, bijvoorbeeld dat de defaultsortering bijvoorbeeld op datum of op prijs of op naam is, en dat niemand zomaar 5000 items in 1x kan opvragen. Dat doe je door het Pageable-object te vertalen naar een ander PageRequest:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="162" data-line-end="171">    @GetMapping
+    public Iterable&lt;Book&gt; getAll(Pageable pageable) {
+        return bookRepository.findAll(
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        Math.min(pageable.getPageSize(), 3),
+                        pageable.getSortOr(Sort.by(&quot;title&quot;))));
+    }
+</code></pre>
+<h2 class="code-line" data-line-start="172" data-line-end="173"><a id="Transactional_172"></a>@Transactional</h2>
+<ul>
+<li class="has-line-data" data-line-start="173" data-line-end="174">Als je naar een database schrijft, zeker bij een complexe operatie die meerdere stappen heeft, is de @Transactional-annotatie handig</li>
+<li class="has-line-data" data-line-start="174" data-line-end="175">@Transactional boven een methode zetten betekent dat als de methode een unchecked exceptie gooit, dat de databasetransactie zal worden teruggerold tot de begintoestand.</li>
+<li class="has-line-data" data-line-start="175" data-line-end="176">Let er dus op dat als je een <em>checked</em> exceptie gooit, Transactional niets zal terugrollen.</li>
+<li class="has-line-data" data-line-start="176" data-line-end="177">Transactional zal ook niet werken als je in de methode zelf de unchecked exceptie opvangt.</li>
+<li class="has-line-data" data-line-start="177" data-line-end="178">Vaak zetten mensen @Transactional boven een klasse, dat voegt automatisch @Transactional boven alle methoden toe.</li>
+</ul>
+<h2 class="code-line" data-line-start="180" data-line-end="181"><a id="CrossOrigin_180"></a>@CrossOrigin</h2>
+<ul>
+<li class="has-line-data" data-line-start="181" data-line-end="182">als je in een browser een front-end-app hebt, die een verzoek doet aan een backend, kan de browser zeggen dat er een CORS-error is omdat een preflight-request werd geweigerd door de backend.</li>
+<li class="has-line-data" data-line-start="182" data-line-end="183">Wat de browser doet is een HTTP OPTIONS-request aan de backend sturen (dat is de ‘preflight’ request) met iets als: de applicatie op poort 5173 wil data van je hebben. Mag dat? Als de backend applicatie ‘nee’ antwoordt of een verkeerd antwoord geeft, rapporteert de browser die CORS error.</li>
+<li class="has-line-data" data-line-start="183" data-line-end="184">Je kunt dit probleem voorkomen door boven je @RestController-klasse een @CrossOrigin-annotatie te zetten, liefst met het toegestane pad voor client-applicaties, of toegestane paden. Iets als bijvoorbeeld @CrossOrigin(&quot;<a href="http://localhost:5173">http://localhost:5173</a>&quot;)</li>
+<li class="has-line-data" data-line-start="184" data-line-end="186">Let wel dat je NIET in de SecurityFilterConfiguration (als je die hebt) CORS disablet, want dan geeft Spring geen net antwoord meer aan de browser en krijg je alsnog CORS-errors.</li>
+</ul>
+<h2 class="code-line" data-line-start="186" data-line-end="187"><a id="Diversen_186"></a>Diversen</h2>
+<ul>
+<li class="has-line-data" data-line-start="187" data-line-end="188">jar vs war-files: JAR is Java-Archive, WAR is Web-Archive, dat waren files die vooral vroeger werden gemaakt om ergens op een application server te draaien. Tegenwoordig hebben de meeste Spring-applicaties een ingebouwde server (dus bv Tomcat), dus WAR wordt tegenwoordig veel minder gebruikt.</li>
+<li class="has-line-data" data-line-start="188" data-line-end="189">CrudRepository vs JpaRepository: Een JpaRepository extends het CrudRepository, je kunt dus JpaRepository overal gebruiken waar je een CrudRepository hebt. Maar programmeurs vinden dat vaak niet netjes, die willen vaak het ‘minimale contract’. Basaal: als je een entity wil/moet pagineren, gebruik dan JpaRepository. Als dat (nog) niet hoeft, gebruik CrudRepository.</li>
+</ul>
+<h2 class="code-line" data-line-start="191" data-line-end="192"><a id="BONUS_191"></a>BONUS</h2>
+<ul>
+<li class="has-line-data" data-line-start="192" data-line-end="193">@ComponentScan</li>
+<li class="has-line-data" data-line-start="193" data-line-end="194">@Bean</li>
+<li class="has-line-data" data-line-start="194" data-line-end="195">@Configuration</li>
+</ul>
+<h1 class="code-line" data-line-start="197" data-line-end="198"><a id="JavaScript_197"></a>JavaScript</h1>
+<h2 class="code-line" data-line-start="199" data-line-end="200"><a id="Interactie_met_de_gebruiker_199"></a>Interactie met de gebruiker</h2>
+<ul>
+<li class="has-line-data" data-line-start="200" data-line-end="201">console.log</li>
+<li class="has-line-data" data-line-start="201" data-line-end="202">console.table</li>
+<li class="has-line-data" data-line-start="202" data-line-end="203">confirm (boolean)</li>
+<li class="has-line-data" data-line-start="203" data-line-end="204">alert</li>
+<li class="has-line-data" data-line-start="204" data-line-end="206">prompt (string)</li>
+</ul>
+<h2 class="code-line" data-line-start="206" data-line-end="207"><a id="Hoe_je_waarden_toekent_206"></a>Hoe je waarden toekent</h2>
+<ul>
+<li class="has-line-data" data-line-start="207" data-line-end="208">a = 5</li>
+<li class="has-line-data" data-line-start="208" data-line-end="210">ken const en let (en vermijd var)</li>
+</ul>
+<h2 class="code-line" data-line-start="210" data-line-end="211"><a id="Datatypen_eenvoudig_210"></a>Datatypen (eenvoudig)</h2>
+<ul>
+<li class="has-line-data" data-line-start="211" data-line-end="212">string (JavaScript heeft GEEN char)</li>
+<li class="has-line-data" data-line-start="212" data-line-end="213">number (soort double, er zijn geen integers in JS)</li>
+<li class="has-line-data" data-line-start="213" data-line-end="215">boolean</li>
+</ul>
+<h2 class="code-line" data-line-start="215" data-line-end="216"><a id="Speciale_waarden_215"></a>Speciale waarden</h2>
+<ul>
+<li class="has-line-data" data-line-start="216" data-line-end="217">undefined</li>
+<li class="has-line-data" data-line-start="217" data-line-end="219">null</li>
+</ul>
+<h2 class="code-line" data-line-start="219" data-line-end="220"><a id="Operatoren_219"></a>Operatoren:</h2>
+<ul>
+<li class="has-line-data" data-line-start="220" data-line-end="221">alle Java-operatoren zitten in JavaScript: (+ - / %, &amp;&amp;, || ! , ++, --, +=, -=, %= etc.)</li>
+<li class="has-line-data" data-line-start="221" data-line-end="228">booleaanse operatoren betekenen vaak net iets anders:
+<ul>
+<li class="has-line-data" data-line-start="222" data-line-end="223">ze werken op ALLE waarden (niet alleen op booleans)</li>
+<li class="has-line-data" data-line-start="223" data-line-end="224">omdat elke waarde in JavaScript ‘truthy’ of ‘falsy’ is</li>
+<li class="has-line-data" data-line-start="224" data-line-end="225">0, “”, NaN, undefined, null, false zijn allemaal falsy. De rest van de mogelijke waarden is dus truthy.</li>
+<li class="has-line-data" data-line-start="225" data-line-end="226">! zet een truthy/falsy waarde om in false resp. true</li>
+<li class="has-line-data" data-line-start="226" data-line-end="227">&amp;&amp; returnt de eerste falsy waarde en anders de laatste waarde (en geeft dus voor booleans precies hetzelfde resultaat als Java doet)</li>
+<li class="has-line-data" data-line-start="227" data-line-end="228">|| returnt de eerste truthy waarde en anders de laatste waarde (en geeft dus voor booleans precies hetzelfde resultaat als Java doet)</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="228" data-line-end="229">extra operator: ** voor machtsverheffen (12 ** 2 // 144)</li>
+<li class="has-line-data" data-line-start="229" data-line-end="231">let wel dat != en == in JavaScript typeconversie doen. Bv <code>0== &quot;&quot;</code> is true. Gebruik dus liever === en !== ipv == en !=.</li>
+</ul>
+<h2 class="code-line" data-line-start="231" data-line-end="232"><a id="Aanhalingstekens_231"></a>Aanhalingstekens</h2>
+<p class="has-line-data" data-line-start="233" data-line-end="234">‘’ vs “”: mag allebei (er is toch geen verschil tussen String en char)</p>
+<h2 class="code-line" data-line-start="235" data-line-end="236"><a id="Puntkomma_235"></a>Puntkomma</h2>
+<p class="has-line-data" data-line-start="237" data-line-end="238">; is vaak onnodig (maar wel voor de zekerheid)</p>
+<h2 class="code-line" data-line-start="240" data-line-end="241"><a id="Datatypen_complex_240"></a>Datatypen (complex)</h2>
+<ul>
+<li class="has-line-data" data-line-start="241" data-line-end="242">
+<p class="has-line-data" data-line-start="241" data-line-end="242">arrays (a=[1,2,‘hallo’])</p>
+</li>
+<li class="has-line-data" data-line-start="242" data-line-end="243">
+<p class="has-line-data" data-line-start="242" data-line-end="243">objects (person = {name: “Wim”, grade: 5, isExpelled: false} )</p>
+</li>
+<li class="has-line-data" data-line-start="243" data-line-end="248">
+<p class="has-line-data" data-line-start="243" data-line-end="247">als je al waarden hebt, kan het korter:<br>
+const name = Wim<br>
+const age = 12<br>
+const person = { name, age } // {name: “Wim”, age: 12}</p>
+</li>
+<li class="has-line-data" data-line-start="248" data-line-end="250">
+<p class="has-line-data" data-line-start="248" data-line-end="249">opvragen van waarden in object: a[5], <a href="http://person.name">person.name</a>, person[“name”]</p>
+</li>
+</ul>
+<h2 class="code-line" data-line-start="250" data-line-end="251"><a id="String_Interpolation_250"></a>String Interpolation</h2>
+<ul>
+<li class="has-line-data" data-line-start="251" data-line-end="252">Java/oud JavaScript: 'Hello ’ + name;</li>
+<li class="has-line-data" data-line-start="252" data-line-end="254">modern JavaScript: <code>Hello ${name}</code>;</li>
+</ul>
+<h2 class="code-line" data-line-start="254" data-line-end="255"><a id="Array_methods_and_fields_254"></a>Array methods and fields</h2>
+<ul>
+<li class="has-line-data" data-line-start="255" data-line-end="256">length</li>
+<li class="has-line-data" data-line-start="256" data-line-end="257">push(value): voegt aan einde toe</li>
+<li class="has-line-data" data-line-start="257" data-line-end="258">pop(): verwijdert van einde (en returnt verwijderde waarde)</li>
+<li class="has-line-data" data-line-start="258" data-line-end="259">shift: verwijder van begin</li>
+<li class="has-line-data" data-line-start="259" data-line-end="260">unshift: voeg toe aan begin</li>
+<li class="has-line-data" data-line-start="260" data-line-end="262">zie verder <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array</a></li>
+</ul>
+<h2 class="code-line" data-line-start="262" data-line-end="263"><a id="Functies_262"></a>Functies</h2>
+<ul>
+<li class="has-line-data" data-line-start="263" data-line-end="266">versie 1:
+<ul>
+<li class="has-line-data" data-line-start="264" data-line-end="265">simpel: function greet(name) { return <code>Hello ${name}</code>; }</li>
+<li class="has-line-data" data-line-start="265" data-line-end="266">complex: function register(name) { names.push(name); return <code>${name} has been registered.</code>; }</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="266" data-line-end="269">versie 2:
+<ul>
+<li class="has-line-data" data-line-start="267" data-line-end="268">simpel: const hello = function(name) { return <code>Hello ${name}</code>; }</li>
+<li class="has-line-data" data-line-start="268" data-line-end="269">complex: const register = function (name) { names.push(name); return <code>${name} has been registered.</code>; }</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="269" data-line-end="275">versie 3:
+<ul>
+<li class="has-line-data" data-line-start="270" data-line-end="274">simpel:
+<ul>
+<li class="has-line-data" data-line-start="271" data-line-end="272">1 parameter const hello = name =&gt; <code>Hello ${name}</code></li>
+<li class="has-line-data" data-line-start="272" data-line-end="273">0 parameters : const greet = () =&gt; <code>Hello unknown person!</code>;</li>
+<li class="has-line-data" data-line-start="273" data-line-end="274">2+ parameters: const add = (first, second) =&gt; first + second;</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="274" data-line-end="275">complex: const register = name =&gt; { names.push(name); return <code>${name} has been registered.</code>; }</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="275" data-line-end="276">teveel argumenten? teveel worden genegeerd</li>
+<li class="has-line-data" data-line-start="276" data-line-end="278">te weinig argumenten? rest wordt undefined</li>
+</ul>
+<h2 class="code-line" data-line-start="278" data-line-end="279"><a id="Controlestructuren_278"></a>Controlestructuren</h2>
+<ul>
+<li class="has-line-data" data-line-start="279" data-line-end="280">if., while, do-while, for, switch statement: Zelfde als in Java (maar dan met truthy)</li>
+<li class="has-line-data" data-line-start="280" data-line-end="283">foreach/enhanced for:
+<ul>
+<li class="has-line-data" data-line-start="281" data-line-end="282">for (const a in arr) =&gt; [0, 1, 2] // indexes</li>
+<li class="has-line-data" data-line-start="282" data-line-end="283">for (const a of arr) =&gt; [‘a’,‘b’,‘c’] // values</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="283" data-line-end="284">try catch throw zoals in Java (maar catch(e) ipv catch(Exception e) omdat JavaScript geen typen heeft).</li>
+<li class="has-line-data" data-line-start="284" data-line-end="285">JavaScript heeft geen ‘throws’</li>
+<li class="has-line-data" data-line-start="285" data-line-end="287">break en continue zijn hetzelfde als in Java (inclusief labeled breaks/continues!)</li>
+</ul>
+<h2 class="code-line" data-line-start="287" data-line-end="288"><a id="Objecten_en_arrays_kopiren_287"></a>Objecten en arrays kopiëren</h2>
+<pre><code class="has-line-data" data-line-start="289" data-line-end="297">const newArray = [...myArray, value]
+arr1 = ['a','c','f']
+arr2 = [...arr1, 'q'] // ['a','c','f', 'q']
+
+const newObj = {...oldObj, key: value, key2: value2}
+oldObj = {name: &quot;Piet&quot;, pet: 'dog'}
+newObj = {...oldObj, pet: 'cat', age: 4}
+</code></pre>
+<h2 class="code-line" data-line-start="298" data-line-end="299"><a id="Keys_en_values_uit_objecten_krijgen_298"></a>Keys en values uit objecten krijgen</h2>
+<pre><code class="has-line-data" data-line-start="300" data-line-end="304">Object.keys(obj) 
+Object.values(obj);
+Object.entries(obj); // array van [key, value]
+</code></pre>
+<h2 class="code-line" data-line-start="305" data-line-end="306"><a id="Destructuring_305"></a>Destructuring</h2>
+<ul>
+<li class="has-line-data" data-line-start="306" data-line-end="307">arrays:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="308" data-line-end="314">arr= ['aap','noot','mies','wim', 'zus']
+const [first, second, ...rest] = arr; 
+// first = 'aap' 
+// second = 'noot'
+// rest = ['mies','wim', 'zus']
+</code></pre>
+<p class="has-line-data" data-line-start="314" data-line-end="315">-objects:</p>
+<pre><code class="has-line-data" data-line-start="316" data-line-end="321">menu = {breakfast: 'waffles', lunch:'salad', dinner: 'steak'};
+const {breakfast, dinner: supper} = menu;
+// breakfast = 'waffles' 
+// supper = 'steak' // rename
+</code></pre>
+<p class="has-line-data" data-line-start="321" data-line-end="322">-functies:</p>
+<pre><code class="has-line-data" data-line-start="323" data-line-end="331">const p = {&quot;name&quot;: &quot;Clovis&quot;, occupation: &quot;king&quot; };
+
+function greet({name}) {
+    console.log(`Hi ${name}!`);
+}
+
+greet(p); // outputs &quot;Hi Clovis!&quot;
+</code></pre>
+<h2 class="code-line" data-line-start="332" data-line-end="333"><a id="Oppassen_bij__332"></a>Oppassen bij …</h2>
+<ul>
+<li class="has-line-data" data-line-start="333" data-line-end="334">Als je een object wil teruggeven met een lambda</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="335" data-line-end="338">const makeNewTim = sweaterColor =&gt; { name: &quot;Tim&quot;, sweaterColor} // WERKT NIET, JAVASCRIPT DENKT DAT {} een codeblok vormen 
+const makeNewTim = sweaterColor =&gt; ({ name: &quot;Tim&quot;, sweaterColor})
+</code></pre>
+<h2 class="code-line" data-line-start="339" data-line-end="340"><a id="Map_en_filter_339"></a>Map en filter</h2>
+<ul>
+<li class="has-line-data" data-line-start="340" data-line-end="342">map: transformeer array met X waarden in andere array met X waarden<br>
+[1,5,6].map(number =&gt; number ** 2) // [1,25,36]</li>
+<li class="has-line-data" data-line-start="342" data-line-end="345">filter: uit array met X waarden maak een array van 0 tot X waarden<br>
+[1,5,6].filter(number =&gt; number % 2) // [1,5]</li>
+</ul>
+<h2 class="code-line" data-line-start="345" data-line-end="346"><a id="Omgaan_met_ontbrekende_waarden_en_methoden_345"></a>Omgaan met ontbrekende waarden en methoden</h2>
+<ul>
+<li class="has-line-data" data-line-start="346" data-line-end="353">?.
+<ul>
+<li class="has-line-data" data-line-start="347" data-line-end="350">voor velden die er mogelijk niet zijn:
+<ul>
+<li class="has-line-data" data-line-start="348" data-line-end="349">PROBLEEM: console.log(menu.midnightSnack.length) ERROR</li>
+<li class="has-line-data" data-line-start="349" data-line-end="350">BETER: console.log(menu.midnightSnack?.length) // undefined</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="350" data-line-end="353">voor methoden die er mogelijk niet zijn
+<ul>
+<li class="has-line-data" data-line-start="351" data-line-end="352">PROBLEEM: console.log(input.length()) // ERROR if input is a number, like 3 Uncaught TypeError: input.length is not a function</li>
+<li class="has-line-data" data-line-start="352" data-line-end="353">BETER: console.log(input.length?.()) // undefined</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="353" data-line-end="354">?? const snack = menu.midnightSnack ?? “No snack!”</li>
+<li class="has-line-data" data-line-start="354" data-line-end="356">??= menu.midnightSnack ??= “icecream”</li>
+</ul>
+<h2 class="code-line" data-line-start="356" data-line-end="357"><a id="Importeren_en_exporteren_356"></a>Importeren en exporteren</h2>
+<pre><code class="has-line-data" data-line-start="358" data-line-end="367">// in test.js 
+const myFunc = () =&gt; `MyFunc called!`;  
+export myFunc;
+export default myValue = 5; // only one export default per file
+
+// in testuser.js   
+import { myFunc } from 'test.js';
+import myValue from 'test.js'; // geen {} nodig wegens default export 
+</code></pre>
+<h2 class="code-line" data-line-start="368" data-line-end="369"><a id="Promises_368"></a>Promises</h2>
+<p class="has-line-data" data-line-start="369" data-line-end="375">Sommige functies geven een promise terug: als ze klaar zijn, voer code uit in ‘then’<br>
+fetch(<code>http://localhost:8080/api/v1/items</code>)<br>
+.then(response =&gt; response.json())<br>
+.then(actualData =&gt; setItems(actualData))<br>
+.catch(err =&gt; console.log(<code>An error has occurred: ${err.message}.</code>)<br>
+console.log(“fetch called”) // eerst wordt fetch gestart, dan ‘fetch called’ geprint, en als de fetch klaar is krijg je pas dat setItems(actualData) wordt aangeroepen, typisch NA de console.log.</p>
+<p class="has-line-data" data-line-start="376" data-line-end="379">—BONUS<br>
+varargs (Java public static void main(String… args)<br>
+JavaScript: function addAll(…values) // roep aan als addAll(1,2,3,5)</p>
+<p class="has-line-data" data-line-start="380" data-line-end="383">Als je een array wil geven aan een functie met meerdere argumenten<br>
+function plus(first, second) { return first+second }<br>
+plus(…[1,2]); // wordt aangeroepen als plus(1,2)</p>
+<p class="has-line-data" data-line-start="384" data-line-end="386">datatypes:<br>
+bigint (4n)</p>
+<h1 class="code-line" data-line-start="387" data-line-end="388"><a id="React_387"></a>React</h1>
+<h2 class="code-line" data-line-start="389" data-line-end="390"><a id="Aanmaken_Reactapp_389"></a>Aanmaken React-app</h2>
+<ul>
+<li class="has-line-data" data-line-start="390" data-line-end="391">Vite het handigst (al hoef je <code>npm create vite@latest</code> niet uit je hoofd te kennen)</li>
+<li class="has-line-data" data-line-start="391" data-line-end="392">met Vite werkt +SWC het snelste (compileert je code sneller!)</li>
+<li class="has-line-data" data-line-start="392" data-line-end="393">JavaScript of TypeScript: JavaScript is iets makkelijker en veelzijdiger, al heeft TypeScript meer fans. Mijn aanraden: ga alleen over op TypeScript als je JavaScript voldoende goed beheerst, want TypeScript is feitelijk vermomd JavaScript met extra complexiteit die je misschien beter niet tegelijkertijd wilt leren.</li>
+<li class="has-line-data" data-line-start="393" data-line-end="395">npm create-react-app is verouderd, heeft allemaal security leaks. Gebruik liever vite (of eventueel NextJs)</li>
+</ul>
+<h2 class="code-line" data-line-start="395" data-line-end="396"><a id="Componenten_395"></a>Componenten</h2>
+<ul>
+<li class="has-line-data" data-line-start="396" data-line-end="397">zijn (tegenwoordig) functies</li>
+<li class="has-line-data" data-line-start="397" data-line-end="398">NOTE: op internet zie je nog wel oude klasse-gebaseerde componenten met een render-methode; zijn tegenwoordig overbodig</li>
+<li class="has-line-data" data-line-start="398" data-line-end="399">componenten geven een JSX-body terug &lt;p&gt;Hello from me!&lt;/p&gt;. Moet 1 (top-level) element zijn</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="400" data-line-end="403">  return &lt;ol&gt;{toDos.map(toDo =&gt; &lt;li key={toDo.item}&gt;{toDo.item}&lt;/li&gt;)}&lt;/ol&gt;
+    &lt;AddToDo addToDo={addToDo} /&gt;
+</code></pre>
+<p class="has-line-data" data-line-start="403" data-line-end="404">werkt niet (2 elementen)</p>
+<pre><code class="has-line-data" data-line-start="405" data-line-end="410">  return &lt;&gt;
+    &lt;ol&gt;{toDos.map(toDo =&gt; &lt;li key={toDo.item}&gt;{toDo.item}&lt;/li&gt;)}&lt;/ol&gt;
+    &lt;AddToDo addToDo={addToDo} /&gt;
+  &lt;/&gt;
+</code></pre>
+<p class="has-line-data" data-line-start="410" data-line-end="411">Werkt dus wel (1 hoofdelement)</p>
+<ul>
+<li class="has-line-data" data-line-start="411" data-line-end="412">de naam van componenten begint met een hoofdletter (waarschijnlijk omdat componenten eerst klassen waren)</li>
+<li class="has-line-data" data-line-start="412" data-line-end="413">Vite eist dat componenten in een .jsx-file staan (maar niet alle builders doen dat, .js is meestal ook toegestaan).</li>
+<li class="has-line-data" data-line-start="413" data-line-end="414">component ziet eruit als <code>const Hello = () =&gt; &lt;p&gt;Hello React&lt;/p&gt;</code></li>
+<li class="has-line-data" data-line-start="414" data-line-end="416">een Hello-component gebruik je in andere files/JSX als &lt;Hello /&gt;</li>
+</ul>
+<h2 class="code-line" data-line-start="416" data-line-end="417"><a id="JSX_416"></a>JSX</h2>
+<ul>
+<li class="has-line-data" data-line-start="417" data-line-end="418">staat voor “JavaScript Syntax Extension”</li>
+<li class="has-line-data" data-line-start="418" data-line-end="419">je kan werken met &lt;&gt;&lt;/&gt; (voorkomt dat je een div moet aanmaken speciaal omdat alles gewrapt moet worden in 1 top-level component)</li>
+<li class="has-line-data" data-line-start="419" data-line-end="425">Lijkt enorm op JavaScript, met paar uitzonderingen
+<ul>
+<li class="has-line-data" data-line-start="420" data-line-end="421">class =&gt; className</li>
+<li class="has-line-data" data-line-start="421" data-line-end="422">{} voor JavaScript-code: &lt;p&gt;hallo&lt;/p&gt; print gewoon hallo, &lt;p&gt;{hallo}&lt;/p&gt; print de waarde van de variable hallo</li>
+<li class="has-line-data" data-line-start="422" data-line-end="423">for =&gt; htmlFor</li>
+<li class="has-line-data" data-line-start="423" data-line-end="425">onclick, onsubmit etc =&gt; onClick, onSubmit</li>
+</ul>
+</li>
+</ul>
+<h2 class="code-line" data-line-start="425" data-line-end="426"><a id="Lijsten_425"></a>Lijsten</h2>
+<ul>
+<li class="has-line-data" data-line-start="426" data-line-end="427">Vaak wil je meerdere data van hetzelfde soort afbeelden, zoals meerdere items in een todo-list</li>
+<li class="has-line-data" data-line-start="427" data-line-end="430">in HTML: <code>&lt;ol&gt;&lt;li&gt;first&lt;/li&gt;&lt;li&gt;second&lt;/li&gt;&lt;/ol&gt;</code>
+<ul>
+<li class="has-line-data" data-line-start="428" data-line-end="429">“ol” is voor “ordered list” - een geordende lijst, punten aangegeven met 1, 2, 3</li>
+<li class="has-line-data" data-line-start="429" data-line-end="430">“ul” <code>&lt;ul&gt;</code> is voor “unordered list” - een “ongeordende lijst”, punten aangegeven met bullet points</li>
+</ul>
+</li>
+<li class="has-line-data" data-line-start="430" data-line-end="431">in React kun je een sequentie maken van alle typen elementen, hoeft geen ol/ul/li te bevatten! In plaats van ol of ul kun je &lt;&gt; of <code>&lt;div&gt;</code> of wat dan ook gebruiken, of zelfs niets! En in plaats van li kun je alles gebruiken, zelfs je eigen componenten!</li>
+<li class="has-line-data" data-line-start="431" data-line-end="432">elke (JSX) component in een lijst die je maakt moet een unieke key property hebben voor optimalisatie van rendering, het is niet ‘best practice’ om de positie in de lijst te gebruiken. Normaal gebruik je het id (uit een database of desnoods random gegenereerd) of een naam of een andere unieke eigenschap.</li>
+<li class="has-line-data" data-line-start="432" data-line-end="435">normaal maak je gebruik van een array van items en dan een map:
+<ul>
+<li class="has-line-data" data-line-start="433" data-line-end="434"><code>&lt;ol&gt;{items.map(item =&gt; &lt;li key={item.name}&gt;{item.name}&lt;/li&gt;)}&lt;/ol&gt;</code></li>
+<li class="has-line-data" data-line-start="434" data-line-end="435"><code>{items.map(item =&gt;&lt;p key={item.name}&gt;This item is: {item.name}&lt;/p&gt;}</code></li>
+</ul>
+</li>
+</ul>
+<h2 class="code-line" data-line-start="437" data-line-end="438"><a id="Data_doorgeven_aan_kindcomponent_437"></a>Data doorgeven aan kindcomponent</h2>
+<ul>
+<li class="has-line-data" data-line-start="438" data-line-end="439">in parent component: &lt;Item item={item} /&gt;</li>
+<li class="has-line-data" data-line-start="439" data-line-end="442">child component:
+<ul>
+<li class="has-line-data" data-line-start="440" data-line-end="441">optie 1: <code>const Item = props =&gt; &lt;p&gt;{props.item.name}&lt;/p&gt;</code></li>
+<li class="has-line-data" data-line-start="441" data-line-end="442">optie 2: <code>const Item =({item}) =&gt; &lt;p&gt;{item.name}&lt;/p&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h3 class="code-line" data-line-start="444" data-line-end="445"><a id="Hoe_ga_je_om_met_een_buttonclick_of_andere_verandering_444"></a>Hoe ga je om met een buttonclick of andere verandering?</h3>
+<ol>
+<li class="has-line-data" data-line-start="445" data-line-end="447">Maak binnen de component (normaal boven de JSX die je returnt) een functie die doet wat je wilt,<br>
+<code>const sayHello = () =&gt; alert(&quot;Hi!&quot;);</code></li>
+<li class="has-line-data" data-line-start="447" data-line-end="449">zorg dat de knop of andere component een onClick krijgt met die functie als argument:<br>
+<code>&lt;button onClick={sayHello}&gt;Greet me!&lt;/button&gt;</code></li>
+<li class="has-line-data" data-line-start="449" data-line-end="451">je hoeft in theorie geen aparte functie te maken, je kunt de code ook tussen de {} zitten. Maar het wordt dan makkelijk onoverzichtelijk<br>
+<code>&lt;button onClick={() =&gt; alert(&quot;Also hi!&quot;)}&gt;Greet me!&lt;/button&gt;</code></li>
+<li class="has-line-data" data-line-start="451" data-line-end="455">let op dat ik hier NIET &lt;button onClick={alert(“Also hi!”)}&gt;Greet me!&lt;/button&gt; gebruik. Als je dat doet wordt de alert onmiddellijk uitgevoerd als de pagina opent, en niet als je klikt! IN REACT, ALS EEN ONCLICK OFZO HET NIET LIJKT TE DOEN, CHECK OF JE DE JUISTE VORM VAN DE METHODE GEBRUIKT:
+<ul>
+<li class="has-line-data" data-line-start="452" data-line-end="453">functie zonder argumenten: <code>&lt;button onClick={sayHello}&gt;Greet me!&lt;/button&gt;</code></li>
+<li class="has-line-data" data-line-start="453" data-line-end="455">functie mèt argumenten: <code>&lt;button onClick={() =&gt; sayHello(name)}&gt;Greet me!&lt;/button&gt;</code></li>
+</ul>
+</li>
+</ol>
+<h3 class="code-line" data-line-start="455" data-line-end="456"><a id="Maar_hoe_voer_je_ingewikkeldere_data_in_dan_een_knop_klikken_Bijvoorbeeld_tekst_455"></a>Maar hoe voer je ingewikkeldere data in dan een knop klikken? Bijvoorbeeld tekst?</h3>
+<pre><code>-gebruik controlled components... Al vraag je je misschien af wat die zijn? Beschouw de volgende code 
+</code></pre>
+<pre><code class="has-line-data" data-line-start="459" data-line-end="479">import { useState } from 'react';
+
+const Input = () =&gt; {
+    const [item, setItem] = useState(&quot;&quot;);
+
+    const change = event =&gt; {
+        setItem(event.target.value);
+    }
+
+    const submit = event =&gt; {
+        event.preventDefault();
+        alert(`You typed '${item}'!`);
+    }
+
+    return &lt;form onSubmit={submit}&gt;
+        &lt;input type=&quot;text&quot; value={item} onChange={change}&gt;&lt;/input&gt;
+        &lt;input type=&quot;submit&quot;&gt;&lt;/input&gt;
+    &lt;/form&gt;
+}
+</code></pre>
+<p class="has-line-data" data-line-start="480" data-line-end="481">Je ziet dat ik hier een tekst-input-component gebruik (<code>&lt;input type=&quot;text&quot; ... /&gt;</code>). En ik wil iets met de waarde doen die dat oplevert als de gebruiker op een knop drukt.</p>
+<p class="has-line-data" data-line-start="482" data-line-end="483">Wat ik dus gebruik zijn:</p>
+<ol>
+<li class="has-line-data" data-line-start="483" data-line-end="484">Het invoerveld zelf <code>&lt;input type=&quot;text&quot; ...&gt;</code></li>
+<li class="has-line-data" data-line-start="484" data-line-end="485">Een variabele voor de waarde die in het tekstveld zit, hier heet die variabele <code>item</code>.</li>
+<li class="has-line-data" data-line-start="485" data-line-end="486">Die variabele maak ik met behulp van een <code>useState</code> commando van React. De useState(&quot;&quot;) betekent dat als de Input-component voor het eerst wordt getoond, item de waarde “” krijgt. <code>useState</code> zelf betekent dat telkens als de waarde van value verandert de component opnieuw wordt getekend. Althans, alleen als de waarde via <code>setItem</code> wordt veranderd code als <code>item=&quot;hallo&quot;</code> zorgt er niet voor dat de component opnieuw wordt getekend (en een ‘state’-waarde als item veranderen via = wordt bij mijn weten ook als ‘bad practice’ gezien bij React)</li>
+<li class="has-line-data" data-line-start="486" data-line-end="487">Het input-veld heeft een onChange-property die verwijst naar een functie, hier dus de ‘change’-functie.</li>
+<li class="has-line-data" data-line-start="487" data-line-end="488">De ‘change’-functie verandert de waarde van item door <code>setItem</code> aan te roepen. Zoals je ziet krijgt de functie die aan onChange wordt toegekend automatisch een ‘event’-parameter mee, die met event.target.value de waarde die nu in het tekstveld staat ophaalt. Als dit wat verwarrend klinkt: de browser produceert een ‘event’ als je op bijvoorbeeld een knop drukt. De event.target is wijst naar de component die het event afvuurde. In dit geval dus de knop. De event.target.value verwijst naar de value-property in diezelfde component, in dit geval dus dat ding die “value={item}”, die dus in het begin de waarde “item” heeft maar momenteel (omdat je wat hebt ingetypt) bijvoorbeeld iets als item+‘a’ (als je ‘a’ had ingetypt)</li>
+<li class="has-line-data" data-line-start="488" data-line-end="489">onSubmit={submit} betekent dat als je op de submit-knop drukt (die aangegeven is met <code>&lt;input type=&quot;submit&quot;&gt;&lt;/input&gt;</code>), de ‘submit’-methode wordt aangeroepen.</li>
+<li class="has-line-data" data-line-start="489" data-line-end="490">De submit-methode krijgt van de browser ook een event mee, vandaar die parameter voor de submit-functie.</li>
+<li class="has-line-data" data-line-start="490" data-line-end="491">Browsers hebben als standaard (‘default behavior’) dat als je op de submit-knop drukt, een pagina opnieuw wordt geladen, dus alle data wordt ververst. Dat wil je hier niet, want dan wordt alles weer op de beginstand gezet, dus item wordt dan weer “”. Daarom roep je eerst de .preventDefault() aan op het event.</li>
+<li class="has-line-data" data-line-start="491" data-line-end="492">Daarna kun je iets doen, in dit geval bijvoorbeeld de waarde afbeelden in een alert-box.</li>
+</ol>
+<h3 class="code-line" data-line-start="494" data-line-end="495"><a id="Maar_hoe_kan_je_handig_data_invoeren_als_je_meer_dan_1_veld_hebt_moet_je_dan_4_of_5_changemethoden_schrijven_494"></a>Maar hoe kan je handig data invoeren als je meer dan 1 veld hebt, moet je dan 4 of 5 change-methoden schrijven?</h3>
+<ul>
+<li class="has-line-data" data-line-start="496" data-line-end="497">Als je meerdere input-velden hebt gebruik je meestal een object in plaats van van losse waarden</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="500" data-line-end="512">    const updateNewItem = event =&gt; {
+        const { name, value } = event.target;
+        setNewToDo({ ...newToDo, [name]: value });
+    }
+
+    return &lt;form onSubmit={submit}&gt;
+        &lt;input type=&quot;text&quot; name=&quot;item&quot; value={newToDo.item} onChange={updateNewItem} /&gt;
+        &lt;input type=&quot;number&quot; name=&quot;importance&quot; value={newToDo.importance} onChange={updateNewItem} /&gt;
+        &lt;input type=&quot;number&quot; name=&quot;urgency&quot; value={newToDo.urgency} onChange={updateNewItem} /&gt;
+        &lt;input type=&quot;submit&quot; /&gt;
+    &lt;/form&gt;
+</code></pre>
+<h2 class="code-line" data-line-start="514" data-line-end="515"><a id="Data_doorgeven_van_kind_aan_oudercomponent_514"></a>Data doorgeven van kind aan oudercomponent</h2>
+<ul>
+<li class="has-line-data" data-line-start="515" data-line-end="517">dit doe je door in de oudercomponent een functie te maken, en die door te geven</li>
+</ul>
+<h2 class="code-line" data-line-start="517" data-line-end="518"><a id="Data_laden_van_een_API_of__andere_startuplogica_517"></a>Data laden van een API of andere startup-logica</h2>
+<ul>
+<li class="has-line-data" data-line-start="518" data-line-end="519">useEffect voor wat moet worden uitgevoerd bij het re-renderen van een component</li>
+<li class="has-line-data" data-line-start="519" data-line-end="520">useEffect heeft als laatste argument een array die aangeeft bij welke veranderingen in de state het weer wordt aangeroepen ([] betekent volgens mij als de props verandert)</li>
+<li class="has-line-data" data-line-start="520" data-line-end="522">axios/fetch</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="523" data-line-end="535">  useEffect(() =&gt; {
+    axios(&quot;http://localhost:8080/api/v1/todos&quot;).then(result =&gt; setToDos(result.data))
+  }, [])
+
+  const addToDo = newToDo =&gt;
+    axios.post(&quot;http://localhost:8080/api/v1/todos&quot;, newToDo).then(result =&gt; setToDos([...toDos, result.data]));
+
+  const addToDo2 = async newToDo =&gt; {
+    const result = await axios.post(&quot;http://localhost:8080/api/v1/todos&quot;, newToDo)
+    setToDos([...toDos, result.data])
+  }
+</code></pre>
+<p class="has-line-data" data-line-start="537" data-line-end="542">BONUS:<br>
+-hoe zorg je dat verschillende paden naar verschillende componenten leiden (handig voor bookmarks)<br>
+-hoe maak je een link?<br>
+-hoe zorg je dat een button een andere pagina/component activeert<br>
+-hoe extraheer je path variabelen</p>
+<p class="has-line-data" data-line-start="543" data-line-end="544">// Let op: undefined controlled/uncontrolled</p>
+</body></html>
