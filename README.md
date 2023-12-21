@@ -1,8 +1,11 @@
 # OCA-app
-Description (optional)
+## Description
+Group project to create a practice test program for the Java OCA certification.  
+Upholds a two-folder structure for source code: frontend and backend.  
+Design choices and other important information like requirements can be found in the design folder.  
 
-Options for on the main page:
-- number of questions
-- subject of questions
-- timer and/or maximum amount of time for full test or per question.
-Could this be achieved via a dropdown menu?
+### Details
+Project members:
+Peter Diepstraten  
+Raafi Kuijper  
+Nol Keereweer  
