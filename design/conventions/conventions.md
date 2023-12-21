@@ -11,6 +11,7 @@
 - End all lines with semicolons (like in Java)
 
 ## GitHub
+- Messages/comments in GitHub should all be written in Dutch
 - Do not push code that doesn't compile/work
 - Before merging main, follow these steps
     1. Check out main
