@@ -9,7 +9,8 @@ Mandatory:
     Should have the paragraph of the Gupta-book selected/shown,
     Has to be given a tag that shows the subject.
 - Admin screen to oversee the tags, preferably implement checks to keep from duplicating tags.
-- Tags need to be able to be deleted if not attached to any questions
+- Tags need to be able to be deleted if not attached to any questions; 
+    if a tag is to be removed which is connected to a question it should be renamed.
 - Test needs to be able to be completed upon which it shows score and explanation per question.
 
 Extra:
