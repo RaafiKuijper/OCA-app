@@ -1,4 +1,4 @@
-Mandatory:
+# Mandatory:
 
 - Test/quiz screen, Tests should be able to have their subjects selected(General OCA stuff, Inheritance, classes, etc.) and their length in questions.
 - User has to be able to login with username and password to see previous tests, results and so that previously failed questions can be asked again.
@@ -13,7 +13,7 @@ Mandatory:
     if a tag is to be removed which is connected to a question it should be renamed.
 - Test needs to be able to be completed upon which it shows score and explanation per question.
 
-Extra:
+## Extra:
 
 - import and export functionality regarding full tests
 - favorite questions
