@@ -1,6 +1,6 @@
 # The Student - Persona
 ## Information
-1. Name: Nol Kierewier
+1. Name: Nol Keereweer
 2. Age: 21
 3. Title: ItVitae Student
 
