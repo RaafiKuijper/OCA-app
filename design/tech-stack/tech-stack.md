@@ -15,6 +15,8 @@
 - https://www.jetbrains.com/idea/ 
 6. Gradle 8
 - https://gradle.org/ 
+7. Postman 10
+- https://www.postman.com/
 
 ### Libraries & Tools
 1. Spring Web 
