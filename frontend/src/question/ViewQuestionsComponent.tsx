@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 
 function ViewQuestionsComponent() {
 
-    const [questions, setQuestions] = useState<any[]>([]);
+
+    const [questions, setQuestions] = useState<Question[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
