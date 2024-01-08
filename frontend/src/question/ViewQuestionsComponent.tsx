@@ -10,7 +10,6 @@ function ViewQuestionsComponent() {
             const result = await axios.get(`http://localhost:8080/api/v1/questions`);
             console.log(result.data);
 
-
             setQuestions(result.data);
         };
 

@@ -20,4 +20,9 @@ public class QuestionController {
     public ResponseEntity<Iterable<Question>> getAll() {
         return ResponseEntity.ok(questionService.getAll());
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<Question> addTestQuestion() {
+        return ResponseEntity.ok(questionService.createTestQuestion());
+    }
 }

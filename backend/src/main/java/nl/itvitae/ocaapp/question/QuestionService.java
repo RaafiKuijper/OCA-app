@@ -12,4 +12,8 @@ public class QuestionService {
     public Iterable<Question> getAll(){
         return questionRepository.findAll();
     }
+
+    public Question createTestQuestion() {
+        return questionRepository.save(new Question("this is a question, or it it?", "this is the answer because i said so", "correct answer"));
+    }
 }
