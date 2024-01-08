@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function Question() {
+function ViewQuestionsComponent() {
 
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(`http://localhost:8080/api/v1/questions`);
             console.log(result.data);
+
             
             setQuestions(result.data);
         };
@@ -21,7 +22,7 @@ function Question() {
             <dl>
                 {questions.map(question =>
                     <div>
-                        <h3>{question}</h3><br />
+                        <h3>{question.name}</h3><br />
                     </div>
                 )}
             </dl>
@@ -29,4 +30,4 @@ function Question() {
     )
 }
 
-export default Question
+export default ViewQuestionsComponent;

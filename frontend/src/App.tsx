@@ -1,12 +1,12 @@
 import './App.css'
-import Question from './question/Question'
+import ViewQuestionsComponent from './question/ViewQuestionsComponent'
 
 function App() {
 
   return (
     <>
       <h1>OCA-app</h1>
-      <Question />
+      <ViewQuestionsComponent />
     </>
   )
 }
