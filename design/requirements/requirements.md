@@ -7,7 +7,7 @@
     Should have the option to choose if it's a yes/no, multiple choice or multiple selection question type,
     Should be declared which answer is correct and which are incorrect,
     Should have the paragraph of the Gupta-book selected/shown,
-    Has to be given a tag that shows the subject.
+    Has to be given 1 or more tags that shows the subject.
 - Admin screen to oversee the tags, preferably implement checks to keep from duplicating tags.
 - Tags need to be able to be deleted if not attached to any questions; 
     if a tag is to be removed which is connected to a question it should be renamed.
