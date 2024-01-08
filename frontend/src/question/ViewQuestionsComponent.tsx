@@ -10,7 +10,7 @@ function ViewQuestionsComponent() {
             const result = await axios.get(`http://localhost:8080/api/v1/questions`);
             console.log(result.data);
 
-            
+
             setQuestions(result.data);
         };
 
@@ -22,7 +22,9 @@ function ViewQuestionsComponent() {
             <dl>
                 {questions.map(question =>
                     <div>
-                        <h3>{question.name}</h3><br />
+                        <h3>{question.name}</h3>
+                        <p>{question.correctAnswer}</p>
+                        <p>{question.explanation}</p><br />
                     </div>
                 )}
             </dl>
