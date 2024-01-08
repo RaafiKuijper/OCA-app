@@ -1,15 +1,15 @@
-[java](https://docs.oracle.com/en/java/javase/17/)
+[Java docs](https://docs.oracle.com/en/java/javase/17/)
 
-[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[JavaScript docs (courtesy of Mozilla)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-[TypeScript](https://www.typescriptlang.org/docs/handbook/intro.html)
+[TypeScript docs](https://www.typescriptlang.org/docs/handbook/intro.html)
 
-[Spring](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#documentation)
+[Spring docs](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#documentation)
 
-[gradle](https://docs.gradle.org/current/userguide/userguide.html)
+[Gradle docs](https://docs.gradle.org/current/userguide/userguide.html)
 
-[react](https://react.dev/)
+[React docs](https://react.dev/)
 
-[html](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[html docs (courtesy of Mozilla)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
-[css](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[css docs (courtesy of Mozilla)](https://developer.mozilla.org/en-US/docs/Web/CSS)
