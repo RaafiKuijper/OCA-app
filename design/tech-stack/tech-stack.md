@@ -52,3 +52,9 @@
 - https://vitejs.dev/ 
 
 ### Libraries & Tools
+1. React Router
+- https://reactrouter.com/en/main
+2. Axios 
+- https://axios-http.com/docs/intro
+3. React Bootstrap
+- https://react-bootstrap.netlify.app/
