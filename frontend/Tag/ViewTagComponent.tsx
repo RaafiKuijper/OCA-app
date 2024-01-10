@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react";
 import { useState, useEffect } from "react";
 
-function CreateTagComponent() {
+function ViewTagComponent() {
     const [result, setResult] = useState('')
 
     useEffect(() => {
@@ -21,4 +21,4 @@ function CreateTagComponent() {
     )
 }
 
-export default CreateTagComponent
+export default ViewTagComponent
