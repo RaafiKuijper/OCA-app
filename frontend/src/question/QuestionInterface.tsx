@@ -1,5 +1,5 @@
 interface Question {
-    name: string,
-    correctAnswer: string,
-    explanation: string
+  name: string;
+  correctAnswer: string;
+  explanation: string;
 }

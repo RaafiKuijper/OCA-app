@@ -1,6 +1,4 @@
 # Tech Stack
-## Frontend
-
 ## Backend
 ### Languages & Frameworks
 1. Spring Boot 3
@@ -60,3 +58,10 @@
 - https://axios-http.com/docs/intro
 3. React Bootstrap
 - https://react-bootstrap.netlify.app/
+
+## Pair Programming
+
+1. Intellij: CodeWithMe
+- https://www.jetbrains.com/code-with-me/
+2. VisualStudioCode: LiveShare
+- https://visualstudio.microsoft.com/services/live-share/
