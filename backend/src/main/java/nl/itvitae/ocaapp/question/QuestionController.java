@@ -14,15 +14,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class QuestionController {
 
-    private final QuestionService questionService;
-    
-    @GetMapping
-    public ResponseEntity<Iterable<Question>> getAll() {
-        return ResponseEntity.ok(questionService.getAll());
-    }
+  private final QuestionService questionService;
 
-    @GetMapping("/test")
-    public ResponseEntity<Question> addTestQuestion() {
-        return ResponseEntity.ok(questionService.createTestQuestion());
-    }
+  @GetMapping
+  public ResponseEntity<Iterable<Question>> getAll() {
+    return ResponseEntity.ok(questionService.getAll());
+  }
+
+  @GetMapping("/test")
+  public ResponseEntity<Question> addTestQuestion() {
+    return ResponseEntity.ok(questionService.createTestQuestion());
+  }
 }
