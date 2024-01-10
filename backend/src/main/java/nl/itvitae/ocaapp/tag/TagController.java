@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/tags")
 public class TagController {
 
-    private final TagRepository tagRepository;
+  private final TagService tagService;
 
-    @GetMapping
-    public Iterable<Tag> findAll() {
-        return tagRepository.findAll();
-    }
+  @GetMapping
+  public Iterable<Tag> findAll() {
+    return tagService.getAllTags();
+  }
 }

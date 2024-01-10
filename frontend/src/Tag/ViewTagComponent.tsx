@@ -1,24 +1,19 @@
-import axios from "axios"
-import React from "react";
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 function ViewTagComponent() {
-    const [result, setResult] = useState('')
+  const [results, setResults] = useState([]);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        const res = await axios.get("http://localhost:8080/api/v1/findall");
-        setResult(res.data[0]["tagName"]);
-      }
-  
-      fetchData();
-    })
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:8080/api/v1/tags`);
+      setResults(res.data);
+    };
 
-    return (
-        <>
-            Tags in database: {result}
-        </>
-    )
+    fetchData();
+  });
+
+  return <>Tags in database: {results.map(tag => <p>{tag.name}</p>)}</>;
 }
 
-export default ViewTagComponent
+export default ViewTagComponent;
