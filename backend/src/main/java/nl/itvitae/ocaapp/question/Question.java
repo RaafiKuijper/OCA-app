@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,18 +15,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private Long id;
 
-    private String name;
-    private String explanation;
-    private String correctAnswer;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private Long id;
 
-    public Question(String name, String explanation, String correctAnswer) {
-        this.name = name;
-        this.explanation = explanation;
-        this.correctAnswer = correctAnswer;
-    }
+  private String text;
+  private List<String> options;
+  private String explanation;
+  private String answer;
+  // private List<Fragment> fragments
+  // private List<Tag> tags;
+
+  public Question(String text, List<String> options, String explanation, String answer) {
+    this.text = text;
+    this.options = options;
+    this.explanation = explanation;
+    this.answer = answer;
+  }
 }

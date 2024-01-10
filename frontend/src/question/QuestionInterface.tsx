@@ -1,5 +1,6 @@
 interface Question {
-  name: string;
-  correctAnswer: string;
+  text: string;
+  options: string[];
+  answer: string;
   explanation: string;
 }
