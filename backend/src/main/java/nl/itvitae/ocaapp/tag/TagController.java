@@ -13,7 +13,7 @@ public class TagController {
 
   private final TagService tagService;
 
-  @GetMapping
+  @GetMapping("/")
   public Iterable<Tag> findAll() {
     return tagService.getAllTags();
   }

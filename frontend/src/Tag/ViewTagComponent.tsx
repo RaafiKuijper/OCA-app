@@ -7,7 +7,7 @@ function ViewTagComponent() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8080/api/v1/tags`);
+      const response = await axios.get(`http://localhost:8080/api/v1/tags/`);
       setTags(response.data);
     };
 
@@ -18,7 +18,11 @@ function ViewTagComponent() {
     <>
       Tags in database:{" "}
       {tags.map((tag) => (
-        <p key={tag.id}>{tag.name}</p>
+        <p key={tag.id}>
+          {tag.name} OCA certifaction guide chapter: {tag.chapterOrParagraph}.
+          <br />
+          {tag.context}
+        </p>
       ))}
     </>
   );
