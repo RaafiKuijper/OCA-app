@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Question from "../question/QuestionInterface";
+import Question, { emptyQuestion } from "../question/questionModels";
 import AnswerQuestionHeader from "./AnswerQuestionHeader";
+import AnswerQuestionList from "./AnswerQuestionList";
 
 // Can I use explanation marks?
 const AnswerQuestionView = () => {
   const { id } = useParams();
-  const [question, setQuestion] = useState<Question>();
+
+  const [question, setQuestion] = useState<Question>(emptyQuestion);
 
   useEffect(() => {
     const fetchQuestion = async (id: string) => {
@@ -22,12 +24,8 @@ const AnswerQuestionView = () => {
 
   return (
     <>
-      {question && <AnswerQuestionHeader text={question?.text} />}
-      <ol>
-        {question?.options.map((option) => (
-          <li key={option.id}>{option.text}</li>
-        ))}
-      </ol>
+      <AnswerQuestionHeader text={question.text} />
+      <AnswerQuestionList options={question.options} />
       {/* <button>Submit</button> */}
     </>
   );

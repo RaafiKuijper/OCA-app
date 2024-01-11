@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Question from "./QuestionInterface";
+import Question from "./questionModels";
 
 function ViewQuestionsComponent() {
   const [questions, setQuestions] = useState<Question[]>([]);

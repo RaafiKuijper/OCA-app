@@ -5,8 +5,15 @@ export default interface Question {
   explanation: string;
 }
 
-interface Option {
+export interface Option {
   id: number;
   text: string;
   isCorrect: boolean;
 }
+
+export const emptyQuestion: Question = {
+  id: 0,
+  text: "",
+  options: [],
+  explanation: "",
+};
