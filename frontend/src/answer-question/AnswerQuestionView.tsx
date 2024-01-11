@@ -22,10 +22,10 @@ const AnswerQuestionView = () => {
 
   return (
     <>
-      <AnswerQuestionHeader text={question!.text} />
+      {question && <AnswerQuestionHeader text={question?.text} />}
       <ol>
         {question?.options.map((option) => (
-          <li>{option.text}</li>
+          <li key={option.id}>{option.text}</li>
         ))}
       </ol>
       {/* <button>Submit</button> */}

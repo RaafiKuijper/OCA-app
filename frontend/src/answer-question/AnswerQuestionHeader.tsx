@@ -1,12 +1,15 @@
-type PropType = {
-  text: string;
-};
+import { useEffect } from "react";
+import classes from "../styles/answer-question.module.css";
 
-// Zou met destructering moeten werken
-const AnswerQuestionHeader = (props: PropType) => {
+// Should work with destructuring
+const AnswerQuestionHeader = (props: { text: string }) => {
+  useEffect(() => {
+    console.log(classes);
+  });
+
   return (
     <>
-      <h1>{props.text}</h1>
+      <h1 className={classes.answerQuestionHeader}>{props.text}</h1>
     </>
   );
 };
