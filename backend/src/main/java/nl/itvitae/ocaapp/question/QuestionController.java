@@ -1,9 +1,11 @@
 package nl.itvitae.ocaapp.question;
 
 import java.net.URI;
+import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +33,18 @@ public class QuestionController {
     return ResponseEntity.ok(questionService.createTestQuestion());
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Optional<Question>> getById(@PathVariable Long id) {
+    return ResponseEntity.ok(questionService.getById(id));
+  }
+
   @PostMapping("/create")
   public ResponseEntity<Question> createQuestion(@RequestBody Question question,
       UriComponentsBuilder ucb) {
     Question newQuestion = questionService.createQuestion(question);
     URI locationOfNewQuestion = ucb
         .path("/api/v1/questions/{id}")
-        .buildAndExpand(questionService.getAll())
+        .buildAndExpand(newQuestion.getId())
         .toUri();
     return ResponseEntity.created(locationOfNewQuestion).body(newQuestion);
   }

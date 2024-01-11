@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.question;
 
 import java.util.List;
+import java.util.Optional;
 import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class QuestionService {
     final String explanation = "this is the answer because i said so";
     final Question question = new Question(text, options, explanation);
     return questionRepository.save(question);
+  }
+
+  public Optional<Question> getById(Long id) {
+    return questionRepository.findById(id);
   }
 
   public Question createQuestion(Question question) {
