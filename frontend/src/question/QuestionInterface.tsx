@@ -1,6 +1,13 @@
-interface Question {
+export default interface Question {
+  id: number;
   text: string;
-  options: string[];
+  options: Option[];
   answer: string;
   explanation: string;
+}
+
+interface Option {
+  id: number;
+  text: string;
+  isCorrect: boolean;
 }
