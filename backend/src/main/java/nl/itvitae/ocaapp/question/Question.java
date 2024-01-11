@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.ocaapp.option.Option;
 
 @Entity
 @Getter
@@ -22,16 +24,16 @@ public class Question {
   private Long id;
 
   private String text;
-  private List<String> options;
+  // should later be changed to ManyToMany to avoid duplicate data
+  @OneToMany
+  private List<Option> options;
   private String explanation;
-  private String answer;
   // private List<Fragment> fragments
   // private List<Tag> tags;
 
-  public Question(String text, List<String> options, String explanation, String answer) {
+  public Question(String text, List<Option> options, String explanation) {
     this.text = text;
     this.options = options;
     this.explanation = explanation;
-    this.answer = answer;
   }
 }
