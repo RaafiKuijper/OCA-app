@@ -1,6 +1,6 @@
 export default interface Tag {
   id: number;
   name: string;
-  chapterOrParagraph: string;
+  chapter: string;
   context: string;
 }

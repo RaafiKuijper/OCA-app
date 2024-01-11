@@ -1,4 +1,6 @@
 import "./App.css";
+import CreateTagComponent from "./Tag/CreateTagComponent";
+import ViewTagComponent from "./Tag/ViewTagComponent";
 import ViewQuestionsComponent from "./question/ViewQuestionsComponent";
 
 function App() {
@@ -6,6 +8,8 @@ function App() {
     <>
       <h1>OCA-app</h1>
       <ViewQuestionsComponent />
+      <CreateTagComponent />
+      <ViewTagComponent />
     </>
   );
 }
