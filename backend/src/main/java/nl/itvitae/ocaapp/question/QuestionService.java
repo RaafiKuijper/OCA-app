@@ -28,4 +28,8 @@ public class QuestionService {
     final Question question = new Question(text, options, explanation);
     return questionRepository.save(question);
   }
+
+  public Question createQuestion(Question question) {
+    return questionRepository.save(question);
+  }
 }
