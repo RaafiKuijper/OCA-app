@@ -16,4 +16,8 @@ public class TagService {
     return tagRepository.findAll();
   }
 
+  public Tag addTag(Tag tag) {
+    System.out.println("Currently in service: addTags");
+    return tagRepository.save(tag);
+  }
 }
