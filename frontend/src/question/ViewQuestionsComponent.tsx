@@ -27,7 +27,6 @@ function ViewQuestionsComponent() {
                 <li key={option.id}>{option.text}</li>
               ))}
             </ol>
-            <p>{question.answer}</p>
             <p>{question.explanation}</p>
             <br />
           </div>
