@@ -5,4 +5,14 @@
   padding: 1em;
   background-color: rgb(131, 175, 213);
   border-bottom: 0.2em solid blue;
+  margin-bottom: 2em;
+}
+
+.answerQuestionList {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.answerQuestionListText {
+  width: 90%;
 }
