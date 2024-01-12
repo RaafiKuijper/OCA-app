@@ -29,6 +29,10 @@ public class Question {
   // private List<Fragment> fragments
   // private List<Tag> tags;
 
+  public List<Option> getCorrect() {
+    return options.stream().filter(Option::getIsCorrect).toList();
+  }
+
   public Question(String text, List<Option> options, String explanation) {
     this.text = text;
     this.options = options;
