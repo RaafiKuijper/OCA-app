@@ -8,8 +8,22 @@ const AnswerQuestionList = (props: { options: Option[] }) => {
     <section className={classes.answerQuestionList}>
       {props.options.map((option) => (
         <InputGroup key={option.id} className={classes.answerQuestionListItem}>
-          <InputGroup.Checkbox className={classes.answerQuestionListCheckbox} />
-          <InputGroup.Text className={classes.answerQuestionListText}>
+          <InputGroup.Checkbox
+            onChange={(e) => console.log(e)}
+            className={classes.answerQuestionListCheckbox}
+            style={{
+              margin: "0",
+              height: "1.5em",
+              width: "1.5em",
+            }}
+          />
+          <InputGroup.Text
+            className={classes.answerQuestionListText}
+            style={{
+              padding: "0.8em",
+              fontSize: "1.2em",
+            }}
+          >
             {option.text}
           </InputGroup.Text>
         </InputGroup>
