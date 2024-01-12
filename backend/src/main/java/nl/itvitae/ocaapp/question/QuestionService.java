@@ -35,6 +35,10 @@ public class QuestionService {
   }
 
   public Question createQuestion(Question question) {
+    for (Option option :
+        question.getOptions()) {
+      optionRepository.save(option);
+    }
     return questionRepository.save(question);
   }
 }

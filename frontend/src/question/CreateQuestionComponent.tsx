@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import QuestionProps from "./interfaces/QuestionPropsInterface";
+import OptionBody from "./interfaces/OptionBody";
 
 function CreateQuestionsComponent(props: QuestionProps) {
   const [result, setResult] = useState<string>();
@@ -22,7 +23,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
       console.log(props.optionCount);
       
       
-      for (let i = 0; i < props.optionCount; i++) {
+      /* for (let i = 0; i < props.optionCount; i++) {
         const createOption = await axios.post(
           "http://localhost:8080/api/v1/options/create",
           {
@@ -30,13 +31,22 @@ function CreateQuestionsComponent(props: QuestionProps) {
             isCorrect: props.optionsIsCorrect[props.optionCount-1],
           }
         );
-      }
+      } */
+
+      let options: OptionBody[] = [];
+
+      for (let i = 0; i < props.optionCount; i++) {
+        options[i] = {
+            text: props.optionsText[i],
+            isCorrect: props.optionsIsCorrect[i],
+          };
+      } 
 
       const createQuestion = await axios.post(
         "http://localhost:8080/api/v1/questions/create",
         {
           text: props.text,
-          options: 
+          options: options,
           explanation: props.explanation,
         }
       );
