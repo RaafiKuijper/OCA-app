@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function CreateOptionComponent() {
   const [option, setOption] = useState<string>();
-  const [isCorrect, setIsCorrect] = useState();
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
   return (
     <>
@@ -12,12 +12,11 @@ function CreateOptionComponent() {
           <input
             type="text"
             placeholder="option"
-            value={option}
             onChange={(e) => {
               setOption(e.target.value);
             }}
           />
-          <input type="checkbox" checked={isCorrect} />
+          <input type="checkbox" checked={isCorrect} onChange={() => setIsCorrect(!isCorrect)}/>
         </label>
       </div>
     </>

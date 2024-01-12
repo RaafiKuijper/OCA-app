@@ -1,12 +1,12 @@
 import './App.css'
-import CreateQuestionsComponent from './question/CreateQuestionComponent'
+import CreateQuestionsFormComponent from './question/CreateQuestionFormComponent'
 
 function App() {
 
   return (
     <>
       <h1>OCA-app</h1>
-      <CreateQuestionsComponent />
+      <CreateQuestionsFormComponent />
     </>
   )
 }
