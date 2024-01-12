@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CreateOptionComponent from "./CreateOptionComponent";
 import CreateQuestionsComponent from "./CreateQuestionComponent";
 
@@ -6,27 +6,12 @@ function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
   const [text, setText] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
-
-  // optionCount, optionsText, optionsIsCorrect allemaal afhankelijk
-  // Wat willen we? Een enkele option array
-
   const [optionCount, setOptionCount] = useState(1);
   const [optionsText, setOptionsText] = useState<string[]>([]);
-  const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([false]);
-
-  useEffect(() => {
-    optionsIsCorrect.forEach((element) => {
-      console.log("test: " + element);
-    });
-
-    let currectOptionsIsCorrect = optionsIsCorrect.map((isCorrect) =>
-      isCorrect === undefined ? false : isCorrect
-    );
-  });
+  const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([]);
 
   const handleFormSubmit = () => {
     setDisplayResult(true);
-    console.log("optionsText: " + optionsText);
   };
 
   return (
