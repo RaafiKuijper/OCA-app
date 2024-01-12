@@ -5,9 +5,9 @@ import Question, { emptyQuestion } from "../question/questionModels";
 import AnswerQuestionHeader from "./AnswerQuestionHeader";
 import AnswerQuestionList from "./AnswerQuestionList";
 
-// Can I use explanation marks?
 const AnswerQuestionView = () => {
   const { id } = useParams();
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   const [question, setQuestion] = useState<Question>(emptyQuestion);
 
@@ -25,7 +25,11 @@ const AnswerQuestionView = () => {
   return (
     <>
       <AnswerQuestionHeader text={question.text} />
-      <AnswerQuestionList options={question.options} />
+      <AnswerQuestionList
+        options={question.options}
+        selectedOptions={selectedOptions}
+        setSelectedOptions={setSelectedOptions}
+      />
       {/* <button>Submit</button> */}
     </>
   );

@@ -3,13 +3,26 @@ import { Option } from "../question/questionModels";
 import classes from "../styles/answer-question.module.css";
 
 // This does not work for long lines of text yet.
-const AnswerQuestionList = (props: { options: Option[] }) => {
+const AnswerQuestionList = (props: {
+  options: Option[];
+  selectedOptions: number[];
+  setSelectedOptions: (options: number[]) => void;
+}) => {
+  const updateSelectedOptions = (selectedId: number) => {
+    let updatedOptions = [];
+    if (props.selectedOptions.includes(selectedId)) {
+      updatedOptions = props.selectedOptions.filter((id) => id !== selectedId);
+    } else {
+      updatedOptions = [...props.selectedOptions, selectedId];
+    }
+    props.setSelectedOptions(updatedOptions);
+  };
   return (
     <section className={classes.answerQuestionList}>
       {props.options.map((option) => (
         <InputGroup key={option.id} className={classes.answerQuestionListItem}>
           <InputGroup.Checkbox
-            onChange={(e) => console.log(e)}
+            onChange={() => updateSelectedOptions(option.id)}
             className={classes.answerQuestionListCheckbox}
             style={{
               margin: "0",
