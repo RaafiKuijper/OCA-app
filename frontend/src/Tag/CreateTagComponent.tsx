@@ -1,43 +1,27 @@
 import axios from "axios";
-import Tag from "./TagInterface";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function CreateTagComponent() {
-  const emptyTag = (): Tag => ({
-    id: 0,
-    name: "",
-    chapter: "",
-    context: "",
-  });
+  const [tagName, setTagName] = useState<string>("");
+  const [tagChapter, setTagChapter] = useState<string>("");
+  const [tagContext, setTagContext] = useState<string>("");
+  let tagCreated = false;
 
-  const [tag, setTag] = useState<Tag>(emptyTag());
-  const [sent, setSent] = useState(0);
-  const [tagName, setTagName] = useState("");
-  const [tagChapter, setTagChapter] = useState("");
-  const [tagContext, setTagContext] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.post(
-        `http://localhost:8080/api/v1/tags/add`,
-        {
-          name: { tagName },
-          chapter: { tagChapter },
-          context: { tagContext },
-        }
-      );
-      setTag(response.data);
-    };
-
-    fetchData();
-  }, [sent]);
+  const postData = async () => {
+    const response = await axios.post(`http://localhost:8080/api/v1/tags/add`, {
+      name: tagName,
+      chapter: tagChapter,
+      context: tagContext,
+    });
+  };
 
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setSent(sent + 1);
+          postData();
+          tagCreated = true;
         }}
       >
         <input
@@ -57,10 +41,6 @@ function CreateTagComponent() {
         ></input>
         <button type="submit">Submit</button>
       </form>
-      Created tag:{" "}
-      <p key={tag.id}>
-        {tag.name} which is linked to chapter {tag.chapter}
-      </p>
     </>
   );
 }

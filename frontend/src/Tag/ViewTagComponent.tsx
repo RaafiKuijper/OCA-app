@@ -19,7 +19,7 @@ function ViewTagComponent() {
       Tags in database:{" "}
       {tags.map((tag) => (
         <p key={tag.id}>
-          {tag.name} OCA certifaction guide chapter: {tag.chapterOrParagraph}.
+          {tag.name} OCA certifaction guide chapter: {tag.chapter}.
           <br />
           {tag.context}
         </p>
