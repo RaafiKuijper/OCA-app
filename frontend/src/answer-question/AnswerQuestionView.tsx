@@ -1,15 +1,33 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Question, { emptyQuestion } from "../question/questionModels";
 import AnswerQuestionHeader from "./AnswerQuestionHeader";
 import AnswerQuestionList from "./AnswerQuestionList";
+import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
+import classes from "../styles/answer-question.module.css";
+import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
+
+type AnswerResponse = {
+  passed: boolean;
+};
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
-
   const [question, setQuestion] = useState<Question>(emptyQuestion);
+  const [score, setScore] = useState("");
+
+  const submitAnswer = async () => {
+    const body = {
+      selectedIds: selectedOptions,
+      questionId: id,
+    };
+    const uri = "http://localhost:8080/api/v1/answer/submit";
+    console.log(body);
+    const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
+    setScore(result.data.passed ? "Passed" : "Failed");
+  };
 
   useEffect(() => {
     const fetchQuestion = async (id: string) => {
@@ -23,15 +41,16 @@ const AnswerQuestionView = () => {
   }, [id]);
 
   return (
-    <>
+    <section className={classes.AnswerQuestionView}>
       <AnswerQuestionHeader text={question.text} />
       <AnswerQuestionList
         options={question.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
       />
-      {/* <button>Submit</button> */}
-    </>
+      <AnswerQuestionSubmit submitAnswer={submitAnswer} />
+      <AnswerQuestionFeedback score={score} />
+    </section>
   );
 };
 
