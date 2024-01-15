@@ -23,6 +23,11 @@ public class QuestionService {
     return questionRepository.findById(id);
   }
 
+
+  public QuestionCount getCount() {
+    return new QuestionCount(questionRepository.count());
+  }
+
   public Question createTestQuestion() {
     final String text = "this is a question, or it it?";
     final List<Option> options = optionRepository.saveAll(

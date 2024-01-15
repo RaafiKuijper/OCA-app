@@ -1,9 +1,6 @@
 package nl.itvitae.ocaapp.question;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-import nl.itvitae.ocaapp.option.Option;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +29,11 @@ public class QuestionController {
     final Optional<Question> optionalQuestion = questionService.getById(id);
     return optionalQuestion.map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @GetMapping("/count")
+  public ResponseEntity<QuestionCount> count() {
+    return ResponseEntity.ok(questionService.getCount());
   }
 
   @GetMapping("/test")
