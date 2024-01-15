@@ -15,6 +15,7 @@ function CreateTagComponent() {
       chapter: tagChapter,
       context: tagContext,
     });
+    setSub(sub + 1);
   };
 
   useEffect(() => {
@@ -31,7 +32,6 @@ function CreateTagComponent() {
         onSubmit={(e) => {
           e.preventDefault();
           postData();
-          setSub(sub + 1);
         }}
       >
         <input
