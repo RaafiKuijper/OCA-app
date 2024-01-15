@@ -21,7 +21,7 @@ function ViewTagComponent(props: { count: number }) {
         <p key={tag.id}>
           {tag.name} OCA certifaction guide chapter: {tag.chapter}.
           <br />
-          {tag.context}
+          {tag.summary}
         </p>
       ))}
     </>

@@ -20,11 +20,11 @@ public class Tag {
 
   private String name;
   private String chapter;
-  private String context;
+  private String summary;
 
-  public Tag(String name, String chapter, String context) {
+  public Tag(String name, String chapter, String summary) {
     this.name = name;
     this.chapter = chapter;
-    this.context = context;
+    this.summary = summary;
   }
 }

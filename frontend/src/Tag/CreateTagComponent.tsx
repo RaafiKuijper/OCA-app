@@ -5,26 +5,26 @@ import ViewTagComponent from "./ViewTagComponent";
 function CreateTagComponent() {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
-  const [tagContext, setTagContext] = useState<string>("");
+  const [tagSummary, setTagSummary] = useState<string>("");
   const [dispText, setDispText] = useState("");
-  const [sub, setSub] = useState<number>(0);
+  const [count, setCount] = useState<number>(0); // count is used to only show this message upon creation of a tag
 
   const postData = async () => {
     await axios.post(`http://localhost:8080/api/v1/tags/add`, {
       name: tagName,
       chapter: tagChapter,
-      context: tagContext,
+      summary: tagSummary,
     });
-    setSub(sub + 1);
+    setCount(count + 1);
   };
 
   useEffect(() => {
-    if (sub !== 0) {
+    if (count !== 0) {
       setDispText(
         `Created tag is named: ${tagName}, which is covered in chapter ${tagChapter} in the OCA guide.`
       );
     }
-  }, [sub]);
+  }, [count]);
 
   return (
     <>
@@ -34,25 +34,35 @@ function CreateTagComponent() {
           postData();
         }}
       >
+        Enter a name for the tag:
+        <br />
         <input
           type="text"
           placeholder="Tag name"
           onChange={(e) => setTagName(e.target.value)}
         ></input>
+        <br />
+        Enter the chapter, or paragraph of the OCA guide in which it can be
+        found:
+        <br />
         <input
           type="text"
           placeholder="Tag chapter"
           onChange={(e) => setTagChapter(e.target.value)}
         ></input>
+        <br />
+        Summarize the basic principles of the tag:
+        <br />
         <input
           type="text"
           placeholder="Tag context"
-          onChange={(e) => setTagContext(e.target.value)}
+          onChange={(e) => setTagSummary(e.target.value)}
         ></input>
+        <br />
         <button type="submit">Submit</button>
       </form>
       <p>{dispText}</p>
-      <ViewTagComponent count={sub} />
+      <ViewTagComponent count={count} />
     </>
   );
 }
