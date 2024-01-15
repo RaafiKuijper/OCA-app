@@ -19,6 +19,10 @@ public class QuestionService {
     return questionRepository.findAll();
   }
 
+  public Optional<Question> getById(long id) {
+    return questionRepository.findById(id);
+  }
+
   public Question createTestQuestion() {
     final String text = "this is a question, or it it?";
     final List<Option> options = optionRepository.saveAll(

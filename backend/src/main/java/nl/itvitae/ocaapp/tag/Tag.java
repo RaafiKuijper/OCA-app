@@ -17,9 +17,14 @@ public class Tag {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
 
-  public Tag(String name) {
+  private String name;
+  private String chapterOrParagraph;
+  private String context;
+
+  public Tag(String name, String chapterOrParagraph, String context) {
     this.name = name;
+    this.chapterOrParagraph = chapterOrParagraph;
+    this.context = context;
   }
 }

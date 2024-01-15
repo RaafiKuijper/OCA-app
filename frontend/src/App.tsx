@@ -1,14 +1,11 @@
-import './App.css'
-import CreateQuestionsFormComponent from './question/CreateQuestionFormComponent'
+import "./App.css";
 
 function App() {
-
   return (
     <>
-      <h1>OCA-app</h1>
-      <CreateQuestionsFormComponent />
+      <h1>Home Screen</h1>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
