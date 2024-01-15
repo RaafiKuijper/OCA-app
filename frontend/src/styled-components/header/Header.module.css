@@ -1,0 +1,9 @@
+.Header {
+  margin: 0em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 1em;
+  background-color: rgb(131, 175, 213);
+  border-bottom: 0.2em solid blue;
+  margin-bottom: 2em;
+}
