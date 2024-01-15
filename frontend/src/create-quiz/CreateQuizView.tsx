@@ -3,6 +3,7 @@ import Header from "../styled-components/header/Header";
 import CreateQuizQuestionCount from "./CreateQuizQuestionCount";
 import axios from "axios";
 import QuestionCount from "./QuestionCount";
+import CreateQuizButton from "./CreateQuizButton";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
@@ -22,6 +23,7 @@ const CreateQuizView = () => {
     <>
       <Header text="Create Quiz View" />;
       <CreateQuizQuestionCount questionCount={questionCount} />
+      <CreateQuizButton />
     </>
   );
 };
