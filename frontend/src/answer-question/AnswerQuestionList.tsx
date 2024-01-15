@@ -1,5 +1,5 @@
 import { InputGroup } from "react-bootstrap";
-import { Option } from "../question/questionModels";
+import Option from "../question/interfaces/OptionInterface";
 import classes from "../styles/answer-question.module.css";
 import { useState } from "react";
 
