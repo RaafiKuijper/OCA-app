@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Question from "./QuestionInterface";
+import Question from "./questionModels";
 
 function ViewQuestionsComponent() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -27,7 +27,6 @@ function ViewQuestionsComponent() {
                 <li key={option.id}>{option.text}</li>
               ))}
             </ol>
-            <p>{question.answer}</p>
             <p>{question.explanation}</p>
             <br />
           </div>

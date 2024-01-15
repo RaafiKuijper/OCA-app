@@ -1,0 +1,26 @@
+.answerQuestionHeader {
+  margin: 0em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 1em;
+  background-color: rgb(131, 175, 213);
+  border-bottom: 0.2em solid blue;
+  margin-bottom: 2em;
+}
+
+.answerQuestionView {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answerQuestionList {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.answerQuestionListText {
+  width: 90%;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
