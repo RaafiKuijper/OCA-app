@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Tag from "./TagInterface";
 
-function ViewTagComponent() {
+function ViewTagComponent(props: { count: number }) {
   const [tags, setTags] = useState<Tag[]>([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function ViewTagComponent() {
     };
 
     fetchData();
-  }, []);
+  }, [props.count]);
 
   return (
     <>

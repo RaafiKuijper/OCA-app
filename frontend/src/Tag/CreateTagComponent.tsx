@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ViewTagComponent from "./ViewTagComponent";
 
 function CreateTagComponent() {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagContext, setTagContext] = useState<string>("");
   const [dispText, setDispText] = useState("");
-  const [sub, setSub] = useState(0);
+  const [sub, setSub] = useState<number>(0);
 
   const postData = async () => {
     await axios.post(`http://localhost:8080/api/v1/tags/add`, {
@@ -51,6 +52,7 @@ function CreateTagComponent() {
         <button type="submit">Submit</button>
       </form>
       <p>{dispText}</p>
+      <ViewTagComponent count={sub} />
     </>
   );
 }
