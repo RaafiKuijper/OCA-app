@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.question;
 
 import java.util.List;
+import java.util.Optional;
 import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class QuestionService {
 
   public Iterable<Question> getAll() {
     return questionRepository.findAll();
+  }
+
+  public Optional<Question> getById(long id) {
+    return questionRepository.findById(id);
   }
 
   public Question createTestQuestion() {

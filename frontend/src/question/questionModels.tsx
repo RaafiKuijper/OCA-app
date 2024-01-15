@@ -2,12 +2,18 @@ export default interface Question {
   id: number;
   text: string;
   options: Option[];
-  answer: string;
   explanation: string;
 }
 
-interface Option {
+export interface Option {
   id: number;
   text: string;
   isCorrect: boolean;
 }
+
+export const emptyQuestion: Question = {
+  id: 0,
+  text: "",
+  options: [],
+  explanation: "",
+};
