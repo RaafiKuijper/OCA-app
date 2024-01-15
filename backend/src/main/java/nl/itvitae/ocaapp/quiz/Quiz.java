@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OrderColumn;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Quiz {
   private Long id;
 
   @ManyToMany
+  @OrderColumn
   private List<Question> questions;
 
   public Quiz(List<Question> questions) {

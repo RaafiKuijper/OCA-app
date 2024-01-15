@@ -1,5 +1,6 @@
 package nl.itvitae.ocaapp.question;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class QuestionService {
   }
 
   public List<Question> getRandomQuestions(int questionAmount) {
-    List<Question> questions = questionRepository.findAll();
+    List<Question> questions = new ArrayList<>(questionRepository.findAll());
     Collections.shuffle(questions);
     return questions.subList(0, questionAmount);
   }
