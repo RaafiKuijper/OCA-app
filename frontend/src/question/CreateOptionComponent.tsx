@@ -1,3 +1,4 @@
+import { Form } from "react-bootstrap";
 import OptionPropsInterface from "./interfaces/OptionPropsInterface";
 
 function CreateOptionComponent(props: OptionPropsInterface) {
@@ -19,11 +20,15 @@ function CreateOptionComponent(props: OptionPropsInterface) {
   return (
     <>
       <div>
-        <label>
-          option:{" "}
-          <input type="text" placeholder="option" onChange={updateText} />
-          <input type="checkbox" onChange={updateIsCorrect} />
-        </label>
+        <Form.Label>
+          option {props.index + 1}:
+          <Form.Control
+            type="text"
+            placeholder="option"
+            onChange={updateText}
+          />
+          <Form.Check type="checkbox" onChange={updateIsCorrect} />
+        </Form.Label>
       </div>
     </>
   );

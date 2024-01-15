@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CreateOptionComponent from "./CreateOptionComponent";
 import CreateQuestionsComponent from "./CreateQuestionComponent";
+import { Button, Form } from "react-bootstrap";
 
 function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
@@ -16,59 +17,64 @@ function CreateQuestionsFormComponent() {
 
   return (
     <>
-      <form
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
           handleFormSubmit();
         }}
       >
         {/* question input */}
-        <label>
-          question:{" "}
-          <input
+        <Form.Group>
+          <Form.Label>question:</Form.Label>
+          <Form.Control
             type="text"
             placeholder="question"
             onChange={(e) => setText(e.target.value)}
           />
-        </label>
+        </Form.Group>
         {/* option input */}
-        <label>
-          {[...Array(optionCount)].map((_, index) => (
-            <CreateOptionComponent
-              key={index}
-              index={index}
-              text={optionsText}
-              setText={setOptionsText}
-              isCorrect={optionsIsCorrect}
-              setIsCorrect={setOptionsIsCorrect}
-            />
-          ))}
-          {/* add/remove options */}
-          <button type="button" onClick={() => setOptionCount(optionCount + 1)}>
-            +
-          </button>
-          {optionCount !== 1 && (
-            <button
+        <Form.Group>
+          <Form.Label>
+            {[...Array(optionCount)].map((_, index) => (
+              <CreateOptionComponent
+                key={index}
+                index={index}
+                text={optionsText}
+                setText={setOptionsText}
+                isCorrect={optionsIsCorrect}
+                setIsCorrect={setOptionsIsCorrect}
+              />
+            ))}
+            {/* add/remove options */}
+            <Button
               type="button"
-              onClick={() => setOptionCount(optionCount - 1)}
+              onClick={() => setOptionCount(optionCount + 1)}
             >
-              -
-            </button>
-          )}
-        </label>
-        <br />
+              +
+            </Button>
+            {optionCount !== 1 && (
+              <Button
+                type="button"
+                onClick={() => setOptionCount(optionCount - 1)}
+              >
+                -
+              </Button>
+            )}
+          </Form.Label>
+        </Form.Group>
         {/* input explanation */}
-        <label>
-          explanation:{" "}
-          <input
-            type="text"
-            placeholder="explanation"
-            onChange={(e) => setExplanation(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
+        <Form.Group>
+          <Form.Label>
+            explanation:{" "}
+            <Form.Control
+              type="text"
+              placeholder="explanation"
+              onChange={(e) => setExplanation(e.target.value)}
+            />
+          </Form.Label>
+        </Form.Group>
+        <Button type="submit">Submit</Button>
+      </Form>
       {displayResult && (
         <CreateQuestionsComponent
           text={text}
