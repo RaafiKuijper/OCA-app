@@ -3,6 +3,7 @@ package nl.itvitae.ocaapp.quiz;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Quiz {
   @GeneratedValue
   private Long id;
 
+  @ManyToMany
   private List<Question> questions;
 
   public Quiz(List<Question> questions) {
