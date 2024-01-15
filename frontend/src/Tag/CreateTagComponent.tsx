@@ -1,19 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function CreateTagComponent() {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagContext, setTagContext] = useState<string>("");
-  let tagCreated = false;
+  const [dispText, setDispText] = useState("");
+  const [sub, setSub] = useState(0);
 
   const postData = async () => {
-    const response = await axios.post(`http://localhost:8080/api/v1/tags/add`, {
+    await axios.post(`http://localhost:8080/api/v1/tags/add`, {
       name: tagName,
       chapter: tagChapter,
       context: tagContext,
     });
   };
+
+  useEffect(() => {
+    if (sub !== 0) {
+      setDispText(
+        `Created tag is named: ${tagName}, which is covered in chapter ${tagChapter} in the OCA guide.`
+      );
+    }
+  }, [sub]);
 
   return (
     <>
@@ -21,7 +30,7 @@ function CreateTagComponent() {
         onSubmit={(e) => {
           e.preventDefault();
           postData();
-          tagCreated = true;
+          setSub(sub + 1);
         }}
       >
         <input
@@ -41,6 +50,7 @@ function CreateTagComponent() {
         ></input>
         <button type="submit">Submit</button>
       </form>
+      <p>{dispText}</p>
     </>
   );
 }
