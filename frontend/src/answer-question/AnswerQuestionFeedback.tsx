@@ -1,16 +1,25 @@
-const AnswerQuestionFeedback = (props: { score: string }) => {
+const AnswerQuestionFeedback = (props: {
+  score: string;
+  explanation: string;
+}) => {
   return (
-    <p
+    <section
       style={{
         textAlign: "center",
         margin: "1em",
-        color: props.score === "Passed" ? "green" : "red",
         fontWeight: "bold",
         fontSize: "1.2em",
       }}
     >
-      {props.score}
-    </p>
+      <p
+        style={{
+          color: props.score === "Passed" ? "green" : "red",
+        }}
+      >
+        {props.score}
+      </p>
+      <p>{props.explanation}</p>
+    </section>
   );
 };
 

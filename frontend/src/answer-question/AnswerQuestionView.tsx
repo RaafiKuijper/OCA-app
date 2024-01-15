@@ -7,16 +7,14 @@ import AnswerQuestionList from "./AnswerQuestionList";
 import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
-
-type AnswerResponse = {
-  passed: boolean;
-};
+import AnswerResponse from "./AnswerResponse";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [question, setQuestion] = useState<Question>(emptyQuestion);
   const [score, setScore] = useState("");
+  const [explanation, setExplanation] = useState("");
 
   const submitAnswer = async () => {
     const body = {
@@ -27,6 +25,7 @@ const AnswerQuestionView = () => {
     console.log(body);
     const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
     setScore(result.data.passed ? "Passed" : "Failed");
+    setExplanation(result.data.explanation);
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const AnswerQuestionView = () => {
         setSelectedOptions={setSelectedOptions}
       />
       <AnswerQuestionSubmit submitAnswer={submitAnswer} />
-      <AnswerQuestionFeedback score={score} />
+      <AnswerQuestionFeedback score={score} explanation={explanation} />
     </section>
   );
 };

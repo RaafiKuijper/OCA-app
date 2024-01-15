@@ -32,6 +32,6 @@ public class AnswerService {
 
     final Answer answer = new Answer(selected, question);
 
-    return new AnswerResult(answer.isPassed());
+    return new AnswerResult(answer.isPassed(), question.getExplanation());
   }
 }
