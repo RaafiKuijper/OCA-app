@@ -13,7 +13,7 @@ function CreateOptionComponent(props: FragmentProps) {
       <div>
         <Form.Label>
           fragment {props.index + 1}:
-          <Form.Control 
+          <Form.Control
             as="textarea"
             placeholder="fragment"
             onChange={updateText}

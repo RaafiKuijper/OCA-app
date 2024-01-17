@@ -51,8 +51,6 @@ public class QuestionService {
     final Question question = new Question(text, options, explanation, fragments);
     return questionRepository.save(question);
   }
-<<<<<<< Updated upstream
-=======
 
   public Optional<Question> getById(Long id) {
     return questionRepository.findById(id);
@@ -70,5 +68,5 @@ public class QuestionService {
     }
     return questionRepository.save(question);
   }
->>>>>>> Stashed changes
 }
+

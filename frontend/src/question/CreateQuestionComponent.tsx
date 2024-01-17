@@ -36,9 +36,9 @@ function CreateQuestionsComponent(props: QuestionProps) {
 
         for (let i = 0; i < props.fragmentCount; i++) {
           fragments[i] = {
-            text: props.fragmentText[i]
+            text: props.fragmentText[i],
           };
-        } 
+        }
 
         const createQuestion = await axios.post(
           "http://localhost:8080/api/v1/questions/create",

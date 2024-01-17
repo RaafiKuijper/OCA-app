@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
-import Question, { emptyQuestion } from "../question/questionModels";
+import Question, { emptyQuestion } from "../question/interfaces/QuestionInterface";
 import AnswerQuestionHeader from "./AnswerQuestionHeader";
 import AnswerQuestionList from "./AnswerQuestionList";
 import AnswerQuestionSubmit from "./AnswerQuestionSubmit";

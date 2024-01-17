@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Question from "./questionModels";
+import Question from "./interfaces/QuestionInterface";
 
 function ViewQuestionsComponent() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -23,7 +23,7 @@ function ViewQuestionsComponent() {
           <div key={question.id}>
             <h3>{question.text}</h3>
             {question.fragments.map((fragment) => 
-              fragment.text.split("\\n").map((line) => <pre key={line}>{line}</pre>)
+              fragment.text.split("\\n").map((line: string) => <pre key={line}>{line}</pre>)
             )}
             <ol>
               {question.options.map((option) => (

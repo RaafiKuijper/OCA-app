@@ -11,8 +11,8 @@ function CreateQuestionsFormComponent() {
   const [optionCount, setOptionCount] = useState(1);
   const [optionsText, setOptionsText] = useState<string[]>([]);
   const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([]);
-    const [fragmentCount, setFragmentCount] = useState(0);
-      const [fragmentText, setFragmentText] = useState<string[]>([]);
+  const [fragmentCount, setFragmentCount] = useState(0);
+  const [fragmentText, setFragmentText] = useState<string[]>([]);
 
   const handleFormSubmit = () => {
     setDisplayResult(true);
@@ -35,7 +35,6 @@ function CreateQuestionsFormComponent() {
             onChange={(e) => setText(e.target.value)}
           />
         </Form.Group>
-
         {/* option input */}
         <Form.Group>
           <Form.Label>
@@ -107,7 +106,6 @@ function CreateQuestionsFormComponent() {
             />
           </Form.Label>
         </Form.Group>
-
         <Button type="submit">Submit</Button>
       </Form>
       {displayResult && (
