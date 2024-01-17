@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import QuestionProps from "./interfaces/QuestionPropsInterface";
 import OptionBody from "./interfaces/OptionBody";
+import FragmentBody from "./interfaces/FragmentBody";
 
 function CreateQuestionsComponent(props: QuestionProps) {
   const [result, setResult] = useState<string>();
@@ -31,11 +32,20 @@ function CreateQuestionsComponent(props: QuestionProps) {
           };
         }
 
+        let fragments: FragmentBody[] = [];
+
+        for (let i = 0; i < props.fragmentCount; i++) {
+          fragments[i] = {
+            text: props.fragmentText[i],
+          };
+        }
+
         const createQuestion = await axios.post(
           "http://localhost:8080/api/v1/questions/create",
           {
             text: props.text,
             options: options,
+            fragments: fragments,
             explanation: props.explanation,
           }
         );
