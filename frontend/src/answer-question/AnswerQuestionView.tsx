@@ -12,6 +12,7 @@ import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
 import Header from "../styled-components/header/Header";
 import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
+import Subheader from "../styled-components/subheader/Subheader";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
@@ -54,6 +55,9 @@ const AnswerQuestionView = () => {
   return (
     <section className={classes.AnswerQuestionView}>
       <Header text={question.text} />
+      {question.correct > 1 && (
+        <Subheader text={`Select ${question.correct} options`} />
+      )}
       <AnswerQuestionFragment
         text={question.fragments.map((fragment) => fragment.text)}
       />
