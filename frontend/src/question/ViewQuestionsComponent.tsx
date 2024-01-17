@@ -14,7 +14,7 @@ function ViewQuestionsComponent() {
     };
 
     fetchData();
-  }, []);
+  }, []); 
 
   return (
     <>
@@ -22,6 +22,9 @@ function ViewQuestionsComponent() {
         {questions.map((question) => (
           <div key={question.id}>
             <h3>{question.text}</h3>
+            {question.fragments.map((fragment) => 
+              fragment.text.split("\\n").map((line) => <pre key={line}>{line}</pre>)
+            )}
             <ol>
               {question.options.map((option) => (
                 <li key={option.id}>{option.text}</li>

@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.option.Option;
 
 @Entity
@@ -26,16 +27,19 @@ public class Question {
   @OneToMany
   private List<Option> options;
   private String explanation;
-  // private List<Fragment> fragments
+
+  @OneToMany
+  private List<Fragment> fragments;
   // private List<Tag> tags;
 
   public List<Option> getCorrect() {
     return options.stream().filter(Option::getIsCorrect).toList();
   }
 
-  public Question(String text, List<Option> options, String explanation) {
+  public Question(String text, List<Option> options, String explanation, List<Fragment> fragments) {
     this.text = text;
     this.options = options;
     this.explanation = explanation;
+    this.fragments = fragments;
   }
 }
