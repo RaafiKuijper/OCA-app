@@ -45,4 +45,16 @@ public class QuestionService {
     final Question question = new Question(text, options, explanation);
     return questionRepository.save(question);
   }
+
+  public Optional<Question> getById(Long id) {
+    return questionRepository.findById(id);
+  }
+
+  public Question createQuestion(Question question) {
+    for (Option option :
+        question.getOptions()) {
+      optionRepository.save(option);
+    }
+    return questionRepository.save(question);
+  }
 }

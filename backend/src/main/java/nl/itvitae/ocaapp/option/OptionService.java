@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.option;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,11 @@ public class OptionService {
     return optionRepository.findAllById(ids);
   }
 
+  public Optional<Option> getById(Long id) {
+    return optionRepository.findById(id);
+  }
+
+  public Option createOption(Option option) {
+    return optionRepository.save(option);
+  }
 }
