@@ -17,4 +17,9 @@ public class TagController {
   public Iterable<Tag> findAll() {
     return tagService.getAllTags();
   }
+
+  @PostMapping("/add")
+  public Tag addTag(@RequestBody Tag tag) {
+    return tagService.addTag(tag);
+  }
 }

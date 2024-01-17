@@ -12,8 +12,10 @@ public class TagService {
   TagRepository tagRepository;
 
   public Iterable<Tag> getAllTags() {
-    System.out.println("Currently in service: getAllTags");
     return tagRepository.findAll();
   }
 
+  public Tag addTag(Tag tag) {
+    return tagRepository.save(tag);
+  }
 }
