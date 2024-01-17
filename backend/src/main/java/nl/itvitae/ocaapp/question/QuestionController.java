@@ -1,6 +1,5 @@
 package nl.itvitae.ocaapp.question;
 
-import java.util.Optional;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,10 +33,13 @@ public class QuestionController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Question> getById(@PathVariable long id) {
-    final Optional<Question> optionalQuestion = questionService.getById(id);
-    return optionalQuestion.map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+  public ResponseEntity<QuestionResponse> getById(@PathVariable long id) {
+    final QuestionResponse questionResponse = questionService.getById(id);
+    if (questionResponse == null) {
+      return ResponseEntity.notFound().build();
+    } else {
+      return ResponseEntity.ok(questionResponse);
+    }
   }
 
   @PostMapping("/create")

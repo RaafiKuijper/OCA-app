@@ -5,6 +5,7 @@ export default interface Question {
   text: string;
   options: Option[];
   explanation: string;
+  correct: number;
 }
 
 export const emptyQuestion: Question = {
@@ -12,5 +13,5 @@ export const emptyQuestion: Question = {
   text: "",
   options: [],
   explanation: "",
+  correct: 0,
 };
-
