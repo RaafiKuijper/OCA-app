@@ -4,13 +4,13 @@ import axios, { AxiosResponse } from "axios";
 import Question, {
   emptyQuestion,
 } from "../question/interfaces/QuestionInterface";
-import AnswerQuestionHeader from "./AnswerQuestionHeader";
 import AnswerQuestionSubmit from "./answer-question-submit/AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFeedback";
 import AnswerResponse from "./answer-question-models/AnswerResponse";
 import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
+import Header from "../styled-components/header/Header";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
@@ -44,7 +44,7 @@ const AnswerQuestionView = () => {
 
   return (
     <section className={classes.AnswerQuestionView}>
-      <AnswerQuestionHeader text={question.text} />
+      <Header text={question.text} />
       <AnswerQuestionFragment
         text={question.fragments.map((fragment) => fragment.text)}
       />

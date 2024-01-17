@@ -58,8 +58,9 @@ public class QuestionService {
     final long correct = question.getOptions().stream()
         .filter(Option::getIsCorrect)
         .count();
+    final List<Fragment> fragments = question.getFragments();
 
-    return new QuestionResponse(qid, text, options, explanation, correct);
+    return new QuestionResponse(qid, text, options, explanation, correct, fragments);
   }
 
   public Question createTestQuestion() {

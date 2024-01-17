@@ -1,4 +1,4 @@
-import classes from "../styles/answer-question.module.css";
+import classes from "../../styles/answer-question.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 
 const AnswerQuestionFragment = (props: { text: string[] }) => {
