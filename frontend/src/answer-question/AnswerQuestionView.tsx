@@ -10,6 +10,8 @@ import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFeedback";
 import AnswerResponse from "./answer-question-models/AnswerResponse";
 import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
+import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
+
 const AnswerQuestionView = () => {
   const { id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
@@ -43,6 +45,9 @@ const AnswerQuestionView = () => {
   return (
     <section className={classes.AnswerQuestionView}>
       <AnswerQuestionHeader text={question.text} />
+      <AnswerQuestionFragment
+        text={question.fragments.map((fragment) => fragment.text)}
+      />
       <AnswerQuestionList
         options={question.options}
         selectedOptions={selectedOptions}
