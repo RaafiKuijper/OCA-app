@@ -42,4 +42,10 @@ public class Question {
     this.explanation = explanation;
     this.fragments = fragments;
   }
+
+  public Question(String text, List<Option> options, String explanation) {
+    this.text = text;
+    this.options = options;
+    this.explanation = explanation;
+  }
 }
