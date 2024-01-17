@@ -8,6 +8,8 @@ import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
 import AnswerResponse from "./AnswerResponse";
+import Fragment from "../question/interfaces/FragmentInterface";
+import AnswerQuestionFragment from "./AnswerQuestionFragment";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
@@ -42,6 +44,7 @@ const AnswerQuestionView = () => {
   return (
     <section className={classes.AnswerQuestionView}>
       <AnswerQuestionHeader text={question.text} />
+      <AnswerQuestionFragment text={question.fragments.map((fragment) => fragment.text)} />
       <AnswerQuestionList
         options={question.options}
         selectedOptions={selectedOptions}
