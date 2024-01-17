@@ -28,16 +28,21 @@ public class QuestionController {
     return ResponseEntity.ok(questionService.getAll());
   }
 
-  @GetMapping("/test")
-  public ResponseEntity<Question> addTestQuestion() {
-    return ResponseEntity.ok(questionService.createTestQuestion());
-  }
-
   @GetMapping("/{id}")
   public ResponseEntity<Question> getById(@PathVariable long id) {
     final Optional<Question> optionalQuestion = questionService.getById(id);
     return optionalQuestion.map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @GetMapping("/count")
+  public ResponseEntity<QuestionCount> count() {
+    return ResponseEntity.ok(questionService.getCount());
+  }
+
+  @GetMapping("/test")
+  public ResponseEntity<Question> addTestQuestion() {
+    return ResponseEntity.ok(questionService.createTestQuestion());
   }
 
   @PostMapping("/create")
