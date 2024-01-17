@@ -8,7 +8,6 @@ import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
 import AnswerResponse from "./AnswerResponse";
-import Fragment from "../question/interfaces/FragmentInterface";
 import AnswerQuestionFragment from "./AnswerQuestionFragment";
 
 const AnswerQuestionView = () => {

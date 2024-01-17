@@ -27,7 +27,7 @@ public class QuestionService {
   }
 
   public Question createTestQuestion() {
-    final String text = "this is a question, or it it?";
+    final String text = "this is a question, or is it?";
     final List<Option> options = optionRepository.saveAll(
         List.of((new Option("incorrect answer", false)),
             (new Option("invalid answer", false)),

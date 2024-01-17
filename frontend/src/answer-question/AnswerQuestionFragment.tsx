@@ -1,3 +1,6 @@
+import classes from "../styles/answer-question.module.css";
+import { Col, Container, Row } from "react-bootstrap";
+
 const AnswerQuestionFragment = (props: { text: string[] }) => {
   return (
     <section
@@ -6,13 +9,17 @@ const AnswerQuestionFragment = (props: { text: string[] }) => {
         fontSize: "1.2em",
       }}
     >
-      <div>
+      <Container>
         {props.text.map((fragment) =>
-          fragment
-            .split("\\n")
-            .map((line: string) => <pre key={line}>{line}</pre>)
+          fragment.split("\\n").map((line: string) => (
+            <Row>
+              <Col className={classes.answerQuestionFragment}>
+                <pre key={line}>{line}</pre>
+              </Col>
+            </Row>
+          ))
         )}
-      </div>
+      </Container>
     </section>
   );
 };
