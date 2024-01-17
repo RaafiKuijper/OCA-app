@@ -27,11 +27,6 @@ public class QuestionController {
     return ResponseEntity.ok(questionService.getAll());
   }
 
-  @GetMapping("/test")
-  public ResponseEntity<Question> addTestQuestion() {
-    return ResponseEntity.ok(questionService.createTestQuestion());
-  }
-
   @GetMapping("/{id}")
   public ResponseEntity<QuestionResponse> getById(@PathVariable long id) {
     final QuestionResponse questionResponse = questionService.getById(id);
@@ -40,6 +35,16 @@ public class QuestionController {
     } else {
       return ResponseEntity.ok(questionResponse);
     }
+  }
+
+  @GetMapping("/count")
+  public ResponseEntity<QuestionCount> count() {
+    return ResponseEntity.ok(questionService.getCount());
+  }
+
+  @GetMapping("/test")
+  public ResponseEntity<Question> addTestQuestion() {
+    return ResponseEntity.ok(questionService.createTestQuestion());
   }
 
   @PostMapping("/create")
