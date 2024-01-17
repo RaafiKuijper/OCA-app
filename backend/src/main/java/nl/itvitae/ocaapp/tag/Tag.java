@@ -19,12 +19,12 @@ public class Tag {
   private Long id;
 
   private String name;
-  private String chapterOrParagraph;
-  private String context;
+  private String chapter;
+  private String summary;
 
-  public Tag(String name, String chapterOrParagraph, String context) {
+  public Tag(String name, String chapter, String summary) {
     this.name = name;
-    this.chapterOrParagraph = chapterOrParagraph;
-    this.context = context;
+    this.chapter = chapter;
+    this.summary = summary;
   }
 }

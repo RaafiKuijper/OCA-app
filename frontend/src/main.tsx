@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AnswerQuestionView from "./answer-question/AnswerQuestionView.tsx";
+import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
+import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -11,7 +13,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/answer-question/:id" element={<AnswerQuestionView />} />
-        <Route path="/create-question" element={<CreateQuestionsFormComponent />} />
+        <Route path="/create-quiz" element={<CreateQuizView />} />
+        <Route path="/make-quiz/:id" element={<MakeQuizView />} />
+        <Route
+          path="/create-question"
+          element={<CreateQuestionsFormComponent />}
+        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

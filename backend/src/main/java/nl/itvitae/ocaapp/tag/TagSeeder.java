@@ -15,7 +15,11 @@ public class TagSeeder implements CommandLineRunner {
   public void run(String... args) throws Exception {
     if (tagRepository.count() == 0) {
       tagRepository.saveAll(
-          List.of(new Tag("Loops", "5.1", "Loopy"), new Tag("Inheritance", "6", "childy parenty")));
+          List.of(
+              new Tag("Loops", "5.1", "Loops are constructs to repeat certain lines of code."),
+              new Tag("Inheritance", "6",
+                  "Through inheritance files can communicate with eachother")
+          ));
     }
   }
 }
