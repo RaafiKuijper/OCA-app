@@ -1,4 +1,4 @@
-import Question from "../question/questionModels";
+import Question from "../question/interfaces/QuestionInterface";
 
 type Quiz = {
   id: number;

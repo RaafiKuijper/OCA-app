@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Tag from "./TagInterface";
+import classes from "../styles/Create-Tag.module.css";
 
 function ViewTagComponent(props: { count: number }) {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -15,7 +16,7 @@ function ViewTagComponent(props: { count: number }) {
   }, [props.count]);
 
   return (
-    <>
+    <p className={classes.createTagView}>
       Tags in database:{" "}
       {tags.map((tag) => (
         <p key={tag.id}>
@@ -24,7 +25,7 @@ function ViewTagComponent(props: { count: number }) {
           {tag.summary}
         </p>
       ))}
-    </>
+    </ p>
   );
 }
 

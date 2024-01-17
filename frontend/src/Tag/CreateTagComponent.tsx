@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ViewTagComponent from "./ViewTagComponent";
+import Header from "../styled-components/header/Header";
+import classes from "../styles/Create-Tag.module.css";
 
 function CreateTagComponent() {
   const [tagName, setTagName] = useState<string>("");
@@ -28,7 +30,10 @@ function CreateTagComponent() {
 
   return (
     <>
+      <Header text="OCA-app tags" />
+      <br />
       <form
+        className={classes.createTagView}
         onSubmit={(e) => {
           e.preventDefault();
           postData();
@@ -37,6 +42,7 @@ function CreateTagComponent() {
         Enter a name for the tag:
         <br />
         <input
+          className={classes.createTagInput}
           type="text"
           placeholder="Tag name"
           onChange={(e) => setTagName(e.target.value)}
@@ -46,6 +52,7 @@ function CreateTagComponent() {
         found:
         <br />
         <input
+          className={classes.createTagInput}
           type="text"
           placeholder="Tag chapter"
           onChange={(e) => setTagChapter(e.target.value)}
@@ -54,6 +61,7 @@ function CreateTagComponent() {
         Summarize the basic principles of the tag:
         <br />
         <input
+          className={classes.createTagInput}
           type="text"
           placeholder="Tag context"
           onChange={(e) => setTagSummary(e.target.value)}
