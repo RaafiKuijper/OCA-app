@@ -60,16 +60,15 @@ function CreateTagComponent() {
         <br />
         Summarize the basic principles of the tag:
         <br />
-        <input
-          className={classes.createTagInput}
-          type="text"
-          placeholder="Tag context"
-          onChange={(e) => setTagSummary(e.target.value)}
-        ></input>
+        <textarea className={classes.createTagInput} placeholder="Tag context" onChange={(e) => setTagSummary(e.target.value)}>
+        </textarea>
         <br />
-        <button type="submit">Submit</button>
+        <button className={classes.tagSubmitButton} type="submit">
+          Submit
+        </button>
+        <p>{dispText}</p>
       </form>
-      <p>{dispText}</p>
+
       <ViewTagComponent count={count} />
     </>
   );
