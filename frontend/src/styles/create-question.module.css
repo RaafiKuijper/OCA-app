@@ -1,0 +1,28 @@
+.createQuestionForm {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: center;
+  justify-self: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: aqua;
+}
+
+.createQuestionFormInput {
+    background-color: #f1f1f1;
+}
+
+.createQuestionFormOption {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 2em;
+}
+
+.createQuestionFormIsCorrectButton {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}

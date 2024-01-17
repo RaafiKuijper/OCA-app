@@ -4,6 +4,7 @@ import CreateQuestionsComponent from "./CreateQuestionComponent";
 import { Button, Form } from "react-bootstrap";
 import Header from "../styled-components/header/Header";
 import CreateFragmentComponent from "./CreateFragmentComponent";
+import classes from "../styles/create-question.module.css";
 
 function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
@@ -23,6 +24,7 @@ function CreateQuestionsFormComponent() {
     <>
       <Header text="Create Question" />
       <Form
+        className={classes.createQuestionForm}
         onSubmit={(e) => {
           e.preventDefault();
           handleFormSubmit();
@@ -32,11 +34,42 @@ function CreateQuestionsFormComponent() {
         <Form.Group>
           <Form.Label>question:</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="question"
+            className={classes.createQuestionFormInput}
+            as="textarea"
+            placeholder="this is an interesting question"
             onChange={(e) => setText(e.target.value)}
           />
+
+          {/* fragment input */}
+          <Form.Group>
+            <p>add fragment: </p>
+            <Form.Label>
+              {[...Array(fragmentCount)].map((_, index) => (
+                <CreateFragmentComponent
+                  key={index}
+                  index={index}
+                  text={fragmentText}
+                  setText={setFragmentText}
+                />
+              ))}
+
+              {/* add/remove fragments */}
+              <Button
+                type="button"
+                onClick={() => setFragmentCount(fragmentCount + 1)}
+              >
+                +
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setFragmentCount(fragmentCount - 1)}
+              >
+                -
+              </Button>
+            </Form.Label>
+          </Form.Group>
         </Form.Group>
+
         {/* option input */}
         <Form.Group>
           <Form.Label>
@@ -65,35 +98,6 @@ function CreateQuestionsFormComponent() {
                 -
               </Button>
             )}
-          </Form.Label>
-        </Form.Group>
-
-        {/* fragment input */}
-        <Form.Group>
-          <p>add fragment: </p>
-          <Form.Label>
-            {[...Array(fragmentCount)].map((_, index) => (
-              <CreateFragmentComponent
-                key={index}
-                index={index}
-                text={fragmentText}
-                setText={setFragmentText}
-              />
-            ))}
-
-            {/* add/remove fragments */}
-            <Button
-              type="button"
-              onClick={() => setFragmentCount(fragmentCount + 1)}
-            >
-              +
-            </Button>
-            <Button
-              type="button"
-              onClick={() => setFragmentCount(fragmentCount - 1)}
-            >
-              -
-            </Button>
           </Form.Label>
         </Form.Group>
 
