@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
-import Question, { emptyQuestion } from "../question/interfaces/QuestionInterface";
+import Question, {
+  emptyQuestion,
+} from "../question/interfaces/QuestionInterface";
 import AnswerQuestionHeader from "./AnswerQuestionHeader";
-import AnswerQuestionList from "./AnswerQuestionList";
-import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
+import AnswerQuestionSubmit from "./answer-question-submit/AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
-import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
-import AnswerResponse from "./AnswerResponse";
-
+import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFeedback";
+import AnswerResponse from "./answer-question-models/AnswerResponse";
+import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 const AnswerQuestionView = () => {
   const { id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
@@ -46,6 +47,7 @@ const AnswerQuestionView = () => {
         options={question.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
+        correct={question.correct}
       />
       <AnswerQuestionSubmit submitAnswer={submitAnswer} />
       <AnswerQuestionFeedback score={score} explanation={explanation} />
