@@ -11,10 +11,10 @@ const AnswerQuestionFragment = (props: { text: string[] }) => {
     >
       <Container>
         {props.text.map((fragment) =>
-          fragment.split("\\n").map((line: string) => (
-            <Row>
+          fragment.split("\\n").map((line, index) => (
+            <Row key={index}>
               <Col className={classes.answerQuestionFragment}>
-                <pre key={line}>{line}</pre>
+                <pre>{line}</pre>
               </Col>
             </Row>
           ))

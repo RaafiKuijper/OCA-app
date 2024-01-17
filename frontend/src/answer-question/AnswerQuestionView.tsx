@@ -11,6 +11,7 @@ import AnswerResponse from "./answer-question-models/AnswerResponse";
 import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
 import Header from "../styled-components/header/Header";
+import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
@@ -18,8 +19,16 @@ const AnswerQuestionView = () => {
   const [question, setQuestion] = useState<Question>(emptyQuestion);
   const [score, setScore] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [hint, setHint] = useState("");
 
   const submitAnswer = async () => {
+    if (selectedOptions.length !== question.correct) {
+      setHint(`Should select ${question.correct} options`);
+      return;
+    }
+
+    setHint("");
+
     const body = {
       selectedIds: selectedOptions,
       questionId: id,
@@ -55,6 +64,7 @@ const AnswerQuestionView = () => {
         correct={question.correct}
       />
       <AnswerQuestionSubmit submitAnswer={submitAnswer} />
+      {hint && <AnswerQuestionHint hint={hint} />}
       <AnswerQuestionFeedback score={score} explanation={explanation} />
     </section>
   );
