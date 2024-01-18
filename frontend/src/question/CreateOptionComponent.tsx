@@ -1,5 +1,6 @@
-import { Form } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import OptionPropsInterface from "./interfaces/OptionPropsInterface";
+import classes from "../styles/create-question.module.css";
 
 function CreateOptionComponent(props: OptionPropsInterface) {
   const updateText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,19 +19,34 @@ function CreateOptionComponent(props: OptionPropsInterface) {
   };
 
   return (
-    <>
+    <InputGroup className={classes.createQuestionFormOptions}>
       <div>
-        <Form.Label>
-          option {props.index + 1}:
-          <Form.Control
-            type="text"
-            placeholder="option"
-            onChange={updateText}
-          />
-          <Form.Check type="checkbox" onChange={updateIsCorrect} />
-        </Form.Label>
+        <InputGroup.Text className={classes.createQuestionFormOption}>
+          <div>Option {props.index + 1}:</div>
+        </InputGroup.Text>
+        <Form.Control
+          style={{
+            paddingBottom: "5%",
+          }}
+          type="text"
+          placeholder="option"
+          onChange={updateText}
+        />
       </div>
-    </>
+      <div>
+        <div className={classes.createQuestionFormIsCorrectButton}>
+          <InputGroup.Text>is correct?</InputGroup.Text>
+          <InputGroup.Checkbox
+            style={{
+              marginLeft: "30%",
+              width: "1.5em",
+              height: "1.5em",
+            }}
+            onChange={updateIsCorrect}
+          />
+        </div>
+      </div>
+    </InputGroup>
   );
 }
 
