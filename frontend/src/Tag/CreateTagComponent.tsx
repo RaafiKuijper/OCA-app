@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ViewTagComponent from "./ViewTagComponent";
-import Header from "../styled-components/header/Header";
+import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
 
 function CreateTagComponent() {
@@ -60,8 +60,11 @@ function CreateTagComponent() {
         <br />
         Summarize the basic principles of the tag:
         <br />
-        <textarea className={classes.createTagInput} placeholder="Tag context" onChange={(e) => setTagSummary(e.target.value)}>
-        </textarea>
+        <textarea
+          className={classes.createTagInput}
+          placeholder="Tag context"
+          onChange={(e) => setTagSummary(e.target.value)}
+        ></textarea>
         <br />
         <button className={classes.tagSubmitButton} type="submit">
           Submit
