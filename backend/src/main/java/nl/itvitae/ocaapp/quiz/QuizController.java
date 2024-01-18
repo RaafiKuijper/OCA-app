@@ -2,7 +2,6 @@ package nl.itvitae.ocaapp.quiz;
 
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.ocaapp.question.QuestionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +40,11 @@ public class QuizController {
   }
 
   @GetMapping("/{id}/next")
-  public ResponseEntity<QuestionResponse> getNextQuestion(@PathVariable long id) {
+  public ResponseEntity<NextResponse> getNextQuestionId(@PathVariable long id) {
     if (quizService.getNextQuestion(id) == null) {
       return ResponseEntity.notFound().build();
     } else {
-      return ResponseEntity.ok(quizService.getNextQuestion(id));
+      return ResponseEntity.ok(new NextResponse(quizService.getNextQuestion(id)));
     }
   }
 }

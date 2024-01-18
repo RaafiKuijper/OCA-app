@@ -3,7 +3,6 @@ package nl.itvitae.ocaapp.quiz;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.ocaapp.question.Question;
-import nl.itvitae.ocaapp.question.QuestionResponse;
 import nl.itvitae.ocaapp.question.QuestionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,7 @@ public class QuizService {
     return new QuizResponse(qid, questions);
   }
 
-  public QuestionResponse getNextQuestion(long id) {
+  public Long getNextQuestion(long id) {
     if (quizRepository.findById(id).isEmpty()) {
       return null;
     }
@@ -44,6 +43,6 @@ public class QuizService {
     final int currentAnswer = quiz.getAnswers().size();
     final Question currentQuestion = quiz.getQuestions().get(currentAnswer);
 
-    return questionService.getById(currentQuestion.getId());
+    return currentQuestion.getId();
   }
 }
