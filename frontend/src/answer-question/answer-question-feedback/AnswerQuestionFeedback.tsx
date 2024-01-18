@@ -18,7 +18,18 @@ const AnswerQuestionFeedback = (props: {
       >
         {props.score}
       </p>
-      <p>{props.explanation}</p>
+      {props.explanation.split("\n").map((explanation, index) => (
+        <p
+          key={index}
+          style={{
+            lineHeight: "0.8em",
+            fontWeight: "normal",
+            textAlign: "left",
+          }}
+        >
+          {explanation}
+        </p>
+      ))}
     </section>
   );
 };

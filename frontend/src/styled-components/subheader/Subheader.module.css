@@ -1,0 +1,12 @@
+.Subheader {
+  margin: 0em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 0.2em;
+  background-color: rgb(187, 64, 64);
+  border-bottom: 0.2em solid rgb(99, 2, 2);
+  margin-top: -1.25em;
+  margin-bottom: 1em;
+  color: black;
+  font-weight: bold;
+}

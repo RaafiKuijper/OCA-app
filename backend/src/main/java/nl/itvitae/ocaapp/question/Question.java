@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Question {
   // should later be changed to ManyToMany to avoid duplicate data
   @OneToMany
   private List<Option> options;
+  @Lob
   private String explanation;
 
   @OneToMany
@@ -47,5 +49,6 @@ public class Question {
     this.text = text;
     this.options = options;
     this.explanation = explanation;
+    this.fragments = List.of();
   }
 }
