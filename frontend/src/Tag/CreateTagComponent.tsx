@@ -9,7 +9,7 @@ function CreateTagComponent() {
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagSummary, setTagSummary] = useState<string>("");
   const [dispText, setDispText] = useState("");
-  const [count, setCount] = useState<number>(0); // count is used to only show dispText upon creation of a tag
+  const [count, setCount] = useState<number>(0); // count is used to only show dispText on submit
 
   const postData = async () => {
     if (!tagName || !tagChapter || !tagSummary) {
