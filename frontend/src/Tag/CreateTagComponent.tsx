@@ -30,7 +30,7 @@ function CreateTagComponent() {
 
   return (
     <>
-      <Header text="OCA-app tags" />
+      <Header text="Tags" />
       <br />
       <form
         className={classes.createTagView}
