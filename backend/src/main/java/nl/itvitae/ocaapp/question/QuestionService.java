@@ -8,6 +8,7 @@ import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.fragment.FragmentRepository;
 import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
+import nl.itvitae.ocaapp.option.OptionResponse;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class QuestionService {
     return questionRepository.findAll();
   }
 
-  public Optional<Question> getById(long id) {
+  public Optional<Question> getQuestionById(long id) {
     return questionRepository.findById(id);
   }
 
@@ -36,6 +37,30 @@ public class QuestionService {
     List<Question> questions = new ArrayList<>(questionRepository.findAll());
     Collections.shuffle(questions);
     return questions.subList(0, questionAmount);
+  }
+
+  public QuestionResponse getById(long id) {
+    if (questionRepository.findById(id).isEmpty()) {
+      return null;
+    }
+
+    final Question question = questionRepository.findById(id).get();
+    final long qid = question.getId();
+    final String text = question.getText();
+
+    final List<OptionResponse> options = question.getOptions().stream().map(option -> {
+      final long oid = option.getId();
+      final String oText = option.getText();
+      return new OptionResponse(oid, oText);
+    }).toList();
+
+    final String explanation = question.getExplanation();
+    final long correct = question.getOptions().stream()
+        .filter(Option::getIsCorrect)
+        .count();
+    final List<Fragment> fragments = question.getFragments();
+
+    return new QuestionResponse(qid, text, options, explanation, correct, fragments);
   }
 
   public Question createTestQuestion() {
@@ -62,10 +87,6 @@ public class QuestionService {
     );
     final Question question = new Question(text, options, explanation, fragments);
     return questionRepository.save(question);
-  }
-
-  public Optional<Question> getById(Long id) {
-    return questionRepository.findById(id);
   }
 
   public Question createQuestion(Question question) {

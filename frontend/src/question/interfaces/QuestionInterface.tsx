@@ -7,6 +7,7 @@ export default interface Question {
   fragments: Fragment[];
   options: Option[];
   explanation: string;
+  correct: number;
 }
 
 export const emptyQuestion: Question = {
@@ -15,4 +16,5 @@ export const emptyQuestion: Question = {
   fragments: [],
   options: [],
   explanation: "",
+  correct: 0,
 };

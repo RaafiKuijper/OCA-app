@@ -1,8 +1,8 @@
-import Question from "../question/interfaces/QuestionInterface";
+import QuizQuestion from "./QuizQuestion";
 
 type Quiz = {
   id: number;
-  questions: Question[];
+  questions: QuizQuestion[];
 };
 
 export default Quiz;
