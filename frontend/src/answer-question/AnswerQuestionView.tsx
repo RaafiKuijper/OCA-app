@@ -10,9 +10,9 @@ import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFee
 import AnswerResponse from "./answer-question-models/AnswerResponse";
 import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
-import Header from "../styled-components/header/Header";
+import Header from "../headers/header/Header";
 import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
-import Subheader from "../styled-components/subheader/Subheader";
+import Subheader from "../headers/subheader/Subheader";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();

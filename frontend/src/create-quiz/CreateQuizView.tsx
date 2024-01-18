@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../styled-components/header/Header";
+import Header from "../headers/header/Header";
 import CreateQuizQuestionCount from "./CreateQuizQuestionCount";
 import axios from "axios";
 import QuestionCount from "./QuestionCount";
@@ -21,7 +21,7 @@ const CreateQuizView = () => {
 
   return (
     <>
-      <Header text="Create Quiz View" />;
+      <Header text="Quizzes" />;
       <CreateQuizQuestionCount questionCount={questionCount} />
       <CreateQuizButton />
     </>

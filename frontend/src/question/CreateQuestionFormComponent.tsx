@@ -2,9 +2,9 @@ import { useState } from "react";
 import CreateOptionComponent from "./CreateOptionComponent";
 import CreateQuestionsComponent from "./CreateQuestionComponent";
 import { Button, Form } from "react-bootstrap";
-import Header from "../styled-components/header/Header";
 import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
+import Header from "../headers/header/Header";
 
 function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
@@ -22,7 +22,7 @@ function CreateQuestionsFormComponent() {
 
   return (
     <>
-      <Header text="Create Question" />
+      <Header text="Questions" />
       <Form
         className={classes.createQuestionForm}
         onSubmit={(e) => {

@@ -16,16 +16,16 @@ function ViewTagComponent(props: { count: number }) {
   }, [props.count]);
 
   return (
-    <p className={classes.createTagView}>
+    <div className={classes.createTagView}>
       Tags in database:{" "}
       {tags.map((tag) => (
         <p key={tag.id}>
           {tag.name} OCA certifaction guide chapter: {tag.chapter}.
           <br />
           {tag.summary}
-        </p>
+        </ p>
       ))}
-    </ p>
+    </ div>
   );
 }
 
