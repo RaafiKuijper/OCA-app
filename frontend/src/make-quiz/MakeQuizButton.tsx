@@ -11,7 +11,7 @@ const MakeQuizButton = (props: { id: number }) => {
       `http://localhost:8080/api/v1/quiz/${props.id}/next`
     );
     const data: NextAnswer = result.data;
-    navigate(`/answer-question/${data.id}`);
+    navigate(`/make-quiz/${props.id}/${data.id}`);
   };
 
   return (

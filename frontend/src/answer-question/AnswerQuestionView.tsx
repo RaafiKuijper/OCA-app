@@ -15,7 +15,7 @@ import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
 import Subheader from "../headers/subheader/Subheader";
 
 const AnswerQuestionView = () => {
-  const { id } = useParams();
+  const { quizId, id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [question, setQuestion] = useState<Question>(emptyQuestion);
   const [score, setScore] = useState("");
@@ -36,7 +36,14 @@ const AnswerQuestionView = () => {
       selectedIds: selectedOptions,
       questionId: id,
     };
-    const uri = "http://localhost:8080/api/v1/answer/submit";
+
+    let uri;
+    if (quizId) {
+      uri = `http://localhost:8080/api/v1/quiz/${quizId}/answer`;
+    } else {
+      uri = "http://localhost:8080/api/v1/answer/submit";
+    }
+
     const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
     setScore(result.data.passed ? "Passed" : "Failed");
     setExplanation(result.data.explanation);
@@ -51,7 +58,7 @@ const AnswerQuestionView = () => {
       setQuestion(questionData);
     };
     fetchQuestion(id!);
-  }, [id]);
+  }, [id, quizId]);
 
   return (
     <section className={classes.AnswerQuestionView}>
