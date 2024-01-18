@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Quiz from "../create-quiz/Quiz";
 import Header from "../styled-components/header/Header";
 import MakeQuizList from "./MakeQuizList";
+import MakeQuizButton from "./MakeQuizButton";
 
 const MakeQuizView = () => {
   const emptyQuiz: Quiz = { id: 0, questions: [] };
@@ -24,6 +25,7 @@ const MakeQuizView = () => {
       <Header text={`Quiz ${id}`} />
       <h2 style={{ textAlign: "center" }}>Questions</h2>
       <MakeQuizList questions={quiz.questions} />
+      <MakeQuizButton />
     </article>
   );
 };
