@@ -12,12 +12,17 @@ function CreateTagComponent() {
   const [count, setCount] = useState<number>(0); // count is used to only show this message upon creation of a tag
 
   const postData = async () => {
-    await axios.post(`http://localhost:8080/api/v1/tags/add`, {
-      name: tagName,
-      chapter: tagChapter,
-      summary: tagSummary,
-    });
-    setCount(count + 1);
+    if (!tagName || !tagChapter || !tagSummary) {
+      console.error("Can't submit empty Tag.");
+      setDispText(`Please enter a tag name, the chapter or paragraph it can be read about and a basic summary.`);
+    } else {
+      await axios.post(`http://localhost:8080/api/v1/tags/add`, {
+        name: tagName,
+        chapter: tagChapter,
+        summary: tagSummary,
+      });
+      setCount(count + 1);
+    }
   };
 
   useEffect(() => {
@@ -60,8 +65,11 @@ function CreateTagComponent() {
         <br />
         Summarize the basic principles of the tag:
         <br />
-        <textarea className={classes.createTagInput} placeholder="Tag context" onChange={(e) => setTagSummary(e.target.value)}>
-        </textarea>
+        <textarea
+          className={classes.createTagInput}
+          placeholder="Tag summary"
+          onChange={(e) => setTagSummary(e.target.value)}
+        ></textarea>
         <br />
         <button className={classes.tagSubmitButton} type="submit">
           Submit
