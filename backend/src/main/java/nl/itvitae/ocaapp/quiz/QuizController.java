@@ -31,11 +31,11 @@ public class QuizController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Quiz> getQuizById(@PathVariable long id) {
-    if (quizService.getQuizById(id).isPresent()) {
-      return ResponseEntity.ok(quizService.getQuizById(id).get());
-    } else {
+  public ResponseEntity<QuizResponse> getQuizById(@PathVariable long id) {
+    if (quizService.getQuizById(id) == null) {
       return ResponseEntity.notFound().build();
+    } else {
+      return ResponseEntity.ok(quizService.getQuizById(id));
     }
   }
 }

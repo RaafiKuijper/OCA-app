@@ -50,7 +50,8 @@ function CreateQuestionsComponent(props: QuestionProps) {
           }
         );
 
-        if (createQuestion.status == 201) setResult("Question Succesfully added");
+        if (createQuestion.status == 201)
+          setResult("Question succesfully added");
         else setResult("Could not add question");
       }
     };
@@ -59,7 +60,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
 
   return (
     <>
-      <p style={{textAlign: "center"}}>{result}</p>
+      <p style={{ textAlign: "center" }}>{result}</p>
     </>
   );
 }

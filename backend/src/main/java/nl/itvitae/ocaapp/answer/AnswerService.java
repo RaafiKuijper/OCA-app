@@ -19,7 +19,7 @@ public class AnswerService {
   private final OptionService optionService;
 
   public AnswerResult submitAnswer(AnswerBody body) {
-    final Optional<Question> optionalQuestion = questionService.getById(body.questionId());
+    final Optional<Question> optionalQuestion = questionService.getQuestionById(body.questionId());
     if (optionalQuestion.isEmpty()) {
       return null;
     }

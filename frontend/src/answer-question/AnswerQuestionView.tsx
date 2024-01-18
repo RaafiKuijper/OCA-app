@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
-import Question, { emptyQuestion } from "../question/interfaces/QuestionInterface";
-import AnswerQuestionHeader from "./AnswerQuestionHeader";
-import AnswerQuestionList from "./AnswerQuestionList";
-import AnswerQuestionSubmit from "./AnswerQuestionSubmit";
+import Question, {
+  emptyQuestion,
+} from "../question/interfaces/QuestionInterface";
+import AnswerQuestionSubmit from "./answer-question-submit/AnswerQuestionSubmit";
 import classes from "../styles/answer-question.module.css";
-import AnswerQuestionFeedback from "./AnswerQuestionFeedback";
-import AnswerResponse from "./AnswerResponse";
-import AnswerQuestionFragment from "./AnswerQuestionFragment";
+import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFeedback";
+import AnswerResponse from "./answer-question-models/AnswerResponse";
+import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
+import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
+import Header from "../styled-components/header/Header";
+import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
+import Subheader from "../styled-components/subheader/Subheader";
 
 const AnswerQuestionView = () => {
   const { id } = useParams();
@@ -16,14 +20,23 @@ const AnswerQuestionView = () => {
   const [question, setQuestion] = useState<Question>(emptyQuestion);
   const [score, setScore] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [hint, setHint] = useState("");
 
   const submitAnswer = async () => {
+    if (question.correct > 1 && selectedOptions.length !== question.correct) {
+      setScore("");
+      setExplanation("");
+      setHint(`Should select ${question.correct} options`);
+      return;
+    }
+
+    setHint("");
+
     const body = {
       selectedIds: selectedOptions,
       questionId: id,
     };
     const uri = "http://localhost:8080/api/v1/answer/submit";
-    console.log(body);
     const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
     setScore(result.data.passed ? "Passed" : "Failed");
     setExplanation(result.data.explanation);
@@ -42,14 +55,21 @@ const AnswerQuestionView = () => {
 
   return (
     <section className={classes.AnswerQuestionView}>
-      <AnswerQuestionHeader text={question.text} />
-      <AnswerQuestionFragment text={question.fragments.map((fragment) => fragment.text)} />
+      <Header text={question.text} />
+      {question.correct > 1 && (
+        <Subheader text={`Select ${question.correct} options`} />
+      )}
+      <AnswerQuestionFragment
+        text={question.fragments.map((fragment) => fragment.text)}
+      />
       <AnswerQuestionList
         options={question.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
+        correct={question.correct}
       />
       <AnswerQuestionSubmit submitAnswer={submitAnswer} />
+      {hint && <AnswerQuestionHint hint={hint} />}
       <AnswerQuestionFeedback score={score} explanation={explanation} />
     </section>
   );

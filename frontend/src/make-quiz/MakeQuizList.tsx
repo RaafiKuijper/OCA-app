@@ -1,7 +1,7 @@
 import { Button, ListGroup } from "react-bootstrap";
-import Question from "../question/interfaces/QuestionInterface";
+import QuizQuestion from "../create-quiz/QuizQuestion";
 
-const MakeQuizList = (props: { questions: Question[] }) => {
+const MakeQuizList = (props: { questions: QuizQuestion[] }) => {
   return (
     <section
       style={{ display: "flex", justifyContent: "center", width: "100%" }}
