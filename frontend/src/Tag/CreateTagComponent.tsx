@@ -9,19 +9,30 @@ function CreateTagComponent() {
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagSummary, setTagSummary] = useState<string>("");
   const [dispText, setDispText] = useState("");
-  const [count, setCount] = useState<number>(0); // count is used to only show this message upon creation of a tag
+  const [count, setCount] = useState<number>(0); // count is used to only show dispText upon creation of a tag
 
   const postData = async () => {
     if (!tagName || !tagChapter || !tagSummary) {
       console.error("Can't submit empty Tag.");
-      setDispText(`Please enter a tag name, the chapter or paragraph it can be read about and a basic summary.`);
+      setDispText(
+        `Please enter a tag name, the chapter or paragraph it can be read about and a basic summary.`
+      );
     } else {
-      await axios.post(`http://localhost:8080/api/v1/tags/add`, {
-        name: tagName,
-        chapter: tagChapter,
-        summary: tagSummary,
-      });
-      setCount(count + 1);
+      const checker = await axios.get(
+        `http://localhost:8080/api/v1/tags/findByName/${tagName}`
+      );
+      if (checker.data[0] == null) {
+        await axios.post(`http://localhost:8080/api/v1/tags/add`, {
+          name: tagName,
+          chapter: tagChapter,
+          summary: tagSummary,
+        });
+        setCount(count + 1);
+        setDispText(``);
+      } else {
+        console.error("Can't submit pre-existing Tag.");
+        setDispText(`That tag already exists`);
+      }
     }
   };
 
