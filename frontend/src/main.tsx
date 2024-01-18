@@ -22,6 +22,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="/answer-question/:id"
               element={<AnswerQuestionView />}
             />
+            <Route
+              path="/make-quiz/:quizId/:id"
+              element={<AnswerQuestionView />}
+            />
             <Route path="/make-quiz/:id" element={<MakeQuizView />} />
             <Route path="/create-quiz" element={<CreateQuizView />} />
           </>
