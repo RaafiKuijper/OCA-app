@@ -6,6 +6,7 @@ import AnswerQuestionView from "./answer-question/AnswerQuestionView.tsx";
 import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
 import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
+import CreateTagComponent from "./Tag/CreateTagComponent.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           path="/create-question"
           element={<CreateQuestionsFormComponent />}
         />
+        <Route path="/tags" element={<CreateTagComponent />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
