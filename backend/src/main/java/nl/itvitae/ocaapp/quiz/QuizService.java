@@ -63,7 +63,7 @@ public class QuizService {
     }
 
     final Quiz quiz = quizRepository.findById(id).get();
-    final Answer answer = answerService.saveAnswer(answerBody);
+    final Answer answer = answerService.createAnswer(answerBody, quiz.getId());
 
     if (answer == null) {
       return null;

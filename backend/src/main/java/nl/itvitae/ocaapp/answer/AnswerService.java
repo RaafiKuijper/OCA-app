@@ -19,7 +19,8 @@ public class AnswerService {
   private final OptionService optionService;
   private final AnswerRepository answerRepository;
 
-  public Answer saveAnswer(AnswerBody body) {
+  // Possible duplicate data. Should fix this.
+  public Answer createAnswer(AnswerBody body, long quizId) {
     final Optional<Question> optionalQuestion = questionService.getQuestionById(body.questionId());
     if (optionalQuestion.isEmpty()) {
       return null;
@@ -31,14 +32,15 @@ public class AnswerService {
       return null;
     }
 
-    final Answer answer = new Answer(selected, question);
+    final Answer answer = new Answer(selected, question, quizId);
+
     answerRepository.save(answer);
 
     return answer;
   }
 
   public AnswerResult submitAnswer(AnswerBody body) {
-    final Answer answer = saveAnswer(body);
+    final Answer answer = createAnswer(body, -1);
 
     if (answer == null) {
       return null;
