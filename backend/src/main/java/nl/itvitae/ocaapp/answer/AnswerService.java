@@ -17,8 +17,10 @@ public class AnswerService {
 
   private final QuestionService questionService;
   private final OptionService optionService;
+  private final AnswerRepository answerRepository;
 
-  public AnswerResult submitAnswer(AnswerBody body) {
+  // Possible duplicate data. Should fix this.
+  public Answer createAnswer(AnswerBody body, long quizId) {
     final Optional<Question> optionalQuestion = questionService.getQuestionById(body.questionId());
     if (optionalQuestion.isEmpty()) {
       return null;
@@ -30,8 +32,20 @@ public class AnswerService {
       return null;
     }
 
-    final Answer answer = new Answer(selected, question);
+    final Answer answer = new Answer(selected, question, quizId);
 
-    return new AnswerResult(answer.isPassed(), question.getExplanation());
+    answerRepository.save(answer);
+
+    return answer;
+  }
+
+  public AnswerResult submitAnswer(AnswerBody body) {
+    final Answer answer = createAnswer(body, -1);
+
+    if (answer == null) {
+      return null;
+    } else {
+      return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
+    }
   }
 }

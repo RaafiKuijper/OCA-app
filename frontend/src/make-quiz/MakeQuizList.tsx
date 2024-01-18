@@ -1,23 +1,20 @@
-import { Button, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import QuizQuestion from "../create-quiz/QuizQuestion";
-
 const MakeQuizList = (props: { questions: QuizQuestion[] }) => {
   return (
     <section
       style={{ display: "flex", justifyContent: "center", width: "100%" }}
     >
-      <ListGroup style={{ width: "90%", marginTop: "5em" }}>
+      <ListGroup style={{ width: "90%", marginTop: "1em" }}>
         {props.questions.map((question) => (
           <ListGroup.Item
             key={question.id}
             style={{ display: "flex", alignItems: "center", marginLeft: "0" }}
           >
-            <div>
-              <Button variant="secondary" style={{ marginRight: "1em" }}>
-                Answer
-              </Button>
-            </div>
-            <div>{question.text}</div>
+            <span style={{ fontWeight: "bold", marginRight: "0.5em" }}>
+              Q{question.id}:{" "}
+            </span>
+            <span>{question.text}</span>
           </ListGroup.Item>
         ))}
       </ListGroup>

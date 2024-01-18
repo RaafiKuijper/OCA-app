@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 
-const AnswerQuestionSubmit = (props: { submitAnswer: () => void }) => {
+const AnswerQuestionButton = (props: { action: () => void; text: string }) => {
   return (
     <>
       <div className="d-grid gap-2">
@@ -8,13 +8,13 @@ const AnswerQuestionSubmit = (props: { submitAnswer: () => void }) => {
           variant="secondary"
           size="lg"
           style={{ width: "80%", margin: "0 auto", marginTop: "3em" }}
-          onClick={props.submitAnswer}
+          onClick={props.action}
         >
-          Submit
+          {props.text}
         </Button>
       </div>
     </>
   );
 };
 
-export default AnswerQuestionSubmit;
+export default AnswerQuestionButton;

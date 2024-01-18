@@ -13,13 +13,17 @@ import MyNavbar from "./navbar/MyNavbar.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MyNavbar />
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<App />} />
         {!isAdmin ? (
           <>
             <Route
               path="/answer-question/:id"
+              element={<AnswerQuestionView />}
+            />
+            <Route
+              path="/make-quiz/:quizId/:id"
               element={<AnswerQuestionView />}
             />
             <Route path="/make-quiz/:id" element={<MakeQuizView />} />
