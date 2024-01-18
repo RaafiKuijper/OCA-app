@@ -32,17 +32,20 @@ function CreateQuestionsFormComponent() {
       >
         {/* question input */}
         <Form.Group>
-          <Form.Label>question:</Form.Label>
+          <Form.Label>Question:</Form.Label>
           <Form.Control
-            className={classes.createQuestionFormInput}
             as="textarea"
-            placeholder="this is an interesting question"
+            placeholder="This is an interesting question."
             onChange={(e) => setText(e.target.value)}
           />
 
           {/* fragment input */}
-          <Form.Group>
-            <p>add fragment: </p>
+          <Form.Group
+            style={{
+              marginTop: "1%",
+            }}
+          >
+            <div>Add Fragment:</div>
             <Form.Label>
               {[...Array(fragmentCount)].map((_, index) => (
                 <CreateFragmentComponent
@@ -55,17 +58,21 @@ function CreateQuestionsFormComponent() {
 
               {/* add/remove fragments */}
               <Button
+                className={classes.createQuestionFormAddButton}
                 type="button"
                 onClick={() => setFragmentCount(fragmentCount + 1)}
               >
                 +
               </Button>
-              <Button
-                type="button"
-                onClick={() => setFragmentCount(fragmentCount - 1)}
-              >
-                -
-              </Button>
+              {fragmentCount !== 0 && (
+                <Button
+                  className={classes.createQuestionFormAddButton}
+                  type="button"
+                  onClick={() => setFragmentCount(fragmentCount - 1)}
+                >
+                  -
+                </Button>
+              )}
             </Form.Label>
           </Form.Group>
         </Form.Group>
@@ -85,6 +92,7 @@ function CreateQuestionsFormComponent() {
             ))}
             {/* add/remove options */}
             <Button
+              className={classes.createQuestionFormAddButton}
               type="button"
               onClick={() => setOptionCount(optionCount + 1)}
             >
@@ -92,6 +100,7 @@ function CreateQuestionsFormComponent() {
             </Button>
             {optionCount !== 1 && (
               <Button
+                className={classes.createQuestionFormAddButton}
                 type="button"
                 onClick={() => setOptionCount(optionCount - 1)}
               >
@@ -104,15 +113,22 @@ function CreateQuestionsFormComponent() {
         {/* input explanation */}
         <Form.Group>
           <Form.Label>
-            explanation:
+            Explanation:
             <Form.Control
-              type="text"
+              as="textarea"
               placeholder="explanation"
               onChange={(e) => setExplanation(e.target.value)}
             />
           </Form.Label>
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button
+          className={classes.createQuestionFormAddButton}
+          variant="secondary"
+          size="lg"
+          type="submit"
+        >
+          Submit
+        </Button>
       </Form>
       {displayResult && (
         <CreateQuestionsComponent
