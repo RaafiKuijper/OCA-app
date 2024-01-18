@@ -3,7 +3,7 @@ const AnswerQuestionHint = (props: { hint: string }) => {
     <p
       style={{
         textAlign: "center",
-        marginTop: "2em",
+        marginTop: "1em",
         fontSize: "1.5em",
         color: "red",
       }}

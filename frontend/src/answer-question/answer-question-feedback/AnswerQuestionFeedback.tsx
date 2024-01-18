@@ -19,7 +19,16 @@ const AnswerQuestionFeedback = (props: {
         {props.score}
       </p>
       {props.explanation.split("\n").map((explanation, index) => (
-        <p key={index}>{explanation}</p>
+        <p
+          key={index}
+          style={{
+            lineHeight: "0.8em",
+            fontWeight: "normal",
+            textAlign: "left",
+          }}
+        >
+          {explanation}
+        </p>
       ))}
     </section>
   );

@@ -23,7 +23,9 @@ const AnswerQuestionView = () => {
   const [hint, setHint] = useState("");
 
   const submitAnswer = async () => {
-    if (selectedOptions.length !== question.correct) {
+    if (question.correct > 1 && selectedOptions.length !== question.correct) {
+      setScore("");
+      setExplanation("");
       setHint(`Should select ${question.correct} options`);
       return;
     }
@@ -35,7 +37,6 @@ const AnswerQuestionView = () => {
       questionId: id,
     };
     const uri = "http://localhost:8080/api/v1/answer/submit";
-    console.log(body);
     const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
     setScore(result.data.passed ? "Passed" : "Failed");
     setExplanation(result.data.explanation);

@@ -16,10 +16,17 @@ const AnswerQuestionList = (props: {
 
   const updateSelectedOptions = (selectedId: number) => {
     let updatedOptions = [];
-    if (props.selectedOptions.includes(selectedId)) {
-      updatedOptions = props.selectedOptions.filter((id) => id !== selectedId);
+
+    if (props.correct === 1) {
+      updatedOptions = [selectedId];
     } else {
-      updatedOptions = [...props.selectedOptions, selectedId];
+      if (props.selectedOptions.includes(selectedId)) {
+        updatedOptions = props.selectedOptions.filter(
+          (id) => id !== selectedId
+        );
+      } else {
+        updatedOptions = [...props.selectedOptions, selectedId];
+      }
     }
     props.setSelectedOptions(updatedOptions);
     updateChecked(selectedId);
