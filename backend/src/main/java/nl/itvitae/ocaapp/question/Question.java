@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.option.Option;
+import nl.itvitae.ocaapp.tag.Tag;
 
 @Entity
 @Getter
@@ -32,7 +34,9 @@ public class Question {
 
   @OneToMany
   private List<Fragment> fragments;
-  // private List<Tag> tags;
+
+  @ManyToMany
+  private List<Tag> tags;
 
   public List<Option> getCorrect() {
     return options.stream().filter(Option::getIsCorrect).toList();
