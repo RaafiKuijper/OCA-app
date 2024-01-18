@@ -47,6 +47,11 @@ public class QuizService {
 
     final Quiz quiz = quizRepository.findById(id).get();
     final int currentAnswer = quiz.getAnswers().size();
+
+    if (currentAnswer >= quiz.getQuestions().size()) {
+      return -1L;
+    }
+
     final Question currentQuestion = quiz.getQuestions().get(currentAnswer);
 
     return currentQuestion.getId();
