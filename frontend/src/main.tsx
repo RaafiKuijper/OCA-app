@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="/create-question"
               element={<CreateQuestionsFormComponent />}
             />
-            <Route path="/tags" element={<CreateTagComponent />} />
+            <Route path="/create-tag" element={<CreateTagComponent />} />
           </>
         )}
       </Routes>
