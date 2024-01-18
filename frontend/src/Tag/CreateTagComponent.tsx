@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ViewTagComponent from "./ViewTagComponent";
-import Header from "../styled-components/header/Header";
+import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
 
 function CreateTagComponent() {
@@ -46,7 +46,7 @@ function CreateTagComponent() {
 
   return (
     <>
-      <Header text="OCA-app tags" />
+      <Header text="Tags" />
       <br />
       <form
         className={classes.createTagView}
