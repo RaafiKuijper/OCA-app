@@ -22,6 +22,7 @@ const MakeQuizView = () => {
   return (
     <article style={{ margin: 0 }}>
       <Header text={`Quiz ${id}`} />
+      <h2 style={{ textAlign: "center" }}>Questions</h2>
       <MakeQuizList questions={quiz.questions} />
     </article>
   );
