@@ -1,7 +1,12 @@
 package nl.itvitae.ocaapp.quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.ocaapp.answer.Answer;
+import nl.itvitae.ocaapp.answer.AnswerBody;
+import nl.itvitae.ocaapp.answer.AnswerResult;
+import nl.itvitae.ocaapp.answer.AnswerService;
 import nl.itvitae.ocaapp.question.Question;
 import nl.itvitae.ocaapp.question.QuestionService;
 import org.springframework.stereotype.Service;
@@ -14,6 +19,7 @@ public class QuizService {
 
   private final QuizRepository quizRepository;
   private final QuestionService questionService;
+  private final AnswerService answerService;
 
 
   public Quiz createQuiz(int questionCount) {
@@ -44,5 +50,24 @@ public class QuizService {
     final Question currentQuestion = quiz.getQuestions().get(currentAnswer);
 
     return currentQuestion.getId();
+  }
+
+  public AnswerResult submitAnswer(long id, AnswerBody answerBody) {
+    if (quizRepository.findById(id).isEmpty()) {
+      return null;
+    }
+
+    final Quiz quiz = quizRepository.findById(id).get();
+    final Answer answer = answerService.saveAnswer(answerBody);
+
+    if (answer == null) {
+      return null;
+    }
+
+    final List<Answer> answers = new ArrayList<>(quiz.getAnswers());
+    answers.add(answer);
+    quiz.setAnswers(answers);
+    quizRepository.save(quiz);
+    return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
   }
 }

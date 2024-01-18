@@ -17,8 +17,9 @@ public class AnswerService {
 
   private final QuestionService questionService;
   private final OptionService optionService;
+  private final AnswerRepository answerRepository;
 
-  public AnswerResult submitAnswer(AnswerBody body) {
+  public Answer saveAnswer(AnswerBody body) {
     final Optional<Question> optionalQuestion = questionService.getQuestionById(body.questionId());
     if (optionalQuestion.isEmpty()) {
       return null;
@@ -31,7 +32,18 @@ public class AnswerService {
     }
 
     final Answer answer = new Answer(selected, question);
+    answerRepository.save(answer);
 
-    return new AnswerResult(answer.isPassed(), question.getExplanation());
+    return answer;
+  }
+
+  public AnswerResult submitAnswer(AnswerBody body) {
+    final Answer answer = saveAnswer(body);
+
+    if (answer == null) {
+      return null;
+    } else {
+      return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
+    }
   }
 }
