@@ -1,7 +1,10 @@
 import { Button, ListGroup } from "react-bootstrap";
 import QuizQuestion from "../create-quiz/QuizQuestion";
+import { useNavigate } from "react-router-dom";
 
 const MakeQuizList = (props: { questions: QuizQuestion[] }) => {
+  const navigate = useNavigate();
+
   return (
     <section
       style={{ display: "flex", justifyContent: "center", width: "100%" }}
@@ -13,7 +16,11 @@ const MakeQuizList = (props: { questions: QuizQuestion[] }) => {
             style={{ display: "flex", alignItems: "center", marginLeft: "0" }}
           >
             <div>
-              <Button variant="secondary" style={{ marginRight: "1em" }}>
+              <Button
+                variant="secondary"
+                style={{ marginRight: "1em" }}
+                onClick={() => navigate(`../../answer-question/${question.id}`)}
+              >
                 Answer
               </Button>
             </div>
