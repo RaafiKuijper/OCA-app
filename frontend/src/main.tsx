@@ -13,7 +13,7 @@ import MyNavbar from "./navbar/MyNavbar.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MyNavbar />
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<App />} />
         {!isAdmin ? (
