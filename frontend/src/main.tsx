@@ -6,21 +6,34 @@ import AnswerQuestionView from "./answer-question/AnswerQuestionView.tsx";
 import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
 import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
-import CreateTagComponent from "./Tag/CreateTagComponent.tsx";
+import CreateTagComponent from "./tag/CreateTagComponent.tsx";
+import isAdmin from "./user/user.tsx";
+import MyNavbar from "./navbar/MyNavbar.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <MyNavbar />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/answer-question/:id" element={<AnswerQuestionView />} />
-        <Route path="/create-quiz" element={<CreateQuizView />} />
-        <Route path="/make-quiz/:id" element={<MakeQuizView />} />
-        <Route
-          path="/create-question"
-          element={<CreateQuestionsFormComponent />}
-        />
-        <Route path="/tags" element={<CreateTagComponent />} />
+        {!isAdmin ? (
+          <>
+            <Route
+              path="/answer-question/:id"
+              element={<AnswerQuestionView />}
+            />
+            <Route path="/make-quiz/:id" element={<MakeQuizView />} />
+            <Route path="/create-quiz" element={<CreateQuizView />} />
+          </>
+        ) : (
+          <>
+            <Route
+              path="/create-question"
+              element={<CreateQuestionsFormComponent />}
+            />
+            <Route path="/create-tag" element={<CreateTagComponent />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

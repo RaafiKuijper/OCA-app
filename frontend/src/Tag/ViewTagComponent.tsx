@@ -25,7 +25,7 @@ function ViewTagComponent(props: { count: number }) {
           {tag.summary}
         </p>
       ))}
-    </ p>
+    </p>
   );
 }
 
