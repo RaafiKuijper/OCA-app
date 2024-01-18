@@ -7,7 +7,7 @@ import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
 import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
 import CreateTagComponent from "./tag/CreateTagComponent.tsx";
-import isAdmin from "./user.tsx";
+import isAdmin from "./user/user.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
