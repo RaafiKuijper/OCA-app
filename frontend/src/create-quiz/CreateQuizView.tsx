@@ -21,7 +21,7 @@ const CreateQuizView = () => {
 
   return (
     <>
-      <Header text="Create Quiz View" />;
+      <Header text="Quizzes" />;
       <CreateQuizQuestionCount questionCount={questionCount} />
       <CreateQuizButton />
     </>
