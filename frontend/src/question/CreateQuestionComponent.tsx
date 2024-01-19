@@ -3,21 +3,30 @@ import { useEffect, useState } from "react";
 import QuestionProps from "./interfaces/QuestionPropsInterface";
 import OptionBody from "./interfaces/OptionBody";
 import FragmentBody from "./interfaces/FragmentBody";
+import Question from "./interfaces/QuestionInterface";
 
 function CreateQuestionsComponent(props: QuestionProps) {
   const [result, setResult] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (
+      const check = await axios.get("http://localhost:8080/api/v1/questions");
+
+      if (!props.text || !props.explanation || props.optionsText.includes("")) {
+        setResult("Please enter a question, options or an explanation.");
+      } else if (
         props.optionsIsCorrect.filter((isCorrect) => isCorrect === false)
           .length === props.optionsIsCorrect.length ||
         props.optionsIsCorrect.filter((isCorrect) => isCorrect === true)
           .length === props.optionsIsCorrect.length
       ) {
-        setResult("invalid amount of correct answers");
-      } else if (props.optionCount <= 1) {
-        setResult("invalid amount of options");
+        setResult("Invalid amount of correct answers");
+      } else if (
+        check.data
+          .map((question: Question) => question.text)
+          .includes(props.text)
+      ) {
+        setResult("Question already exists");
       } else {
         props.optionsIsCorrect.map((isCorrect) =>
           isCorrect === undefined ? false : isCorrect
@@ -56,7 +65,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
       }
     };
     fetchData();
-  }, [props.text]);
+  }, [props.count]);
 
   return (
     <>
