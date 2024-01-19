@@ -11,8 +11,18 @@ function CreateQuestionsComponent(props: QuestionProps) {
   useEffect(() => {
     const fetchData = async () => {
       const check = await axios.get("http://localhost:8080/api/v1/questions");      
-      if (check.data.map((question: Question) => question.text).includes(props.text)) {
+      if (
+        check.data
+          .map((question: Question) => question.text)
+          .includes(props.text)
+      ) {
         setResult("Question already exists");
+      } else if (
+        !props.text ||
+        !props.explanation ||
+        !props.optionsText.includes("")
+      ) {
+        setResult("Please enter a question, options or an explanation.");
       } else if (
         props.optionsIsCorrect.filter((isCorrect) => isCorrect === false)
           .length === props.optionsIsCorrect.length ||
