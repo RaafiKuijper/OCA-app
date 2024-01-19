@@ -13,8 +13,6 @@ function CreateQuestionsComponent(props: QuestionProps) {
       const check = await axios.get("http://localhost:8080/api/v1/questions");      
       if (check.data.map((question: Question) => question.text).includes(props.text)) {
         setResult("Question already exists");
-      } else if (props.optionCount <= 1) {
-        setResult("invalid amount of options");
       } else if (
         props.optionsIsCorrect.filter((isCorrect) => isCorrect === false)
           .length === props.optionsIsCorrect.length ||
@@ -60,7 +58,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
       }
     };
     fetchData();
-  }, []);
+  }, [props.count]);
 
   return (
     <>
