@@ -4,6 +4,7 @@ import CreateQuizQuestionCount from "./create-quiz-question-count/CreateQuizQues
 import axios from "axios";
 import QuestionCount from "./models/QuestionCount";
 import CreateQuizButton from "./create-quiz-button/CreateQuizButton";
+import CreateQuizSizeSelector from "./create-quiz-size-selector/CreateQuizSizeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
@@ -23,6 +24,7 @@ const CreateQuizView = () => {
     <>
       <Header text="Quizzes" />;
       <CreateQuizQuestionCount questionCount={questionCount} />
+      <CreateQuizSizeSelector />
       <CreateQuizButton />
     </>
   );
