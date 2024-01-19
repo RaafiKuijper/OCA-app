@@ -1,5 +1,5 @@
 import { ListGroup } from "react-bootstrap";
-import QuizQuestion from "../create-quiz/QuizQuestion";
+import QuizQuestion from "../create-quiz/models/QuizQuestion";
 const MakeQuizList = (props: { questions: QuizQuestion[] }) => {
   return (
     <section

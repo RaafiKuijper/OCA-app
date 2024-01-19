@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Header from "../headers/header/Header";
-import CreateQuizQuestionCount from "./CreateQuizQuestionCount";
+import CreateQuizQuestionCount from "./create-quiz-question-count/CreateQuizQuestionCount";
 import axios from "axios";
-import QuestionCount from "./QuestionCount";
-import CreateQuizButton from "./CreateQuizButton";
+import QuestionCount from "./models/QuestionCount";
+import CreateQuizButton from "./create-quiz-button/CreateQuizButton";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);

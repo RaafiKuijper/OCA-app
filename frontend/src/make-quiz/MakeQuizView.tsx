@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Quiz from "../create-quiz/Quiz";
+import Quiz from "../create-quiz/models/Quiz";
 import Header from "../headers/header/Header";
 import MakeQuizList from "./MakeQuizList";
 import MakeQuizButton from "./MakeQuizButton";

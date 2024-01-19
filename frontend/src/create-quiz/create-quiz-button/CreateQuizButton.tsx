@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Button } from "react-bootstrap";
-import Quiz from "./Quiz";
+import Quiz from "../models/Quiz";
 import { useNavigate } from "react-router-dom";
 
 const CreateQuizButton = () => {
