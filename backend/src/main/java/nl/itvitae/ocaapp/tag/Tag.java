@@ -1,5 +1,6 @@
 package nl.itvitae.ocaapp.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,18 +27,12 @@ public class Tag {
   private String summary;
 
   @ManyToMany
+  @JsonIgnore
   private List<Question> questions;
 
   public Tag(String name, String chapter, String summary) {
     this.name = name;
     this.chapter = chapter;
     this.summary = summary;
-  }
-
-  public Tag(String name, String chapter, String summary, List<Question> questions) {
-    this.name = name;
-    this.chapter = chapter;
-    this.summary = summary;
-    this.questions = questions;
   }
 }

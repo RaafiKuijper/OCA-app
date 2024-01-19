@@ -1,5 +1,6 @@
 package nl.itvitae.ocaapp.question;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +37,7 @@ public class Question {
   private List<Fragment> fragments;
 
   @ManyToMany
+  @JsonIgnore
   private List<Tag> tags;
 
   public List<Option> getCorrect() {
@@ -54,5 +56,10 @@ public class Question {
     this.options = options;
     this.explanation = explanation;
     this.fragments = List.of();
+  }
+
+  public void linkTag(Tag tag) {
+    tags.add(tag);
+    tag.getQuestions().add(this);
   }
 }

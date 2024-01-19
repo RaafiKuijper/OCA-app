@@ -6,7 +6,7 @@ import AnswerQuestionView from "./answer-question/AnswerQuestionView.tsx";
 import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
 import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
-import CreateTagComponent from "./Tag/CreateTagComponent.tsx";
+import CreateTagComponent from "./tag/CreateTagComponent.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -1,6 +1,8 @@
 package nl.itvitae.ocaapp.question;
 
 import java.net.URI;
+import nl.itvitae.ocaapp.tag.Tag;
+import nl.itvitae.ocaapp.tag.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class QuestionController {
 
   private final QuestionService questionService;
+  private final TagService tagService;
 
   // Maybe do this with a DTO.
   @GetMapping
@@ -56,5 +59,14 @@ public class QuestionController {
         .buildAndExpand(newQuestion.getId())
         .toUri();
     return ResponseEntity.created(locationOfNewQuestion).body(newQuestion);
+  }
+
+  @GetMapping("/link_tag/{question_id}/{tag_id}")
+  public void linkTag(@PathVariable(value = "question_id") Long question_id,
+      @PathVariable(value = "tag_id") Long tag_id) {
+    Question question = questionService.getById(question_id).get();
+    Tag tag = tagService.getById(tag_id).get();
+    question.linkTag(tag);
+    questionService.save(question);
   }
 }
