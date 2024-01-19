@@ -18,6 +18,11 @@ public class TagController {
     return tagService.getAllTags();
   }
 
+  @GetMapping("/findByName/{name}")
+  public Iterable<Tag> findByName(@PathVariable() String name) {
+    return tagService.findByName(name);
+  }
+
   @PostMapping("/add")
   public Tag addTag(@RequestBody Tag tag) {
     return tagService.addTag(tag);
