@@ -21,16 +21,18 @@ const QuizSizeSelector = () => {
         <span style={flex}>
           <InputGroup.Radio />
           <InputGroup.Text>5 Options</InputGroup.Text>
+        </span>
+        <span style={flex}>
           <InputGroup.Radio />
           <InputGroup.Text>10 Options</InputGroup.Text>
+        </span>
+        <span style={flex}>
           <InputGroup.Radio />
           <InputGroup.Text>20 Options</InputGroup.Text>
         </span>
         <span style={{ ...flex }}>
           <InputGroup.Radio />
-          <span style={{ minWidth: "5em" }}>
-            <Form.Control />
-          </span>
+          <Form.Control type="number" />
           <InputGroup.Text>Options</InputGroup.Text>
         </span>
       </div>
