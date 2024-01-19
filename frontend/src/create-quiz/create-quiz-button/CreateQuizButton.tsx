@@ -18,7 +18,11 @@ const CreateQuizButton = () => {
       <Button
         variant="secondary"
         size="lg"
-        style={{ width: "30%", margin: "1em auto", fontStyle: "900" }}
+        style={{
+          width: "50%",
+          margin: "1em auto",
+          fontStyle: "900",
+        }}
         onClick={() => createQuiz()}
       >
         Create Quiz

@@ -4,7 +4,8 @@ const CreateQuizQuestionCount = (props: { questionCount: number }) => {
   return (
     <Card
       style={{
-        width: "30%",
+        width: "50%",
+        maxWidth: "30em",
         margin: "0 auto",
         textAlign: "center",
       }}
