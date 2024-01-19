@@ -1,6 +1,5 @@
 package nl.itvitae.ocaapp.question;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +36,6 @@ public class Question {
   private List<Fragment> fragments;
 
   @ManyToMany
-  @JsonIgnore
   private List<Tag> tags;
 
   public List<Option> getCorrect() {
