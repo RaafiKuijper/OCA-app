@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import nl.itvitae.ocaapp.tag.Tag;
+
 @Service
 @Transactional
 public class TagService {
@@ -14,6 +16,10 @@ public class TagService {
 
   public Iterable<Tag> getAllTags() {
     return tagRepository.findAll();
+  }
+
+  public Iterable<Tag> findByName(String name) {
+    return tagRepository.findByName(name);
   }
 
   public Tag addTag(Tag tag) {

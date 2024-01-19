@@ -2,27 +2,29 @@ import { useState } from "react";
 import CreateOptionComponent from "./CreateOptionComponent";
 import CreateQuestionsComponent from "./CreateQuestionComponent";
 import { Button, Form } from "react-bootstrap";
-import Header from "../styled-components/header/Header";
 import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
+import Header from "../headers/header/Header";
 
 function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
   const [text, setText] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
-  const [optionCount, setOptionCount] = useState(1);
+  const [optionCount, setOptionCount] = useState(2);
   const [optionsText, setOptionsText] = useState<string[]>([]);
   const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([]);
   const [fragmentCount, setFragmentCount] = useState(0);
   const [fragmentText, setFragmentText] = useState<string[]>([]);
+  const [count, setCount] = useState(1);
 
   const handleFormSubmit = () => {
     setDisplayResult(true);
+    setCount(count + 1);
   };
 
   return (
     <>
-      <Header text="Create Question" />
+      <Header text="Questions" />
       <Form
         className={classes.createQuestionForm}
         onSubmit={(e) => {
@@ -98,7 +100,7 @@ function CreateQuestionsFormComponent() {
             >
               +
             </Button>
-            {optionCount !== 1 && (
+            {optionCount !== 2 && (
               <Button
                 className={classes.createQuestionFormAddButton}
                 type="button"
@@ -132,6 +134,7 @@ function CreateQuestionsFormComponent() {
       </Form>
       {displayResult && (
         <CreateQuestionsComponent
+          count={count}
           text={text}
           explanation={explanation}
           optionCount={optionCount}

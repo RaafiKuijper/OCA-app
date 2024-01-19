@@ -1,26 +1,54 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import Question, {
   emptyQuestion,
 } from "../question/interfaces/QuestionInterface";
-import AnswerQuestionSubmit from "./answer-question-submit/AnswerQuestionSubmit";
+import AnswerQuestionButton from "./answer-question-submit/AnswerQuestionButton";
 import classes from "../styles/answer-question.module.css";
 import AnswerQuestionFeedback from "./answer-question-feedback/AnswerQuestionFeedback";
 import AnswerResponse from "./answer-question-models/AnswerResponse";
 import AnswerQuestionList from "./answer-question-list/AnswerQuestionList";
 import AnswerQuestionFragment from "./answer-question-fragment/AnswerQuestionFragment";
-import Header from "../styled-components/header/Header";
+import Header from "../headers/header/Header";
 import AnswerQuestionHint from "./answer-question-hint/AnswerQuestionHint";
-import Subheader from "../styled-components/subheader/Subheader";
+import Subheader from "../headers/subheader/Subheader";
+import NextAnswer from "../make-quiz/NextAnswer";
 
 const AnswerQuestionView = () => {
-  const { id } = useParams();
+  const { quizId, id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [question, setQuestion] = useState<Question>(emptyQuestion);
   const [score, setScore] = useState("");
   const [explanation, setExplanation] = useState("");
   const [hint, setHint] = useState("");
+  const navigate = useNavigate();
+
+  const reset = () => {
+    setScore("");
+    setExplanation("");
+    setHint("");
+    setQuestion(emptyQuestion);
+    setSelectedOptions([]);
+  };
+
+  const nextQuestion = async () => {
+    if (quizId) {
+      const result = await axios.get(
+        `http://localhost:8080/api/v1/quiz/${quizId}/next`
+      );
+      const data: NextAnswer = result.data;
+
+      if (data.id === -1) {
+        navigate("/");
+      } else {
+        navigate(`/make-quiz/${quizId}/${data.id}`);
+      }
+    } else {
+      navigate("/");
+    }
+    reset();
+  };
 
   const submitAnswer = async () => {
     if (question.correct > 1 && selectedOptions.length !== question.correct) {
@@ -36,7 +64,14 @@ const AnswerQuestionView = () => {
       selectedIds: selectedOptions,
       questionId: id,
     };
-    const uri = "http://localhost:8080/api/v1/answer/submit";
+
+    let uri;
+    if (quizId) {
+      uri = `http://localhost:8080/api/v1/quiz/${quizId}/answer`;
+    } else {
+      uri = "http://localhost:8080/api/v1/answer/submit";
+    }
+
     const result: AxiosResponse<AnswerResponse> = await axios.post(uri, body);
     setScore(result.data.passed ? "Passed" : "Failed");
     setExplanation(result.data.explanation);
@@ -51,7 +86,7 @@ const AnswerQuestionView = () => {
       setQuestion(questionData);
     };
     fetchQuestion(id!);
-  }, [id]);
+  }, [id, quizId]);
 
   return (
     <section className={classes.AnswerQuestionView}>
@@ -68,7 +103,11 @@ const AnswerQuestionView = () => {
         setSelectedOptions={setSelectedOptions}
         correct={question.correct}
       />
-      <AnswerQuestionSubmit submitAnswer={submitAnswer} />
+      {score ? (
+        <AnswerQuestionButton action={nextQuestion} text="Next Question" />
+      ) : (
+        <AnswerQuestionButton action={submitAnswer} text="Submit Answer" />
+      )}
       {hint && <AnswerQuestionHint hint={hint} />}
       <AnswerQuestionFeedback score={score} explanation={explanation} />
     </section>

@@ -3,8 +3,8 @@ package nl.itvitae.ocaapp.answer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,15 +23,17 @@ public class Answer {
 
   private Long id;
 
-  @OneToMany
+  @ManyToMany
   private List<Option> selected;
-  @OneToOne
+  @ManyToOne
   private Question question;
   private boolean passed;
+  private long quizId;
 
-  public Answer(List<Option> selected, Question question) {
+  public Answer(List<Option> selected, Question question, long quizId) {
     this.selected = selected;
     this.question = question;
     this.passed = question.getCorrect().equals(selected);
+    this.quizId = quizId;
   }
 }
