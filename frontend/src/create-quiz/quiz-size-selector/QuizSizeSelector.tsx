@@ -3,7 +3,7 @@ import { Form, InputGroup } from "react-bootstrap";
 const flex = { display: "flex" };
 const center = { ...flex, justifyContent: "center" };
 
-const CreateQuizSizeSelector = () => {
+const QuizSizeSelector = () => {
   return (
     <InputGroup
       style={{
@@ -38,4 +38,4 @@ const CreateQuizSizeSelector = () => {
   );
 };
 
-export default CreateQuizSizeSelector;
+export default QuizSizeSelector;
