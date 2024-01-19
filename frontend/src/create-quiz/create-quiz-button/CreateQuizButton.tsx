@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import Quiz from "../models/Quiz";
 import { useNavigate } from "react-router-dom";
 
-const CreateQuizButton = () => {
+const CreateQuizButton = (props: { quizSize: number }) => {
   const navigate = useNavigate();
 
   const createQuiz = async () => {

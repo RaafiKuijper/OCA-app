@@ -8,6 +8,7 @@ import QuizSizeSelector from "./quiz-size-selector/QuizSizeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
+  const [quizSize, setQuizSize] = useState(10);
 
   useEffect(() => {
     const getQuestionCount = async () => {
@@ -24,8 +25,8 @@ const CreateQuizView = () => {
     <>
       <Header text="Quizzes" />;
       <QuizQuestionCount questionCount={questionCount} />
-      <QuizSizeSelector />
-      <CreateQuizButton />
+      <QuizSizeSelector setQuizSize={setQuizSize} />
+      <CreateQuizButton quizSize={quizSize} />
     </>
   );
 };
