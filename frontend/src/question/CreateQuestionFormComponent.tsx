@@ -10,14 +10,16 @@ function CreateQuestionsFormComponent() {
   const [displayResult, setDisplayResult] = useState(false);
   const [text, setText] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
-  const [optionCount, setOptionCount] = useState(1);
+  const [optionCount, setOptionCount] = useState(2);
   const [optionsText, setOptionsText] = useState<string[]>([]);
   const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([]);
   const [fragmentCount, setFragmentCount] = useState(0);
   const [fragmentText, setFragmentText] = useState<string[]>([]);
+  const [count, setCount] = useState(1);
 
   const handleFormSubmit = () => {
     setDisplayResult(true);
+    setCount(count + 1);
   };
 
   return (
@@ -98,7 +100,7 @@ function CreateQuestionsFormComponent() {
             >
               +
             </Button>
-            {optionCount !== 1 && (
+            {optionCount !== 2 && (
               <Button
                 className={classes.createQuestionFormAddButton}
                 type="button"
@@ -132,6 +134,7 @@ function CreateQuestionsFormComponent() {
       </Form>
       {displayResult && (
         <CreateQuestionsComponent
+          count={count}
           text={text}
           explanation={explanation}
           optionCount={optionCount}
