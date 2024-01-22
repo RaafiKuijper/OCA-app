@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import nl.itvitae.ocaapp.tag.Tag;
-
 @Service
 @Transactional
 public class TagService {
@@ -15,6 +13,14 @@ public class TagService {
 
   public Iterable<Tag> getAllTags() {
     return tagRepository.findAll();
+  }
+
+  public TagValidationResponse validateTag(Tag tag) {
+    if (tagRepository.findByNameContainingIgnoreCase(tag.getName()).size() != 0) {
+      return new TagValidationResponse(false, "similar tag already exists");
+    }
+
+    return new TagValidationResponse(true, "");
   }
 
   public Iterable<Tag> findByName(String name) {
