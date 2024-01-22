@@ -1,5 +1,4 @@
-export default interface Tag {
-  id: number;
+export default interface TagBody {
   name: string;
   chapter: string;
   summary: string;

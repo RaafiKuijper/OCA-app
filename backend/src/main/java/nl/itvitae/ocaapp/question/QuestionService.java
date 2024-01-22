@@ -108,8 +108,8 @@ public class QuestionService {
     return questionRepository.findById(id);
   }
 
-  public Question save(Question question) {
-    return questionRepository.save(question);
+  public void save(Question question) {
+    questionRepository.save(question);
   }
 }
 

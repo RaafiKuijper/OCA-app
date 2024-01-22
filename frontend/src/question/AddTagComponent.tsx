@@ -1,11 +1,11 @@
 import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Tag from "../tag/TagInterface";
 import TagProps from "./interfaces/TagProps";
+import TagResponse from "../tag/models/TagResponse";
 
 function AddTagComponent(props: TagProps) {
-  const [tags, setTags] = useState<Tag[]>([]);
+  const [tags, setTags] = useState<TagResponse[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

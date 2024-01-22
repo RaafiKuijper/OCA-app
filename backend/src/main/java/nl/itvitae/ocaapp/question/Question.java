@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.List;
@@ -15,7 +14,6 @@ import lombok.Setter;
 import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.tag.Tag;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -31,7 +29,7 @@ public class Question {
   // should later be changed to ManyToMany to avoid duplicate data
   @OneToMany
   private List<Option> options;
-  
+
   @Column(length = 1000)
   private String explanation;
 
