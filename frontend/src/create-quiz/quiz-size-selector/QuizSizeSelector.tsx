@@ -4,7 +4,10 @@ import { Form, InputGroup } from "react-bootstrap";
 const flex = { display: "flex" };
 const center = { ...flex, justifyContent: "center" };
 
-const QuizSizeSelector = (props: { setQuizSize: (size: number) => void }) => {
+const QuizSizeSelector = (props: {
+  setQuizSize: (size: number) => void;
+  questionCount: number;
+}) => {
   const options: number[] = [5, 10, 20];
   const [checked, setChecked] = useState<boolean[]>([
     false,
@@ -12,7 +15,7 @@ const QuizSizeSelector = (props: { setQuizSize: (size: number) => void }) => {
     false,
     false,
   ]);
-  const [custom, setCustom] = useState<number>(10);
+  const [custom, setCustom] = useState<number>(0);
 
   const updateSelectedOptions = (index: number) => {
     if (index < checked.length - 1) {
@@ -43,15 +46,17 @@ const QuizSizeSelector = (props: { setQuizSize: (size: number) => void }) => {
           flexWrap: "wrap",
         }}
       >
-        {options.map((option, index) => (
-          <span style={flex} key={index}>
-            <InputGroup.Radio
-              checked={checked[index]}
-              onChange={() => updateSelectedOptions(index)}
-            />
-            <InputGroup.Text>{option} Options</InputGroup.Text>
-          </span>
-        ))}
+        {options
+          .filter((option) => option <= props.questionCount)
+          .map((option, index) => (
+            <span style={{ ...flex }} key={index}>
+              <InputGroup.Radio
+                checked={checked[index]}
+                onChange={() => updateSelectedOptions(index)}
+              />
+              <InputGroup.Text>{option} Options</InputGroup.Text>
+            </span>
+          ))}
         <span style={{ ...flex }}>
           <InputGroup.Radio
             checked={checked[checked.length - 1]}
@@ -59,11 +64,20 @@ const QuizSizeSelector = (props: { setQuizSize: (size: number) => void }) => {
           />
           <Form.Control
             type="number"
-            value={custom || ""}
+            value={custom || 1}
+            min={1}
+            max={props.questionCount}
             onChange={(e) => {
-              setCustom(+e.target.value);
-              if (checked[checked.length - 1]) {
-                props.setQuizSize(+e.target.value || 0);
+              if (
+                !(+e.target.value < 1 || +e.target.value > props.questionCount)
+              ) {
+                setCustom(+e.target.value);
+                if (checked[checked.length - 1]) {
+                  props.setQuizSize(+e.target.value || 1);
+                }
+                if (!checked[checked.length - 1]) {
+                  updateChecked(checked.length - 1);
+                }
               }
             }}
           />
