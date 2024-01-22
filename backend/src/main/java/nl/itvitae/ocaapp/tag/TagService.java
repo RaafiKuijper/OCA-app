@@ -1,5 +1,6 @@
 package nl.itvitae.ocaapp.tag;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +17,25 @@ public class TagService {
   }
 
   public TagValidationResponse validateTag(Tag tag) {
+    // Check for empty properties
+    if (tag.getName().isEmpty() || tag.getChapter().isEmpty() || tag.getSummary().isEmpty()) {
+      return new TagValidationResponse(false, "Tag name, chapter or summary can not be empty");
+    }
 
-    System.out.println(tagRepository.findByNameLikeIgnoreCase(tag.getName()));
-
+    // Check if tag is substring of already existing tag
     if (tagRepository.findByNameLikeIgnoreCase(tag.getName()).size() != 0) {
       return new TagValidationResponse(false, "Similar tag already exists");
     }
 
-    if (tag.getName().isEmpty() || tag.getChapter().isEmpty() || tag.getSummary().isEmpty()) {
-      return new TagValidationResponse(false, "Tag name, chapter or summary can not be empty");
+    // Check if substring of tag already exist
+    // I am not too fond of this code, but I don't know any other solution
+    final String name = tag.getName().toLowerCase();
+    final List<Tag> tags = tagRepository.findAll();
+    final boolean subExists = tags.stream()
+        .filter(existingTag -> name.contains(existingTag.getName().toLowerCase()))
+        .toList().size() != 0;
+    if (subExists) {
+      return new TagValidationResponse(false, "Similar tag already exists");
     }
 
     return new TagValidationResponse(true, "");
