@@ -24,7 +24,11 @@ function CreateQuestionsComponent(props: QuestionProps) {
       check.data.map((question: Question) => question.text).includes(props.text)
     ) {
       setResult("Question already exists");
-    } else {
+    } else if (
+      props.tagIds.filter((id) => id === undefined).length === props.tagIds.length
+    ) {
+      setResult("Tags invalid");
+    }{
       props.optionsIsCorrect.map((isCorrect) =>
         isCorrect === undefined ? false : isCorrect
       );

@@ -17,9 +17,13 @@ function AddTagComponent(props: TagProps) {
   }, []);
 
   const updateTagIds = (e: { target: { value: string | number } }) => {
-    const currentIds = props.ids;
-    currentIds[props.index] = +e.target.value;
-    props.setIds(currentIds);
+    if (e.target.value === "create") {
+      window.open("./create-tag");
+    } else {
+      const currentIds = props.ids;
+      currentIds[props.index] = +e.target.value;
+      props.setIds(currentIds);
+    }
   };
 
   return (
@@ -31,6 +35,7 @@ function AddTagComponent(props: TagProps) {
             {tag.name}
           </option>
         ))}
+        <option value="create">Create a new tag</option>
       </Form.Select>
     </>
   );
