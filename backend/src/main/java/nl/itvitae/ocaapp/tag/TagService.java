@@ -16,8 +16,15 @@ public class TagService {
   }
 
   public TagValidationResponse validateTag(Tag tag) {
-    if (tagRepository.findByNameContainingIgnoreCase(tag.getName()).size() != 0) {
-      return new TagValidationResponse(false, "similar tag already exists");
+
+    System.out.println(tagRepository.findByNameLikeIgnoreCase(tag.getName()));
+
+    if (tagRepository.findByNameLikeIgnoreCase(tag.getName()).size() != 0) {
+      return new TagValidationResponse(false, "Similar tag already exists");
+    }
+
+    if (tag.getName().isEmpty() || tag.getChapter().isEmpty() || tag.getSummary().isEmpty()) {
+      return new TagValidationResponse(false, "Tag name, chapter or summary can not be empty");
     }
 
     return new TagValidationResponse(true, "");

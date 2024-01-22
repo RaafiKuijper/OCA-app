@@ -21,7 +21,7 @@ public class TagController {
     return tagService.getAllTags();
   }
 
-  @GetMapping("/isValid")
+  @PostMapping("/isValid")
   public TagValidationResponse validateTag(@RequestBody Tag tag) {
     return tagService.validateTag(tag);
   }
