@@ -1,6 +1,6 @@
-type TagValidation = {
+type TagValidationResponse = {
   isValid: boolean;
   explanation: string;
 };
 
-export default TagValidation;
+export default TagValidationResponse;

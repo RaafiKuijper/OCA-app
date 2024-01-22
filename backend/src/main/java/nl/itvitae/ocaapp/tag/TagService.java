@@ -38,6 +38,11 @@ public class TagService {
       return new TagValidationResponse(false, "Similar tag already exists");
     }
 
+    // Check if chapter is in correct format.
+    if (!tag.getChapter().matches("(\\d+.?)+") || tag.getChapter().endsWith(".")) {
+      return new TagValidationResponse(false, "Chapter/paragraph must be in format x.y.z...");
+    }
+
     return new TagValidationResponse(true, "");
   }
 
