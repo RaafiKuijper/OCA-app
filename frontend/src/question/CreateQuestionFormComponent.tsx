@@ -93,7 +93,7 @@ function CreateQuestionsFormComponent() {
           <div>Add Tags:</div>
           <Form.Label>
             {[...Array(tagCount)].map((_ , index) => (
-              <AddTagComponent index={index} ids={tagIds} setIds={setTagIds} />
+              <AddTagComponent key={index} index={index} ids={tagIds} setIds={setTagIds} />
             ))}
 
             {/* add/remove tags */}

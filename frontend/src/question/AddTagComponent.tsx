@@ -16,7 +16,7 @@ function AddTagComponent(props: TagProps) {
     fetchData();
   }, []);
 
-  const updateTagIds = (e) => {
+  const updateTagIds = (e: { target: { value: string | number } }) => {
     const currentIds = props.ids;
     currentIds[props.index] = +e.target.value;
     props.setIds(currentIds);
@@ -25,7 +25,7 @@ function AddTagComponent(props: TagProps) {
   return (
     <>
       <Form.Select onChange={updateTagIds}>
-        <option >Choose a tag</option>
+        <option>Choose a tag</option>
         {tags.map((tag) => (
           <option key={tag.id} value={tag.id}>
             {tag.name}
