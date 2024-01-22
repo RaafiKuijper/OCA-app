@@ -8,7 +8,7 @@ function ViewTagComponent(props: { count: number }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8080/api/v1/tags/`);
+      const response = await axios.get(`http://localhost:8080/api/v1/tags`);
       setTags(response.data);
     };
 
