@@ -7,7 +7,9 @@ const CreateQuizButton = (props: { quizSize: number }) => {
   const navigate = useNavigate();
 
   const createQuiz = async () => {
-    const result = await axios.post("http://localhost:8080/api/v1/quiz/create");
+    const result = await axios.post(
+      `http://localhost:8080/api/v1/quiz/create/${props.quizSize}`
+    );
     const data: Quiz = result.data;
     const quizId = data.id;
     navigate(`../make-quiz/${quizId}`);
