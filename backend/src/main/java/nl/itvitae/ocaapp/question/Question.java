@@ -1,10 +1,12 @@
 package nl.itvitae.ocaapp.question;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
@@ -12,6 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.option.Option;
+import nl.itvitae.ocaapp.tag.Tag;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -27,12 +31,15 @@ public class Question {
   // should later be changed to ManyToMany to avoid duplicate data
   @OneToMany
   private List<Option> options;
-  @Lob
+  
+  @Column(length = 1000)
   private String explanation;
 
   @OneToMany
   private List<Fragment> fragments;
-  // private List<Tag> tags;
+
+  @ManyToMany
+  private List<Tag> tags;
 
   public List<Option> getCorrect() {
     return options.stream().filter(Option::getIsCorrect).toList();
@@ -50,5 +57,10 @@ public class Question {
     this.options = options;
     this.explanation = explanation;
     this.fragments = List.of();
+  }
+
+  public void linkTag(Tag tag) {
+    tags.add(tag);
+    tag.getQuestions().add(this);
   }
 }

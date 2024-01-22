@@ -5,9 +5,9 @@ import { Button, Form } from "react-bootstrap";
 import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
 import Header from "../headers/header/Header";
+import AddTagComponent from "./AddTagComponent";
 
 function CreateQuestionsFormComponent() {
-  const [displayResult, setDisplayResult] = useState(false);
   const [text, setText] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
   const [optionCount, setOptionCount] = useState(2);
@@ -15,11 +15,12 @@ function CreateQuestionsFormComponent() {
   const [optionsIsCorrect, setOptionsIsCorrect] = useState<boolean[]>([]);
   const [fragmentCount, setFragmentCount] = useState(0);
   const [fragmentText, setFragmentText] = useState<string[]>([]);
+  const [tagCount, setTagCount] = useState(1);
+  const [tagIds, setTagIds] = useState<number[]>([]);
   const [count, setCount] = useState(1);
 
   const handleFormSubmit = () => {
-    setDisplayResult(true);
-    setCount(count + 1);
+    setCount(count + 1);    
   };
 
   return (
@@ -40,43 +41,75 @@ function CreateQuestionsFormComponent() {
             placeholder="This is an interesting question."
             onChange={(e) => setText(e.target.value)}
           />
+        </Form.Group>
 
-          {/* fragment input */}
-          <Form.Group
-            style={{
-              marginTop: "1%",
-            }}
-          >
-            <div>Add Fragment:</div>
-            <Form.Label>
-              {[...Array(fragmentCount)].map((_, index) => (
-                <CreateFragmentComponent
-                  key={index}
-                  index={index}
-                  text={fragmentText}
-                  setText={setFragmentText}
-                />
-              ))}
+        {/* fragment input */}
+        <Form.Group
+          style={{
+            marginTop: "1%",
+          }}
+        >
+          <div>Add Fragment:</div>
+          <Form.Label>
+            {[...Array(fragmentCount)].map((_, index) => (
+              <CreateFragmentComponent
+                key={index}
+                index={index}
+                text={fragmentText}
+                setText={setFragmentText}
+              />
+            ))}
 
-              {/* add/remove fragments */}
+            {/* add/remove fragments */}
+            <Button
+              className={classes.createQuestionFormAddButton}
+              type="button"
+              onClick={() => setFragmentCount(fragmentCount + 1)}
+            >
+              +
+            </Button>
+            {fragmentCount !== 0 && (
               <Button
                 className={classes.createQuestionFormAddButton}
                 type="button"
-                onClick={() => setFragmentCount(fragmentCount + 1)}
+                onClick={() => setFragmentCount(fragmentCount - 1)}
               >
-                +
+                -
               </Button>
-              {fragmentCount !== 0 && (
-                <Button
-                  className={classes.createQuestionFormAddButton}
-                  type="button"
-                  onClick={() => setFragmentCount(fragmentCount - 1)}
-                >
-                  -
-                </Button>
-              )}
-            </Form.Label>
-          </Form.Group>
+            )}
+          </Form.Label>
+        </Form.Group>
+
+        {/* tag selection */}
+        <Form.Group
+          style={{
+            marginTop: "1%",
+          }}
+        >
+          <div>Add Tags:</div>
+          <Form.Label>
+            {[...Array(tagCount)].map((_ , index) => (
+              <AddTagComponent key={index} index={index} ids={tagIds} setIds={setTagIds} />
+            ))}
+
+            {/* add/remove tags */}
+            <Button
+              className={classes.createQuestionFormAddButton}
+              type="button"
+              onClick={() => setTagCount(tagCount + 1)}
+            >
+              +
+            </Button>
+            {tagCount !== 1 && (
+              <Button
+                className={classes.createQuestionFormAddButton}
+                type="button"
+                onClick={() => setTagCount(tagCount - 1)}
+              >
+                -
+              </Button>
+            )}
+          </Form.Label>
         </Form.Group>
 
         {/* option input */}
@@ -132,8 +165,7 @@ function CreateQuestionsFormComponent() {
           Submit
         </Button>
       </Form>
-      {displayResult && (
-        <CreateQuestionsComponent
+      <CreateQuestionsComponent
           count={count}
           text={text}
           explanation={explanation}
@@ -142,8 +174,9 @@ function CreateQuestionsFormComponent() {
           optionsIsCorrect={optionsIsCorrect}
           fragmentCount={fragmentCount}
           fragmentText={fragmentText}
+          tagCount={tagCount}
+          tagIds={tagIds}
         />
-      )}
     </>
   );
 }

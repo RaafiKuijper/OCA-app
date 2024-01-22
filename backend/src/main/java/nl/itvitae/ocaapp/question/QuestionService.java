@@ -9,6 +9,7 @@ import nl.itvitae.ocaapp.fragment.FragmentRepository;
 import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
 import nl.itvitae.ocaapp.option.OptionResponse;
+import nl.itvitae.ocaapp.tag.Tag;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -59,8 +60,9 @@ public class QuestionService {
         .filter(Option::getIsCorrect)
         .count();
     final List<Fragment> fragments = question.getFragments();
+    final List<Tag> tags = question.getTags();
 
-    return new QuestionResponse(qid, text, options, explanation, correct, fragments);
+    return new QuestionResponse(qid, text, options, explanation, correct, fragments, tags);
   }
 
   public Question createTestQuestion() {
@@ -99,6 +101,14 @@ public class QuestionService {
         question.getFragments()) {
       fragmentRepository.save(fragment);
     }
+    return questionRepository.save(question);
+  }
+
+  public Optional<Question> getById(Long id) {
+    return questionRepository.findById(id);
+  }
+
+  public Question save(Question question) {
     return questionRepository.save(question);
   }
 }
