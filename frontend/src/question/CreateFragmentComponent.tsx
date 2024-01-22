@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import FragmentProps from "./interfaces/FragmentProps";
 
-function CreateOptionComponent(props: FragmentProps) {
+function CreateFragmentComponent(props: FragmentProps) {
   const updateText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentText = props.text;
     currentText[props.index] = e.target.value;
@@ -24,4 +24,4 @@ function CreateOptionComponent(props: FragmentProps) {
   );
 }
 
-export default CreateOptionComponent;
+export default CreateFragmentComponent;
