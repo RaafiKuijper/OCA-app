@@ -24,13 +24,6 @@ function CreateTagComponent() {
   };
 
   const postData = async () => {
-    if (!tagName || !tagChapter || !tagSummary) {
-      console.error("Can't submit empty Tag.");
-      setDispText(
-        `Please enter a tag name, the chapter or paragraph it can be read about and a basic summary.`
-      );
-    }
-
     const newTag: TagBody = {
       name: tagName,
       chapter: tagChapter,
