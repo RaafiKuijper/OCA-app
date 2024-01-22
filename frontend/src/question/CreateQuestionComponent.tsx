@@ -58,6 +58,14 @@ function CreateQuestionsComponent(props: QuestionProps) {
             explanation: props.explanation,
           }
         );
+        
+        const currentQuestionId = check.data.map((question: Question) => question.id).pop() + 1
+
+        for (let i = 0; i < props.tagCount; i++) {
+          await axios.get(
+            `http://localhost:8080/api/v1/questions/link_tag/${currentQuestionId}/${props.tagIds[i]}`
+          );
+        }
 
         if (createQuestion.status == 201)
           setResult("Question succesfully added");

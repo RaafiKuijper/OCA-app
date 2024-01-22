@@ -6,5 +6,7 @@ export default interface QuestionProps {
   optionsIsCorrect: boolean[];
   fragmentCount: number;
   fragmentText: string[];
+  tagCount: number;
+  tagIds: number[];
   count: number;
 }

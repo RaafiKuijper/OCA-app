@@ -9,7 +9,6 @@ import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent
 import CreateTagComponent from "./tag/CreateTagComponent.tsx";
 import isAdmin from "./user/user.tsx";
 import MyNavbar from "./navbar/MyNavbar.tsx";
-import ViewQuestionsComponent from "./question/ViewQuestionsComponent.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -37,7 +36,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               element={<CreateQuestionsFormComponent />}
             />
             <Route path="/create-tag" element={<CreateTagComponent />} />
-            <Route path="/view-questions" element={<ViewQuestionsComponent />} />
           </>
         )}
       </Routes>
