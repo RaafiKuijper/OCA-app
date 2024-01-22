@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ViewTagComponent from "./ViewTagComponent";
 import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
+import DeleteTagComponent from "./DeleteTagComponent";
 
 function CreateTagComponent() {
   const [tagName, setTagName] = useState<string>("");
@@ -88,6 +89,7 @@ function CreateTagComponent() {
         <p>{dispText}</p>
       </form>
 
+      <DeleteTagComponent />
       <ViewTagComponent count={count} />
     </>
   );
