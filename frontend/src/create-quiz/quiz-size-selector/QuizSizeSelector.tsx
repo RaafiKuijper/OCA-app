@@ -59,9 +59,12 @@ const QuizSizeSelector = (props: { setQuizSize: (size: number) => void }) => {
           />
           <Form.Control
             type="number"
-            value={custom}
+            value={custom || ""}
             onChange={(e) => {
               setCustom(+e.target.value);
+              if (checked[checked.length - 1]) {
+                props.setQuizSize(+e.target.value || 0);
+              }
             }}
           />
           <InputGroup.Text>Options</InputGroup.Text>
