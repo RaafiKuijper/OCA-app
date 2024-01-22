@@ -29,6 +29,10 @@ public class TagService {
 
     // Check if substring of tag already exist
     // I am not too fond of this code, but I don't know any other solution
+    // Tried to create a better solution
+    //    if (tagRepository.findSubstringsByName(tag.getName()).size() != 0) {
+    //      return new TagValidationResponse(false, "Singular form already exists");
+    //    }
     final String name = tag.getName().toLowerCase();
     final List<Tag> tags = tagRepository.findAll();
     final boolean subExists = tags.stream()
