@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.tag;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +27,11 @@ public class TagController {
   @PostMapping("/add")
   public Tag addTag(@RequestBody Tag tag) {
     return tagService.addTag(tag);
+  }
+
+  @DeleteMapping("/deleteTag/{tag}")
+  public ResponseEntity<Void> deleteTag(@PathVariable(name = "tag") String tag) {
+    tagService.deleteTagByName(tag);
+    return ResponseEntity.noContent().build();
   }
 }

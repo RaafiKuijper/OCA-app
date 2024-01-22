@@ -24,4 +24,8 @@ public class TagService {
   public Tag addTag(Tag tag) {
     return tagRepository.save(tag);
   }
+
+  public void deleteTagByName(String tag) {
+    tagRepository.deleteTagByName(tag);
+  }
 }
