@@ -24,7 +24,7 @@ public class TagService {
     }
 
     // Check if tag is substring of already existing tag
-    if (tagRepository.findByNameLikeIgnoreCase(tag.getName()).size() != 0) {
+    if (tagRepository.findByNameContainingIgnoreCase(tag.getName()).size() != 0) {
       return new TagValidationResponse(false, "Similar tag already exists");
     }
 

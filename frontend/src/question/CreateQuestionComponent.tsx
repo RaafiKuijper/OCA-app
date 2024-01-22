@@ -28,7 +28,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
       props.tagIds.filter((id) => id === undefined).length === props.tagIds.length
     ) {
       setResult("Tags invalid");
-    }{
+    } else {
       props.optionsIsCorrect.map((isCorrect) =>
         isCorrect === undefined ? false : isCorrect
       );

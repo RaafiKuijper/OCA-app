@@ -12,7 +12,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 //            """)
 //  List<Tag> findSubstringsByName(@Param("input") String input);
 
-  List<Tag> findByNameLikeIgnoreCase(String name);
+  List<Tag> findByNameContainingIgnoreCase(String name);
 
   Iterable<Tag> findByName(String name);
 }

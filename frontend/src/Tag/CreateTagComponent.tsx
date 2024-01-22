@@ -35,6 +35,7 @@ function CreateTagComponent() {
 
     if (!validation.isValid) {
       setDispText(validation.explanation);
+      return;
     }
 
     await axios.post(`http://localhost:8080/api/v1/tags/add`, newTag);
