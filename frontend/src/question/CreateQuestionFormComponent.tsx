@@ -22,9 +22,7 @@ function CreateQuestionsFormComponent() {
 
   const handleFormSubmit = () => {
     setDisplayResult(true);
-    setCount(count + 1);
-    console.log(tagIds);
-    
+    setCount(count + 1);    
   };
 
   return (
@@ -169,8 +167,7 @@ function CreateQuestionsFormComponent() {
           Submit
         </Button>
       </Form>
-      {displayResult && (
-        <CreateQuestionsComponent
+      <CreateQuestionsComponent
           count={count}
           text={text}
           explanation={explanation}
@@ -182,7 +179,6 @@ function CreateQuestionsFormComponent() {
           tagCount={tagCount}
           tagIds={tagIds}
         />
-      )}
     </>
   );
 }
