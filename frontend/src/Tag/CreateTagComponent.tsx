@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import ViewTagComponent from "./ViewTagComponent";
 import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
-import TagResponse from "./models/TagResponse";
 import TagBody from "./models/TagBody";
 import TagValidationResponse from "./models/TagValidationResponse";
 
