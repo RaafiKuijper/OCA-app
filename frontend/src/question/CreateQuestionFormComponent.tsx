@@ -8,7 +8,6 @@ import Header from "../headers/header/Header";
 import AddTagComponent from "./AddTagComponent";
 
 function CreateQuestionsFormComponent() {
-  const [displayResult, setDisplayResult] = useState(false);
   const [text, setText] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
   const [optionCount, setOptionCount] = useState(2);
@@ -21,7 +20,6 @@ function CreateQuestionsFormComponent() {
   const [count, setCount] = useState(1);
 
   const handleFormSubmit = () => {
-    setDisplayResult(true);
     setCount(count + 1);    
   };
 
