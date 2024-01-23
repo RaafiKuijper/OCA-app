@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.question;
 
 import java.net.URI;
+import java.util.Optional;
 import nl.itvitae.ocaapp.tag.Tag;
 import nl.itvitae.ocaapp.tag.TagService;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class QuestionController {
   private final TagService tagService;
 
   // Maybe do this with a DTO.
-  @GetMapping
+  @GetMapping("")
   public ResponseEntity<Iterable<Question>> getAll() {
     return ResponseEntity.ok(questionService.getAll());
   }
@@ -64,9 +65,12 @@ public class QuestionController {
   @GetMapping("/link_tag/{question_id}/{tag_id}")
   public void linkTag(@PathVariable(value = "question_id") Long question_id,
       @PathVariable(value = "tag_id") Long tag_id) {
-    Question question = questionService.getById(question_id).get();
-    Tag tag = tagService.getById(tag_id).get();
-    question.linkTag(tag);
-    questionService.save(question);
+    Optional<Question> optionalQuestion = questionService.getById(question_id);
+    Optional<Tag> optionalTag = tagService.getById(tag_id);
+    if (optionalQuestion.isPresent() && optionalTag.isPresent()) {
+      final Question question = optionalQuestion.get();
+      question.linkTag(optionalTag.get());
+      questionService.save(question);
+    }
   }
 }
