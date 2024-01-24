@@ -9,16 +9,21 @@ const CustomSizeSelector = (props: {
 }) => {
   return (
     <>
-      <InputGroup.Radio
-        checked={props.checked}
-        onChange={props.updateChecked}
-      />
-      <Form.Control
-        type="number"
-        min={1}
-        max={props.questionCount}
-        onChange={(e) => props.updateValue(+e.target.value)}
-      />
+      <InputGroup>
+        <InputGroup.Radio
+          checked={props.checked}
+          onChange={props.updateChecked}
+        />
+        <Form.Control
+          type="number"
+          value={props.value}
+          min={1}
+          max={props.questionCount}
+          style={{ width: "3em" }}
+          onChange={(e) => props.updateValue(+e.target.value)}
+        />
+        <InputGroup.Text style={{ width: "6em" }}>Questions</InputGroup.Text>
+      </InputGroup>
     </>
   );
 };

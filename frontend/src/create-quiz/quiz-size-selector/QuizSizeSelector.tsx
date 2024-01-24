@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { InputGroup } from "react-bootstrap";
 import DefaultSizeSelector from "./DefaultSizeSelector";
 import CustomSizeSelector from "./CustomSizeSelector";
 
@@ -10,9 +9,9 @@ const QuizSizeSelector = (props: {
   const options: number[] = [5, 10, 20];
   const [checked, setChecked] = useState<boolean[]>([
     false,
+    false,
+    false,
     true,
-    false,
-    false,
   ]);
   const [custom, setCustom] = useState<number>(0);
 
@@ -44,19 +43,20 @@ const QuizSizeSelector = (props: {
   };
 
   return (
-    <InputGroup
+    <section
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         flexWrap: "wrap",
+        marginTop: "1em",
       }}
     >
       {options
         .filter((option) => option <= props.questionCount)
         .map((option, index) => (
-          <div style={{ display: "flex", marginTop: "1em" }}>
+          <div style={{ display: "flex" }}>
             <DefaultSizeSelector
               checked={checked[index]}
               option={option}
@@ -64,7 +64,7 @@ const QuizSizeSelector = (props: {
             />
           </div>
         ))}
-      <div style={{ display: "flex", marginTop: "1em" }}>
+      <div style={{ display: "flex" }}>
         <CustomSizeSelector
           checked={checked[checked.length - 1]}
           updateChecked={() => updateChecked(checked.length - 1)}
@@ -73,7 +73,7 @@ const QuizSizeSelector = (props: {
           updateValue={updateCustomValue}
         />
       </div>
-    </InputGroup>
+    </section>
   );
 };
 

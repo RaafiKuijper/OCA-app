@@ -6,10 +6,12 @@ const DefaultSizeSelector = (props: {
   update: () => void;
 }) => {
   return (
-    <>
+    <InputGroup>
       <InputGroup.Radio checked={props.checked} onChange={props.update} />
-      <InputGroup.Text>{props.option} Questions</InputGroup.Text>
-    </>
+      <InputGroup.Text style={{ width: "9em" }}>
+        {props.option} Questions
+      </InputGroup.Text>
+    </InputGroup>
   );
 };
 
