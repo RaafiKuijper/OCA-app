@@ -6,6 +6,7 @@ import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
 import Header from "../headers/header/Header";
 import AddTagComponent from "./AddTagComponent";
+import ViewQuestionsComponent from "./ViewQuestionsComponent";
 
 function CreateQuestionsFormComponent() {
   const [text, setText] = useState<string>("");
@@ -177,6 +178,8 @@ function CreateQuestionsFormComponent() {
           tagCount={tagCount}
           tagIds={tagIds}
         />
+
+        <ViewQuestionsComponent/>
     </>
   );
 }
