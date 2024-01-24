@@ -18,7 +18,7 @@ function AddTagComponent(props: TagProps) {
 
   const updateTagIds = (e: { target: { value: string | number } }) => {
     if (e.target.value === "create") {
-      window.open("./create-tag");
+      window.open("./tags");
     } else {
       const currentIds = props.ids;
       currentIds[props.index] = +e.target.value;

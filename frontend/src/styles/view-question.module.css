@@ -1,0 +1,42 @@
+.viewQuestion {
+  border: solid #7e97bd;
+  border-width: 2px;
+  border-radius: 7.5px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  padding: 2.5%;
+  margin-bottom: 2.5%;
+}
+
+.viewQuestion:hover {
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.viewQuestionFragment {
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  border: solid #7e97bd;
+  border-width: 1px;
+  padding: 2px;
+  margin-bottom: 2px;
+  background-color: #cfdde6;
+}
+
+.viewQuestionBox {
+  margin: 5%;
+  border: solid #6a82a8;
+  border-radius: 7.5px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  align-content: space-between;
+  justify-self: center;
+  padding: 5%;
+}
+
+.viewQuestionHeader {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.viewQuestionHeading {
+  font-weight: bold;
+}
