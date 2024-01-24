@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.question;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import nl.itvitae.ocaapp.tag.Tag;
 import nl.itvitae.ocaapp.tag.TagService;
@@ -28,7 +29,7 @@ public class QuestionController {
   // Maybe do this with a DTO.
   @GetMapping("")
   public ResponseEntity<Iterable<Question>> getAll() {
-    return ResponseEntity.ok(questionService.getAll());
+    return ResponseEntity.ok(questionService.getAll(new FilterBody(List.of())));
   }
 
   @GetMapping("/{id}")
@@ -42,8 +43,8 @@ public class QuestionController {
   }
 
   @GetMapping("/count")
-  public ResponseEntity<QuestionCount> count() {
-    return ResponseEntity.ok(questionService.getCount());
+  public ResponseEntity<QuestionCount> count(@RequestBody FilterBody filter) {
+    return ResponseEntity.ok(questionService.getCount(filter));
   }
 
   @GetMapping("/test")

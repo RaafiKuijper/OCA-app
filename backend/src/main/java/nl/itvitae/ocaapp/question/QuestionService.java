@@ -22,20 +22,21 @@ public class QuestionService {
   private final OptionRepository optionRepository;
   private final FragmentRepository fragmentRepository;
 
-  public Iterable<Question> getAll() {
-    return questionRepository.findAll();
+  public List<Question> getAll(FilterBody filter) {
+    System.out.println(filter);
+    return List.of();
   }
 
   public Optional<Question> getQuestionById(long id) {
     return questionRepository.findById(id);
   }
 
-  public QuestionCount getCount() {
-    return new QuestionCount(questionRepository.count());
+  public QuestionCount getCount(FilterBody filter) {
+    return new QuestionCount(getAll(filter).size());
   }
 
-  public List<Question> getRandomQuestions(int questionAmount) {
-    List<Question> questions = new ArrayList<>(questionRepository.findAll());
+  public List<Question> getRandomQuestions(FilterBody filter, int questionAmount) {
+    List<Question> questions = new ArrayList<>(getAll(filter));
     Collections.shuffle(questions);
     return questions.subList(0, questionAmount);
   }
