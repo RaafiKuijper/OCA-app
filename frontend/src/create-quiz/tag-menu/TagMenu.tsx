@@ -19,21 +19,25 @@ const TagMenu = (props: { setSelectedTags: (ids: number[]) => void }) => {
   }, []);
 
   const addSelected = (id: number) => {
-    setSelected([...selected, options.find((tag) => tag.id === id)!]);
-    props.setSelectedTags(selected.map((tag) => tag.id));
-    setOptions(options.filter((tag) => tag.id !== id));
+    const newOptions = options.filter((tag) => tag.id !== id);
+    const newSelected = [...selected, options.find((tag) => tag.id === id)!];
+    setSelected(newSelected);
+    props.setSelectedTags(newSelected.map((tag) => tag.id));
+    setOptions(newOptions);
   };
 
   const removeSelected = (id: number) => {
-    setOptions([...options, selected.find((tag) => tag.id === id)!]);
-    setSelected(selected.filter((tag) => tag.id !== id));
-    props.setSelectedTags(selected.map((tag) => tag.id));
+    const newOptions = [...options, selected.find((tag) => tag.id === id)!];
+    const newSelected = selected.filter((tag) => tag.id !== id);
+    setOptions(newOptions);
+    setSelected(newSelected);
+    props.setSelectedTags(newSelected.map((tag) => tag.id));
   };
 
   return (
     <section style={{ width: "13em", margin: "1em auto" }}>
       <h2 style={{ textAlign: "center", fontSize: "1em" }}>Select Tags</h2>
-      <SelectedTags selected={selected} />
+      {selected.length !== 0 && <SelectedTags selected={selected} />}
       {options.length !== 0 && (
         <TagSelector
           isAdder={true}

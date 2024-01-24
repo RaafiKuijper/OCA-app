@@ -14,13 +14,13 @@ const CreateQuizView = () => {
 
   useEffect(() => {
     const getQuestionCount = async () => {
+      const headers = {
+        ids: selectedTags.join(","),
+      };
+      console.log(headers);
       const result = await axios.get(
         "http://localhost:8080/api/v1/questions/count",
-        {
-          headers: {
-            ids: selectedTags.map((value) => value.toString()),
-          },
-        }
+        { headers }
       );
       console.log(result);
       const data: QuestionCount = result.data;
