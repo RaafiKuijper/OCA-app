@@ -19,7 +19,7 @@ const CreateQuizView = () => {
       setQuestionCount(data.count);
     };
     getQuestionCount();
-  });
+  }, []);
 
   return (
     <>
