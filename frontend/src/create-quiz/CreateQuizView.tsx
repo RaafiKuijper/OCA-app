@@ -31,7 +31,7 @@ const CreateQuizView = () => {
       <QuestionInfo questionCount={questionCount} />
       <SizeSelector setQuizSize={setQuizSize} questionCount={questionCount} />
       <TagMenu setSelectedTags={setSelectedTags} />
-      <CreateButton quizSize={quizSize} />
+      <CreateButton quizSize={quizSize} selectedTags={selectedTags} />
     </>
   );
 };
