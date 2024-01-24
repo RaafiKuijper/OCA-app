@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewTagComponent from "./ViewTagComponent";
-import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
 import TagBody from "./models/TagBody";
 import TagValidationResponse from "./models/TagValidationResponse";
 
-function CreateTagComponent() {
+function CreateTagComponent(props : {addTag : (tag: TagBody) => (void)}) {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagSummary, setTagSummary] = useState<string>("");
@@ -38,7 +36,7 @@ function CreateTagComponent() {
       return;
     }
 
-    await axios.post(`http://localhost:8080/api/v1/tags/add`, newTag);
+    await props.addTag(newTag);
     setCount(count + 1);
     setDispText(``);
   };
@@ -53,7 +51,6 @@ function CreateTagComponent() {
 
   return (
     <>
-      <Header text="Tags" />
       <br />
       <form
         className={classes.createTagView}
@@ -94,8 +91,6 @@ function CreateTagComponent() {
         </button>
         <p>{dispText}</p>
       </form>
-
-      <ViewTagComponent count={count} />
     </>
   );
 }

@@ -44,4 +44,10 @@ public class TagController {
         .toUri();
     return ResponseEntity.created(locationOfNewQuiz).body(newTag);
   }
+
+  @DeleteMapping("/deleteTag/{tag}")
+  public ResponseEntity<Void> deleteTag(@PathVariable(name = "tag") String tag) {
+    tagService.deleteTagByName(tag);
+    return ResponseEntity.noContent().build();
+  }
 }
