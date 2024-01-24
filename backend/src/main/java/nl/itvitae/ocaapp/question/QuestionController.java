@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +33,11 @@ public class QuestionController {
     return ResponseEntity.ok(questionService.getAll(new FilterBody(List.of())));
   }
 
+  @GetMapping("/filter")
+  public ResponseEntity<Iterable<Question>> getFiltered(@RequestBody FilterBody filter) {
+    return ResponseEntity.ok(questionService.getAll(filter));
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<QuestionResponse> getById(@PathVariable long id) {
     final QuestionResponse questionResponse = questionService.getById(id);
@@ -43,7 +49,7 @@ public class QuestionController {
   }
 
   @GetMapping("/count")
-  public ResponseEntity<QuestionCount> count(@RequestBody FilterBody filter) {
+  public ResponseEntity<QuestionCount> count(@RequestParam FilterBody filter) {
     return ResponseEntity.ok(questionService.getCount(filter));
   }
 

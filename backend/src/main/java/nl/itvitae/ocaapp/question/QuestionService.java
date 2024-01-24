@@ -10,6 +10,7 @@ import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
 import nl.itvitae.ocaapp.option.OptionResponse;
 import nl.itvitae.ocaapp.tag.Tag;
+import nl.itvitae.ocaapp.tag.TagRepository;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -21,10 +22,16 @@ public class QuestionService {
   private final QuestionRepository questionRepository;
   private final OptionRepository optionRepository;
   private final FragmentRepository fragmentRepository;
+  private final TagRepository tagRepository;
 
   public List<Question> getAll(FilterBody filter) {
-    System.out.println(filter);
-    return List.of();
+    if (filter.ids().size() == 0) {
+      return questionRepository.findAll();
+    }
+
+    final List<Tag> tags = filter.ids().stream().map(id -> tagRepository.findById(id).orElse(null))
+        .toList();
+    return questionRepository.findAllQuestionsByTagsIn(tags);
   }
 
   public Optional<Question> getQuestionById(long id) {
