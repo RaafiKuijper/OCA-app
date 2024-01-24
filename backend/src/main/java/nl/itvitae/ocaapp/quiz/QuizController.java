@@ -22,10 +22,9 @@ public class QuizController {
 
   private final QuizService quizService;
 
-  @PostMapping("/create")
-  public ResponseEntity<Quiz> createQuiz(UriComponentsBuilder ucb) {
-    final int questionCount = 5;
-    final Quiz newQuiz = quizService.createQuiz(questionCount);
+  @PostMapping("/create/{size}")
+  public ResponseEntity<Quiz> createQuiz(@PathVariable int size, UriComponentsBuilder ucb) {
+    final Quiz newQuiz = quizService.createQuiz(size);
     URI locationOfNewQuiz = ucb
         .path("/api/v1/quiz/{id}")
         .buildAndExpand(newQuiz.getId())

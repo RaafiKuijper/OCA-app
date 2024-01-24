@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import Header from "../headers/header/Header";
-import CreateQuizQuestionCount from "./CreateQuizQuestionCount";
+import QuizQuestionCount from "./quiz-question-count/QuizQuestionCount";
 import axios from "axios";
-import QuestionCount from "./QuestionCount";
-import CreateQuizButton from "./CreateQuizButton";
+import QuestionCount from "./models/QuestionCount";
+import CreateQuizButton from "./create-quiz-button/CreateQuizButton";
+import QuizSizeSelector from "./quiz-size-selector/QuizSizeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
+  const [quizSize, setQuizSize] = useState(1);
 
   useEffect(() => {
     const getQuestionCount = async () => {
@@ -15,15 +17,20 @@ const CreateQuizView = () => {
       );
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
+      setQuizSize(data.count);
     };
     getQuestionCount();
-  });
+  }, []);
 
   return (
     <>
       <Header text="Quizzes" />;
-      <CreateQuizQuestionCount questionCount={questionCount} />
-      <CreateQuizButton />
+      <QuizQuestionCount questionCount={questionCount} />
+      <QuizSizeSelector
+        setQuizSize={setQuizSize}
+        questionCount={questionCount}
+      />
+      <CreateQuizButton quizSize={quizSize} />
     </>
   );
 };
