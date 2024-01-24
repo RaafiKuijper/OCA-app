@@ -6,18 +6,20 @@ import QuestionCount from "./models/QuestionCount";
 import CreateButton from "./create-button/CreateButton";
 import SizeSelector from "./size-selector/SizeSelector";
 import TagResponse from "../tag/models/TagResponse";
-import TagSelector from "./tag-selector/TagSelector";
+import TagMenu from "./tag-menu/TagMenu";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
   const [quizSize, setQuizSize] = useState(1);
   const [tags, setTags] = useState<TagResponse[]>([]);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   useEffect(() => {
     const getTags = async () => {
       const result = await axios.get("http://localhost:8080/api/v1/tags");
       const data: TagResponse[] = result.data;
       setTags(data);
+      setSelectedTags([data[0].id]);
     };
 
     const getQuestionCount = async () => {
@@ -28,6 +30,7 @@ const CreateQuizView = () => {
       setQuestionCount(data.count);
       setQuizSize(data.count);
     };
+
     getQuestionCount();
     getTags();
   }, []);
@@ -37,8 +40,11 @@ const CreateQuizView = () => {
       <Header text="Quizzes" />;
       <QuestionInfo questionCount={questionCount} />
       <SizeSelector setQuizSize={setQuizSize} questionCount={questionCount} />
-      <TagSelector tags={tags} />
+      <TagMenu tags={tags} setSelectedTags={setSelectedTags} />
       <CreateButton quizSize={quizSize} />
+      <p>
+        Size = {quizSize}, Selected = {selectedTags}
+      </p>
     </>
   );
 };
