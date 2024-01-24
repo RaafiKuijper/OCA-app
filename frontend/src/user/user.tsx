@@ -1,3 +1,3 @@
-const isAdmin = true;
+const isAdmin = false;
 
 export default isAdmin;

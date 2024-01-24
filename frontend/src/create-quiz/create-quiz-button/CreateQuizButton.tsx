@@ -1,13 +1,15 @@
 import axios from "axios";
 import { Button } from "react-bootstrap";
-import Quiz from "./Quiz";
+import Quiz from "../models/Quiz";
 import { useNavigate } from "react-router-dom";
 
-const CreateQuizButton = () => {
+const CreateQuizButton = (props: { quizSize: number }) => {
   const navigate = useNavigate();
 
   const createQuiz = async () => {
-    const result = await axios.post("http://localhost:8080/api/v1/quiz/create");
+    const result = await axios.post(
+      `http://localhost:8080/api/v1/quiz/create/${props.quizSize}`
+    );
     const data: Quiz = result.data;
     const quizId = data.id;
     navigate(`../make-quiz/${quizId}`);
@@ -18,7 +20,11 @@ const CreateQuizButton = () => {
       <Button
         variant="secondary"
         size="lg"
-        style={{ width: "30%", margin: "1em auto", fontStyle: "900" }}
+        style={{
+          width: "50%",
+          margin: "1em auto",
+          fontStyle: "900",
+        }}
         onClick={() => createQuiz()}
       >
         Create Quiz

@@ -1,10 +1,10 @@
 import { Card } from "react-bootstrap";
 
-const CreateQuizQuestionCount = (props: { questionCount: number }) => {
+const QuizQuestionCount = (props: { questionCount: number }) => {
   return (
     <Card
       style={{
-        width: "30%",
+        width: "40%",
         margin: "0 auto",
         textAlign: "center",
       }}
@@ -14,11 +14,11 @@ const CreateQuizQuestionCount = (props: { questionCount: number }) => {
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/768px-Question_mark_%28black%29.svg.png"
       />
       <Card.Body>
-        <Card.Title>Questions in Database</Card.Title>
-        <Card.Text>{props.questionCount} questions</Card.Text>
+        <Card.Title>Questions</Card.Title>
+        <Card.Text>{props.questionCount} Questions</Card.Text>
       </Card.Body>
     </Card>
   );
 };
 
-export default CreateQuizQuestionCount;
+export default QuizQuestionCount;

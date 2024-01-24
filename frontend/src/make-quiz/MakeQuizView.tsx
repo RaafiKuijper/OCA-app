@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Quiz from "../create-quiz/Quiz";
+import Quiz from "../create-quiz/models/Quiz";
 import Header from "../headers/header/Header";
 import MakeQuizList from "./MakeQuizList";
 import MakeQuizButton from "./MakeQuizButton";
@@ -23,7 +23,7 @@ const MakeQuizView = () => {
   return (
     <article style={{ margin: 0 }}>
       <Header text={`Quiz ${id}`} />
-      <h2 style={{ textAlign: "center" }}>Questions</h2>
+      <h2 style={{ textAlign: "center" }}>{quiz.questions.length} Questions</h2>
       <MakeQuizList questions={quiz.questions} />
       <MakeQuizButton id={quiz.id} />
     </article>
