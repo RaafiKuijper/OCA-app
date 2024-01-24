@@ -6,7 +6,7 @@ import AnswerQuestionView from "./answer-question/AnswerQuestionView.tsx";
 import CreateQuizView from "./create-quiz/CreateQuizView.tsx";
 import MakeQuizView from "./make-quiz/MakeQuizView.tsx";
 import CreateQuestionsFormComponent from "./question/CreateQuestionFormComponent.tsx";
-import CreateTagComponent from "./tag/CreateTagComponent.tsx";
+import ViewTagComponent from "./tag/ViewTagComponent.tsx";
 import isAdmin from "./user/user.tsx";
 import MyNavbar from "./navbar/MyNavbar.tsx";
 
@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               path="/create-question"
               element={<CreateQuestionsFormComponent />}
             />
-            <Route path="/create-tag" element={<CreateTagComponent />} />
+            <Route path="/tags" element={<ViewTagComponent />} />
           </>
         )}
       </Routes>

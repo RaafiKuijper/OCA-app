@@ -1,13 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewTagComponent from "./ViewTagComponent";
-import Header from "../headers/header/Header";
 import classes from "../styles/Create-Tag.module.css";
 import TagBody from "./models/TagBody";
 import TagValidationResponse from "./models/TagValidationResponse";
 
-function CreateTagComponent() {
-  const [tag, setTag] = useState<string>("");
+function CreateTagComponent(props : {addTag : (tag: TagBody) => (void)}) {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagSummary, setTagSummary] = useState<string>("");
@@ -39,22 +36,9 @@ function CreateTagComponent() {
       return;
     }
 
-    await axios.post(`http://localhost:8080/api/v1/tags/add`, newTag);
+    await props.addTag(newTag);
     setCount(count + 1);
     setDispText(``);
-  };
-
-  const deleteData = async () => {
-    const checker = await axios.get(
-      `http://localhost:8080/api/v1/tags/findByName/${tag}`
-    );
-    if (checker.data[0] == null) {
-      setDispText(`${tag} doesn't match any names in the database.`);
-    } else {
-      await axios.delete(`http://localhost:8080/api/v1/tags/deleteTag/${tag}`);
-      setDispText(``);
-      setCount(count + 1);
-    }
   };
 
   useEffect(() => {
@@ -67,7 +51,6 @@ function CreateTagComponent() {
 
   return (
     <>
-      <Header text="Tags" />
       <br />
       <form
         className={classes.createTagView}
@@ -107,29 +90,6 @@ function CreateTagComponent() {
           Submit
         </button>
         <p>{dispText}</p>
-      </form>
-
-      <ViewTagComponent count={count} />
-
-      <form
-        className={classes.createTagView}
-        onSubmit={(e) => {
-          e.preventDefault();
-          deleteData();
-        }}
-      >
-        Delete a tag by submitting it's name:
-        <br />
-        <input
-          className={classes.deleteTagInput}
-          type="text"
-          placeholder="Tag name"
-          onChange={(e) => setTag(e.target.value)}
-        ></input>
-        <br />
-        <button className={classes.tagSubmitButton} type="submit">
-          Submit
-        </button>
       </form>
     </>
   );
