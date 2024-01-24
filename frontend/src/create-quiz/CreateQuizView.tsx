@@ -8,7 +8,7 @@ import QuizSizeSelector from "./quiz-size-selector/QuizSizeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
-  const [quizSize, setQuizSize] = useState(0);
+  const [quizSize, setQuizSize] = useState(1);
 
   useEffect(() => {
     const getQuestionCount = async () => {
@@ -17,6 +17,7 @@ const CreateQuizView = () => {
       );
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
+      setQuizSize(data.count);
     };
     getQuestionCount();
   }, []);

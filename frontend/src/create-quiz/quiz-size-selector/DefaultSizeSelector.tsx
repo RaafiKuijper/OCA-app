@@ -8,7 +8,7 @@ const DefaultSizeSelector = (props: {
   return (
     <InputGroup>
       <InputGroup.Radio checked={props.checked} onChange={props.update} />
-      <InputGroup.Text style={{ width: "9em" }}>
+      <InputGroup.Text style={{ width: "10em" }}>
         {props.option} Questions
       </InputGroup.Text>
     </InputGroup>

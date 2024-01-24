@@ -13,26 +13,18 @@ const QuizSizeSelector = (props: {
     false,
     true,
   ]);
-  const [custom, setCustom] = useState<number>(0);
 
   const updateCustomValue = (value: number) => {
     if (!(value > props.questionCount)) {
-      setCustom(value);
-      if (checked[checked.length - 1]) {
-        props.setQuizSize(value || 1);
-      }
       if (!checked[checked.length - 1]) {
         updateChecked(checked.length - 1);
       }
+      props.setQuizSize(value || 1);
     }
   };
 
   const updateSelectedOptions = (index: number) => {
-    if (index < checked.length - 1) {
-      props.setQuizSize(options[index]);
-    } else {
-      props.setQuizSize(custom);
-    }
+    props.setQuizSize(options[index]);
     updateChecked(index);
   };
 
@@ -56,7 +48,7 @@ const QuizSizeSelector = (props: {
       {options
         .filter((option) => option <= props.questionCount)
         .map((option, index) => (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" }} key={index}>
             <DefaultSizeSelector
               checked={checked[index]}
               option={option}
@@ -68,9 +60,9 @@ const QuizSizeSelector = (props: {
         <CustomSizeSelector
           checked={checked[checked.length - 1]}
           updateChecked={() => updateChecked(checked.length - 1)}
-          value={custom}
           questionCount={props.questionCount}
           updateValue={updateCustomValue}
+          key={checked.length - 1}
         />
       </div>
     </section>
