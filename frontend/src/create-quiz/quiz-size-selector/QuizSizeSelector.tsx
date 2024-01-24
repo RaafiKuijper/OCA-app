@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
-
-const flex = { display: "flex" };
-const center = { ...flex, justifyContent: "center" };
+import { InputGroup } from "react-bootstrap";
+import DefaultSizeSelector from "./DefaultSizeSelector";
+import CustomSizeSelector from "./CustomSizeSelector";
 
 const QuizSizeSelector = (props: {
   setQuizSize: (size: number) => void;
@@ -16,6 +15,18 @@ const QuizSizeSelector = (props: {
     false,
   ]);
   const [custom, setCustom] = useState<number>(0);
+
+  const updateCustomValue = (value: number) => {
+    if (!(value > props.questionCount)) {
+      setCustom(value);
+      if (checked[checked.length - 1]) {
+        props.setQuizSize(value || 1);
+      }
+      if (!checked[checked.length - 1]) {
+        updateChecked(checked.length - 1);
+      }
+    }
+  };
 
   const updateSelectedOptions = (index: number) => {
     if (index < checked.length - 1) {
@@ -35,46 +46,32 @@ const QuizSizeSelector = (props: {
   return (
     <InputGroup
       style={{
-        ...center,
-        marginTop: "1em",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
       }}
     >
       {options
         .filter((option) => option <= props.questionCount)
         .map((option, index) => (
-          <div>
-            <InputGroup.Radio
+          <div style={{ display: "flex", marginTop: "1em" }}>
+            <DefaultSizeSelector
               checked={checked[index]}
-              style={{ margin: "0 auto" }}
-              onChange={() => updateSelectedOptions(index)}
+              option={option}
+              update={() => updateSelectedOptions(index)}
             />
-            <InputGroup.Text>{option} Options</InputGroup.Text>
           </div>
         ))}
-      <div style={{ ...flex }}>
-        <InputGroup.Radio
+      <div style={{ display: "flex", marginTop: "1em" }}>
+        <CustomSizeSelector
           checked={checked[checked.length - 1]}
-          onChange={() => updateSelectedOptions(checked.length - 1)}
+          updateChecked={() => updateChecked(checked.length - 1)}
+          value={custom}
+          questionCount={props.questionCount}
+          updateValue={updateCustomValue}
         />
-        <Form.Control
-          type="number"
-          value={custom || ""}
-          min={1}
-          max={props.questionCount}
-          style={{ textAlign: "center", fontSize: "1.2em", padding: "0.5em" }}
-          onChange={(e) => {
-            if (!(+e.target.value > props.questionCount)) {
-              setCustom(+e.target.value);
-              if (checked[checked.length - 1]) {
-                props.setQuizSize(+e.target.value || 1);
-              }
-              if (!checked[checked.length - 1]) {
-                updateChecked(checked.length - 1);
-              }
-            }
-          }}
-        />
-        <InputGroup.Text>Options</InputGroup.Text>
       </div>
     </InputGroup>
   );
