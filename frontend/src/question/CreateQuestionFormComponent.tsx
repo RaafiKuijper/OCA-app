@@ -6,6 +6,7 @@ import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
 import Header from "../headers/header/Header";
 import AddTagComponent from "./AddTagComponent";
+import ViewQuestionsComponent from "./ViewQuestionsComponent";
 
 function CreateQuestionsFormComponent() {
   const [text, setText] = useState<string>("");
@@ -20,7 +21,7 @@ function CreateQuestionsFormComponent() {
   const [count, setCount] = useState(1);
 
   const handleFormSubmit = () => {
-    setCount(count + 1);    
+    setCount(count + 1);
   };
 
   return (
@@ -88,8 +89,13 @@ function CreateQuestionsFormComponent() {
         >
           <div>Add Tags:</div>
           <Form.Label>
-            {[...Array(tagCount)].map((_ , index) => (
-              <AddTagComponent key={index} index={index} ids={tagIds} setIds={setTagIds} />
+            {[...Array(tagCount)].map((_, index) => (
+              <AddTagComponent
+                key={index}
+                index={index}
+                ids={tagIds}
+                setIds={setTagIds}
+              />
             ))}
 
             {/* add/remove tags */}
@@ -166,17 +172,19 @@ function CreateQuestionsFormComponent() {
         </Button>
       </Form>
       <CreateQuestionsComponent
-          count={count}
-          text={text}
-          explanation={explanation}
-          optionCount={optionCount}
-          optionsText={optionsText}
-          optionsIsCorrect={optionsIsCorrect}
-          fragmentCount={fragmentCount}
-          fragmentText={fragmentText}
-          tagCount={tagCount}
-          tagIds={tagIds}
-        />
+        count={count}
+        text={text}
+        explanation={explanation}
+        optionCount={optionCount}
+        optionsText={optionsText}
+        optionsIsCorrect={optionsIsCorrect}
+        fragmentCount={fragmentCount}
+        fragmentText={fragmentText}
+        tagCount={tagCount}
+        tagIds={tagIds}
+      />
+
+      <ViewQuestionsComponent />
     </>
   );
 }

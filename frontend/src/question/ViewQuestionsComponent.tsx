@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Question from "./interfaces/QuestionInterface";
+import classes from "../styles/view-question.module.css";
 
 function ViewQuestionsComponent() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -14,18 +15,26 @@ function ViewQuestionsComponent() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <>
-      <div>
+      <div className={classes.viewQuestionBox}>
+        <p className={classes.viewQuestionHeader}>Questions in the database:</p>
         {questions.map((question) => (
-          <div key={question.id}>
-            <h3>{question.text}</h3>
-            {question.fragments.map((fragment) =>
-              fragment.text
-                .split("\\n")
-                .map((line: string) => <pre key={line}>{line}</pre>)
+          <div className={classes.viewQuestion} key={question.id}>
+            <h3 className={classes.viewQuestionHeading}>
+              Question {question.id}:
+            </h3>
+            <h4>{question.text}</h4>
+            {question.fragments.length !== 0 && (
+              <div className={classes.viewQuestionFragment}>
+                {question.fragments.map((fragment) =>
+                  fragment.text
+                    .split("\\n")
+                    .map((line: string) => <pre key={line}>{line}</pre>)
+                )}
+              </div>
             )}
             <ol>
               {question.options.map((option) => (
@@ -35,14 +44,13 @@ function ViewQuestionsComponent() {
             <p>{question.explanation}</p>
             <div>
               {question.tags.map((tag) => (
-                <dl>
-                  <dt key={tag.id}>{tag.name}</dt>
+                <dl key={tag.id}>
+                  <dt>{tag.name}</dt>
                   <dd>{tag.chapter}</dd>
                   <dd>{tag.summary}</dd>
-                </dl>  
+                </dl>
               ))}
             </div>
-            <br />
           </div>
         ))}
       </div>
