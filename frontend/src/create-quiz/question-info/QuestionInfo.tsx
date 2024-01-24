@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-const QuizQuestionCount = (props: { questionCount: number }) => {
+const QuestionInfo = (props: { questionCount: number }) => {
   return (
     <Card
       style={{
@@ -21,4 +21,4 @@ const QuizQuestionCount = (props: { questionCount: number }) => {
   );
 };
 
-export default QuizQuestionCount;
+export default QuestionInfo;
