@@ -23,12 +23,18 @@ function ViewQuestionsComponent() {
         <p className={classes.viewQuestionHeader}>Questions in the database:</p>
         {questions.map((question) => (
           <div className={classes.viewQuestion} key={question.id}>
-            <h3 className={classes.viewQuestionHeading}>Question {question.id}:</h3>
+            <h3 className={classes.viewQuestionHeading}>
+              Question {question.id}:
+            </h3>
             <h4>{question.text}</h4>
-            {question.fragments.map((fragment) =>
-              fragment.text
-                .split("\\n")
-                .map((line: string) => <pre key={line}>{line}</pre>)
+            {question.fragments.length !== 0 && (
+              <div className={classes.viewQuestionFragment}>
+                {question.fragments.map((fragment) =>
+                  fragment.text
+                    .split("\\n")
+                    .map((line: string) => <pre key={line}>{line}</pre>)
+                )}
+              </div>
             )}
             <ol>
               {question.options.map((option) => (
