@@ -10,6 +10,7 @@ import nl.itvitae.ocaapp.option.Option;
 import nl.itvitae.ocaapp.option.OptionRepository;
 import nl.itvitae.ocaapp.option.OptionResponse;
 import nl.itvitae.ocaapp.tag.Tag;
+import nl.itvitae.ocaapp.tag.TagRepository;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -21,21 +22,28 @@ public class QuestionService {
   private final QuestionRepository questionRepository;
   private final OptionRepository optionRepository;
   private final FragmentRepository fragmentRepository;
+  private final TagRepository tagRepository;
 
-  public Iterable<Question> getAll() {
-    return questionRepository.findAll();
+  public List<Question> getAll(FilterBody filter) {
+    if (filter.ids().size() == 0) {
+      return questionRepository.findAll();
+    }
+
+    final List<Tag> tags = filter.ids().stream().map(id -> tagRepository.findById(id).orElse(null))
+        .toList();
+    return questionRepository.findAllQuestionsByTagsIn(tags);
   }
 
   public Optional<Question> getQuestionById(long id) {
     return questionRepository.findById(id);
   }
 
-  public QuestionCount getCount() {
-    return new QuestionCount(questionRepository.count());
+  public QuestionCount getCount(FilterBody filter) {
+    return new QuestionCount(getAll(filter).size());
   }
 
-  public List<Question> getRandomQuestions(int questionAmount) {
-    List<Question> questions = new ArrayList<>(questionRepository.findAll());
+  public List<Question> getRandomQuestions(FilterBody filter, int questionAmount) {
+    List<Question> questions = new ArrayList<>(getAll(filter));
     Collections.shuffle(questions);
     return questions.subList(0, questionAmount);
   }

@@ -4,6 +4,7 @@ import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.ocaapp.answer.AnswerBody;
 import nl.itvitae.ocaapp.answer.AnswerResult;
+import nl.itvitae.ocaapp.question.FilterBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,9 @@ public class QuizController {
   private final QuizService quizService;
 
   @PostMapping("/create/{size}")
-  public ResponseEntity<Quiz> createQuiz(@PathVariable int size, UriComponentsBuilder ucb) {
-    final Quiz newQuiz = quizService.createQuiz(size);
+  public ResponseEntity<Quiz> createQuiz(@RequestBody FilterBody filter, @PathVariable int size,
+      UriComponentsBuilder ucb) {
+    final Quiz newQuiz = quizService.createQuiz(size, filter);
     URI locationOfNewQuiz = ucb
         .path("/api/v1/quiz/{id}")
         .buildAndExpand(newQuiz.getId())

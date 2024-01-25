@@ -7,6 +7,7 @@ import nl.itvitae.ocaapp.answer.Answer;
 import nl.itvitae.ocaapp.answer.AnswerBody;
 import nl.itvitae.ocaapp.answer.AnswerResult;
 import nl.itvitae.ocaapp.answer.AnswerService;
+import nl.itvitae.ocaapp.question.FilterBody;
 import nl.itvitae.ocaapp.question.Question;
 import nl.itvitae.ocaapp.question.QuestionService;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class QuizService {
   private final AnswerService answerService;
 
 
-  public Quiz createQuiz(int questionCount) {
-    return quizRepository.save(new Quiz(questionService.getRandomQuestions(questionCount)));
+  public Quiz createQuiz(int questionCount, FilterBody filter) {
+    return quizRepository.save(new Quiz(questionService.getRandomQuestions(filter, questionCount)));
   }
 
   public QuizResponse getQuizById(long id) {
