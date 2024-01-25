@@ -33,3 +33,9 @@
   margin: "0 auto";
   margin-top: "3em";
 }
+
+.createQuestionFormSubmitButton {
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
