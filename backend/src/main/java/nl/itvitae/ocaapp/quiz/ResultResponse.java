@@ -1,5 +1,5 @@
 package nl.itvitae.ocaapp.quiz;
 
-public record ResultResponse(int total, int correct) {
+public record ResultResponse(String description, int total, int correct) {
 
 }

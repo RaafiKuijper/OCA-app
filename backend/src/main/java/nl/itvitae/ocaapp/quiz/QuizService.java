@@ -77,6 +77,18 @@ public class QuizService {
     return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
   }
 
+  private String getResultDescription(int size, int correct) {
+    double fraction = (double) correct / size;
+
+    if (fraction < 0.65) {
+      return "Failed!";
+    } else if (fraction < 0.8) {
+      return "Passed!";
+    } else {
+      return "Super!";
+    }
+  }
+
   public ResultResponse getResult(long id) {
     if (quizRepository.findById(id).isEmpty()) {
       return null;
@@ -93,7 +105,8 @@ public class QuizService {
     final int correct = quiz.getAnswers().stream().filter(Answer::isPassed)
         .toList()
         .size();
+    final String description = getResultDescription(size, correct);
 
-    return new ResultResponse(size, correct);
+    return new ResultResponse(description, size, correct);
   }
 }
