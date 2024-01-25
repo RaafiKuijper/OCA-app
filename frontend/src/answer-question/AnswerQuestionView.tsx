@@ -40,7 +40,7 @@ const AnswerQuestionView = () => {
       const data: NextAnswer = result.data;
 
       if (data.id === -1) {
-        navigate("/");
+        navigate(`/quiz-results/${quizId}`);
       } else {
         navigate(`/make-quiz/${quizId}/${data.id}`);
       }

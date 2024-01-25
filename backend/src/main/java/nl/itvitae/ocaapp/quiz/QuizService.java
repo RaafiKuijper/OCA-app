@@ -76,4 +76,35 @@ public class QuizService {
     quizRepository.save(quiz);
     return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
   }
+
+  private String getResultDescription(int size, int correct) {
+    double fraction = (double) correct / size;
+
+    if (fraction < 0.65) {
+      return "Failed!";
+    } else {
+      return "Passed!";
+    }
+  }
+
+  public ResultResponse getResult(long id) {
+    if (quizRepository.findById(id).isEmpty()) {
+      return null;
+    }
+
+    final Quiz quiz = quizRepository.findById(id).get();
+    final int answered = quiz.getAnswers().size();
+    final int size = quiz.getQuestions().size();
+
+    if (answered < size) {
+      return null;
+    }
+
+    final int correct = quiz.getAnswers().stream().filter(Answer::isPassed)
+        .toList()
+        .size();
+    final String description = getResultDescription(size, correct);
+
+    return new ResultResponse(description, size, correct);
+  }
 }
