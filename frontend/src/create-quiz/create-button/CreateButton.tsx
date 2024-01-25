@@ -3,12 +3,13 @@ import { Button } from "react-bootstrap";
 import Quiz from "../models/Quiz";
 import { useNavigate } from "react-router-dom";
 
-const CreateQuizButton = (props: { quizSize: number }) => {
+const CreateButton = (props: { quizSize: number; selectedTags: number[] }) => {
   const navigate = useNavigate();
 
   const createQuiz = async () => {
     const result = await axios.post(
-      `http://localhost:8080/api/v1/quiz/create/${props.quizSize}`
+      `http://localhost:8080/api/v1/quiz/create/${props.quizSize}`,
+      { ids: props.selectedTags }
     );
     const data: Quiz = result.data;
     const quizId = data.id;
@@ -34,4 +35,4 @@ const CreateQuizButton = (props: { quizSize: number }) => {
   );
 };
 
-export default CreateQuizButton;
+export default CreateButton;

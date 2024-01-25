@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.question;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import nl.itvitae.ocaapp.tag.Tag;
 import nl.itvitae.ocaapp.tag.TagService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,12 @@ public class QuestionController {
   // Maybe do this with a DTO.
   @GetMapping("")
   public ResponseEntity<Iterable<Question>> getAll() {
-    return ResponseEntity.ok(questionService.getAll());
+    return ResponseEntity.ok(questionService.getAll(new FilterBody(List.of())));
+  }
+
+  @GetMapping("/filter")
+  public ResponseEntity<Iterable<Question>> getFiltered(@RequestBody FilterBody filter) {
+    return ResponseEntity.ok(questionService.getAll(filter));
   }
 
   @GetMapping("/{id}")
@@ -42,8 +49,8 @@ public class QuestionController {
   }
 
   @GetMapping("/count")
-  public ResponseEntity<QuestionCount> count() {
-    return ResponseEntity.ok(questionService.getCount());
+  public ResponseEntity<QuestionCount> count(@RequestHeader List<Long> ids) {
+    return ResponseEntity.ok(questionService.getCount(new FilterBody(ids)));
   }
 
   @GetMapping("/test")

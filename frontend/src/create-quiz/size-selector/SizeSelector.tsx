@@ -2,7 +2,7 @@ import { useState } from "react";
 import DefaultSizeSelector from "./DefaultSizeSelector";
 import CustomSizeSelector from "./CustomSizeSelector";
 
-const QuizSizeSelector = (props: {
+const SizeSelector = (props: {
   setQuizSize: (size: number) => void;
   questionCount: number;
 }) => {
@@ -45,6 +45,7 @@ const QuizSizeSelector = (props: {
         marginTop: "1em",
       }}
     >
+      <h2 style={{ textAlign: "center", fontSize: "1em" }}>Select Size</h2>
       {options
         .filter((option) => option <= props.questionCount)
         .map((option, index) => (
@@ -69,4 +70,4 @@ const QuizSizeSelector = (props: {
   );
 };
 
-export default QuizSizeSelector;
+export default SizeSelector;

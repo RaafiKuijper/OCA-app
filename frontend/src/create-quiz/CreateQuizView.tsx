@@ -1,36 +1,43 @@
 import { useEffect, useState } from "react";
 import Header from "../headers/header/Header";
-import QuizQuestionCount from "./quiz-question-count/QuizQuestionCount";
+import QuestionInfo from "./question-info/QuestionInfo";
 import axios from "axios";
 import QuestionCount from "./models/QuestionCount";
-import CreateQuizButton from "./create-quiz-button/CreateQuizButton";
-import QuizSizeSelector from "./quiz-size-selector/QuizSizeSelector";
+import CreateButton from "./create-button/CreateButton";
+import SizeSelector from "./size-selector/SizeSelector";
+import TagMenu from "./tag-menu/TagMenu";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
   const [quizSize, setQuizSize] = useState(1);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   useEffect(() => {
     const getQuestionCount = async () => {
+      const headers = {
+        ids: selectedTags.join(","),
+      };
+      console.log(headers);
       const result = await axios.get(
-        "http://localhost:8080/api/v1/questions/count"
+        "http://localhost:8080/api/v1/questions/count",
+        { headers }
       );
+      console.log(result);
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
       setQuizSize(data.count);
     };
+
     getQuestionCount();
-  }, []);
+  }, [selectedTags]);
 
   return (
     <>
       <Header text="Quizzes" />;
-      <QuizQuestionCount questionCount={questionCount} />
-      <QuizSizeSelector
-        setQuizSize={setQuizSize}
-        questionCount={questionCount}
-      />
-      <CreateQuizButton quizSize={quizSize} />
+      <QuestionInfo questionCount={questionCount} />
+      <SizeSelector setQuizSize={setQuizSize} questionCount={questionCount} />
+      <TagMenu setSelectedTags={setSelectedTags} />
+      <CreateButton quizSize={quizSize} selectedTags={selectedTags} />
     </>
   );
 };
