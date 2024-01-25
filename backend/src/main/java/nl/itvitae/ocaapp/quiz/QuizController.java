@@ -52,6 +52,15 @@ public class QuizController {
     }
   }
 
+  @GetMapping("/{id}/result")
+  public ResponseEntity<ResultResponse> getResult(@PathVariable long id) {
+    if (quizService.getResult(id) == null) {
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok(quizService.getResult(id));
+    }
+  }
+
   @PostMapping("/{id}/answer")
   public ResponseEntity<AnswerResult> submitAnswer(@PathVariable long id,
       @RequestBody AnswerBody body) {

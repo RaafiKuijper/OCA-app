@@ -76,4 +76,24 @@ public class QuizService {
     quizRepository.save(quiz);
     return new AnswerResult(answer.isPassed(), answer.getQuestion().getExplanation());
   }
+
+  public ResultResponse getResult(long id) {
+    if (quizRepository.findById(id).isEmpty()) {
+      return null;
+    }
+
+    final Quiz quiz = quizRepository.findById(id).get();
+    final int answered = quiz.getAnswers().size();
+    final int size = quiz.getQuestions().size();
+
+    if (answered < size) {
+      return null;
+    }
+
+    final int correct = quiz.getAnswers().stream().filter(Answer::isPassed)
+        .toList()
+        .size();
+
+    return new ResultResponse(size, correct);
+  }
 }
