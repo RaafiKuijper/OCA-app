@@ -82,10 +82,8 @@ public class QuizService {
 
     if (fraction < 0.65) {
       return "Failed!";
-    } else if (fraction < 0.8) {
-      return "Passed!";
     } else {
-      return "Super!";
+      return "Passed!";
     }
   }
 
