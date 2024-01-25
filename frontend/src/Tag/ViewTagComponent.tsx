@@ -20,14 +20,16 @@ function ViewTagComponent() {
     fetchData();
   }, [fetchCount]);
 
-  const addTag = async (newTag : TagBody) => {
+  const addTag = async (newTag: TagBody) => {
     await axios.post(`http://localhost:8080/api/v1/tags/add`, newTag);
     setFetchCount(fetchCount + 1);
   };
 
-  const deleteTag = async (tagName : string) => {
+  const deleteTag = async (tagName: string) => {
     console.log(`Deleting ${tagName}`);
-    await axios.delete(`http://localhost:8080/api/v1/tags/deleteTag/${tagName}`);
+    await axios.delete(
+      `http://localhost:8080/api/v1/tags/deleteTag/${tagName}`
+    );
     setFetchCount(fetchCount - 1);
   };
 
@@ -35,20 +37,23 @@ function ViewTagComponent() {
     <>
       <Header text="Tags" />
 
-      <CreateTagComponent addTag={addTag}/>
+      <CreateTagComponent addTag={addTag} />
 
-      <div className={classes.createTagView}>
-        Tags in database:{" "}
+      <div className={classes.viewTagView}>
+        <h2 className={classes.viewTagHeader}>Tags in database{" "}</h2>
         {tags.map((tag) => (
-          <p key={tag.id}>
-            {tag.name} OCA certifaction guide chapter: {tag.chapter}.
-            <br />
-            {tag.summary}
-          </p>
+          <>
+            <p key={tag.id}>
+              {tag.name} OCA certifaction guide chapter: {tag.chapter}.
+              <br />
+              {tag.summary}
+            </p>
+            <hr />
+          </>
         ))}
       </div>
 
-      <DeleteTagComponent deleteTag={deleteTag}/>
+      <DeleteTagComponent deleteTag={deleteTag} />
     </>
   );
 }
