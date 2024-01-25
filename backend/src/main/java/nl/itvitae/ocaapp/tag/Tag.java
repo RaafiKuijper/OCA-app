@@ -1,6 +1,7 @@
 package nl.itvitae.ocaapp.tag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class Tag {
 
   private String name;
   private String chapter;
+  @Column(columnDefinition = "TEXT")
   private String summary;
 
   @ManyToMany

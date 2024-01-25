@@ -25,12 +25,12 @@ public class Question {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(columnDefinition = "TEXT")
   private String text;
-  // should later be changed to ManyToMany to avoid duplicate data
   @OneToMany
   private List<Option> options;
 
-  @Column(length = 1000)
+  @Column(columnDefinition = "TEXT")
   private String explanation;
 
   @OneToMany
