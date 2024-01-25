@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import nl.itvitae.ocaapp.answer.Answer;
+import nl.itvitae.ocaapp.answer.AnswerRepository;
 import nl.itvitae.ocaapp.fragment.Fragment;
 import nl.itvitae.ocaapp.fragment.FragmentRepository;
 import nl.itvitae.ocaapp.option.Option;
@@ -23,15 +25,30 @@ public class QuestionService {
   private final OptionRepository optionRepository;
   private final FragmentRepository fragmentRepository;
   private final TagRepository tagRepository;
+  private final AnswerRepository answerRepository;
 
   public List<Question> getAll(FilterBody filter) {
+    List<Question> questions;
+
     if (filter.ids().size() == 0) {
-      return questionRepository.findAll();
+      questions = questionRepository.findAll();
+    } else {
+      final List<Tag> tags = filter.ids().stream()
+          .map(id -> tagRepository.findById(id).orElse(null))
+          .toList();
+      questions = questionRepository.findAllQuestionsByTagsIn(tags);
     }
 
-    final List<Tag> tags = filter.ids().stream().map(id -> tagRepository.findById(id).orElse(null))
-        .toList();
-    return questionRepository.findAllQuestionsByTagsIn(tags);
+    if (filter.failedOnly()) {
+      final List<Answer> failedAnswers = answerRepository.findAll().stream()
+          .filter(answer -> !answer.isPassed()).toList();
+      final List<Question> failedQuestions = failedAnswers.stream()
+          .map(Answer::getQuestion).toList();
+      questions = questions.stream().filter(failedQuestions::contains)
+          .toList();
+    }
+
+    return questions;
   }
 
   public Optional<Question> getQuestionById(long id) {
