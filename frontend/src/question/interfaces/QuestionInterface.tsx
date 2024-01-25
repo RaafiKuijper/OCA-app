@@ -1,12 +1,13 @@
 import Option from "./OptionInterface";
 import Fragment from "./FragmentInterface";
-import Tag from "../../tag/TagInterface";
+import TagResponse from "../../tag/models/TagResponse";
 
 export default interface Question {
   id: number;
   text: string;
   fragments: Fragment[];
-  tags: Tag[];
+  tags: TagResponse[];
+  tagIds?: number[];
   options: Option[];
   explanation: string;
   correct: number;

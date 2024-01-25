@@ -1,9 +1,15 @@
-import { Nav } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 
 const AdminNavLinks = () => {
+
   return (
     <Nav>
-      <Nav.Link href="/create-question">Questions</Nav.Link>
+      <NavDropdown title="Questions" id="basic-nav-dropdown">
+        <NavDropdown.Item href="/create-question">
+          Create questions
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/view-questions">View questions</NavDropdown.Item>
+      </NavDropdown>
       <Nav.Link href="/tags">Tags</Nav.Link>
     </Nav>
   );

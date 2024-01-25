@@ -4,9 +4,20 @@ import QuestionProps from "./interfaces/QuestionPropsInterface";
 import OptionBody from "./interfaces/OptionBody";
 import FragmentBody from "./interfaces/FragmentBody";
 import Question from "./interfaces/QuestionInterface";
+import ViewLatestQuestion from "./ViewLatestQuestion";
 
 function CreateQuestionsComponent(props: QuestionProps) {
   const [result, setResult] = useState<string>();
+  const emptyQuestion = {
+    id: 0,
+    text: "",
+    fragments: [],
+    tags: [],
+    options: [],
+    explanation: "",
+    correct: 0,
+  };
+  const [question, setQuestion] = useState<Question>(emptyQuestion);
 
   const fetchData = async () => {
     let check = await axios.get("http://localhost:8080/api/v1/questions");
@@ -25,7 +36,8 @@ function CreateQuestionsComponent(props: QuestionProps) {
     ) {
       setResult("Question already exists");
     } else if (
-      props.tagIds.filter((id) => id === undefined).length === props.tagIds.length
+      props.tagIds.filter((id) => id === undefined).length ===
+      props.tagIds.length
     ) {
       setResult("Tags invalid");
     } else {
@@ -69,6 +81,8 @@ function CreateQuestionsComponent(props: QuestionProps) {
         );
       }
 
+      setQuestion({ ...createQuestion.data, tagIds: props.tagIds });
+
       if (createQuestion.status == 201) setResult("Question succesfully added");
       else setResult("Could not add question");
     }
@@ -81,6 +95,7 @@ function CreateQuestionsComponent(props: QuestionProps) {
   return (
     <>
       <p style={{ textAlign: "center" }}>{result}</p>
+      {question.id == 0 ? <></>: <ViewLatestQuestion question={question} />}
     </>
   );
 }

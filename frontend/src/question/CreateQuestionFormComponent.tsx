@@ -6,7 +6,7 @@ import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
 import Header from "../headers/header/Header";
 import AddTagComponent from "./AddTagComponent";
-import ViewQuestionsComponent from "./ViewQuestionsComponent";
+import ViewLatestQuestion from "./ViewLatestQuestion";
 
 function CreateQuestionsFormComponent() {
   const [text, setText] = useState<string>("");
@@ -22,6 +22,7 @@ function CreateQuestionsFormComponent() {
 
   const handleFormSubmit = () => {
     setCount(count + 1);
+    console.log("After " + count);
   };
 
   return (
@@ -163,7 +164,7 @@ function CreateQuestionsFormComponent() {
           </Form.Label>
         </Form.Group>
         <Button
-          className={classes.createQuestionFormAddButton}
+          className={classes.createQuestionFormSubmitButton}
           variant="secondary"
           size="lg"
           type="submit"
@@ -183,8 +184,6 @@ function CreateQuestionsFormComponent() {
         tagCount={tagCount}
         tagIds={tagIds}
       />
-
-      <ViewQuestionsComponent />
     </>
   );
 }
