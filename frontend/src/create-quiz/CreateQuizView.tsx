@@ -10,7 +10,7 @@ import TypeSelector from "./type-selector/TypeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
-  const [quizSize, setQuizSize] = useState(1);
+  const [quizSize, setQuizSize] = useState(-1);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const [failedOnly, setFailedOnly] = useState(false);
 
@@ -35,7 +35,6 @@ const CreateQuizView = () => {
 
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
-      setQuizSize(data.count);
     };
 
     getQuestionCount();
@@ -51,7 +50,10 @@ const CreateQuizView = () => {
       <TypeSelector setFailedOnly={setFailedOnly} />
       <TagMenu setSelectedTags={setSelectedTags} />
       {questionCount !== 0 && (
-        <CreateButton quizSize={quizSize} selectedTags={selectedTags} />
+        <CreateButton
+          quizSize={quizSize !== -1 ? quizSize : questionCount}
+          selectedTags={selectedTags}
+        />
       )}
     </>
   );
