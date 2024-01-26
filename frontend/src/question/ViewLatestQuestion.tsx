@@ -15,7 +15,7 @@ function ViewLatestQuestion(props: { question: Question }) {
     };
 
     fetchTags();
-  });
+  }, []);
 
   return (
     <>
