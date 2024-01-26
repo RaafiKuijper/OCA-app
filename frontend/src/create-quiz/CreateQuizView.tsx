@@ -42,7 +42,7 @@ const CreateQuizView = () => {
 
   return (
     <>
-      <Header text="Quizzes" />;
+      <Header text="Quizzes" />
       <QuestionInfo questionCount={questionCount} />
       {questionCount !== 0 && (
         <SizeSelector setQuizSize={setQuizSize} questionCount={questionCount} />
