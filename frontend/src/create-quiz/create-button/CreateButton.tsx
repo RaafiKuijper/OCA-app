@@ -7,6 +7,7 @@ const CreateButton = (props: {
   quizSize: number;
   selectedTags: number[];
   failedOnly: boolean;
+  disabled: boolean;
 }) => {
   const navigate = useNavigate();
 
@@ -31,10 +32,10 @@ const CreateButton = (props: {
           fontStyle: "900",
         }}
         onClick={() => createQuiz()}
+        disabled={props.disabled}
       >
-        Create Quiz
+        {props.disabled ? "Can not create quiz" : "Create quiz"}
       </Button>
-      ;
     </div>
   );
 };

@@ -49,13 +49,13 @@ const CreateQuizView = () => {
       )}
       <TypeSelector setFailedOnly={setFailedOnly} />
       <TagMenu setSelectedTags={setSelectedTags} />
-      {questionCount !== 0 && (
-        <CreateButton
-          quizSize={quizSize !== -1 ? quizSize : questionCount}
-          selectedTags={selectedTags}
-          failedOnly={failedOnly}
-        />
-      )}
+
+      <CreateButton
+        quizSize={quizSize !== -1 ? quizSize : questionCount}
+        selectedTags={selectedTags}
+        failedOnly={failedOnly}
+        disabled={questionCount == 0}
+      />
     </>
   );
 };
