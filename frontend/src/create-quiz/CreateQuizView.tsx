@@ -6,42 +6,56 @@ import QuestionCount from "./models/QuestionCount";
 import CreateButton from "./create-button/CreateButton";
 import SizeSelector from "./size-selector/SizeSelector";
 import TagMenu from "./tag-menu/TagMenu";
+import TypeSelector from "./type-selector/TypeSelector";
 
 const CreateQuizView = () => {
   const [questionCount, setQuestionCount] = useState(0);
-  const [quizSize, setQuizSize] = useState(1);
+  const [quizSize, setQuizSize] = useState(-1);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const [failedOnly, setFailedOnly] = useState(false);
 
   useEffect(() => {
     const getQuestionCount = async () => {
       const headers = {
         ids: selectedTags.join(","),
       };
-      console.log(headers);
-      const result = await axios.get(
-        "http://localhost:8080/api/v1/questions/count",
-        { headers }
-      );
-      console.log(result);
+      let result;
+
+      if (failedOnly) {
+        result = await axios.get(
+          "http://localhost:8080/api/v1/questions/count/failedOnly",
+          { headers }
+        );
+      } else {
+        result = await axios.get(
+          "http://localhost:8080/api/v1/questions/count",
+          { headers }
+        );
+      }
+
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
-      setQuizSize(data.count);
     };
 
     getQuestionCount();
-  }, [selectedTags]);
+  });
 
   return (
     <>
-      <Header text="Quizzes" />;
+      <Header text="Quizzes" />
       <QuestionInfo questionCount={questionCount} />
       {questionCount !== 0 && (
         <SizeSelector setQuizSize={setQuizSize} questionCount={questionCount} />
       )}
+      <TypeSelector setFailedOnly={setFailedOnly} />
       <TagMenu setSelectedTags={setSelectedTags} />
-      {questionCount !== 0 && (
-        <CreateButton quizSize={quizSize} selectedTags={selectedTags} />
-      )}
+
+      <CreateButton
+        quizSize={quizSize !== -1 ? quizSize : questionCount}
+        selectedTags={selectedTags}
+        failedOnly={failedOnly}
+        disabled={questionCount == 0}
+      />
     </>
   );
 };

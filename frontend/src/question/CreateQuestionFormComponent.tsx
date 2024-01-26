@@ -6,7 +6,6 @@ import CreateFragmentComponent from "./CreateFragmentComponent";
 import classes from "../styles/create-question.module.css";
 import Header from "../headers/header/Header";
 import AddTagComponent from "./AddTagComponent";
-import ViewLatestQuestion from "./ViewLatestQuestion";
 
 function CreateQuestionsFormComponent() {
   const [text, setText] = useState<string>("");
@@ -22,7 +21,6 @@ function CreateQuestionsFormComponent() {
 
   const handleFormSubmit = () => {
     setCount(count + 1);
-    console.log("After " + count);
   };
 
   return (

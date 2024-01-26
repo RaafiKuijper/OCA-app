@@ -3,13 +3,18 @@ import { Button } from "react-bootstrap";
 import Quiz from "../models/Quiz";
 import { useNavigate } from "react-router-dom";
 
-const CreateButton = (props: { quizSize: number; selectedTags: number[] }) => {
+const CreateButton = (props: {
+  quizSize: number;
+  selectedTags: number[];
+  failedOnly: boolean;
+  disabled: boolean;
+}) => {
   const navigate = useNavigate();
 
   const createQuiz = async () => {
     const result = await axios.post(
       `http://localhost:8080/api/v1/quiz/create/${props.quizSize}`,
-      { ids: props.selectedTags }
+      { ids: props.selectedTags, failedOnly: props.failedOnly }
     );
     const data: Quiz = result.data;
     const quizId = data.id;
@@ -27,10 +32,10 @@ const CreateButton = (props: { quizSize: number; selectedTags: number[] }) => {
           fontStyle: "900",
         }}
         onClick={() => createQuiz()}
+        disabled={props.disabled}
       >
-        Create Quiz
+        {props.disabled ? "Can not create quiz" : "Create quiz"}
       </Button>
-      ;
     </div>
   );
 };

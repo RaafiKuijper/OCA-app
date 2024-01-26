@@ -30,7 +30,7 @@ public class QuestionController {
   // Maybe do this with a DTO.
   @GetMapping("")
   public ResponseEntity<Iterable<Question>> getAll() {
-    return ResponseEntity.ok(questionService.getAll(new FilterBody(List.of())));
+    return ResponseEntity.ok(questionService.getAll(new FilterBody(List.of(), false)));
   }
 
   @GetMapping("/filter")
@@ -50,7 +50,12 @@ public class QuestionController {
 
   @GetMapping("/count")
   public ResponseEntity<QuestionCount> count(@RequestHeader List<Long> ids) {
-    return ResponseEntity.ok(questionService.getCount(new FilterBody(ids)));
+    return ResponseEntity.ok(questionService.getCount(new FilterBody(ids, false)));
+  }
+
+  @GetMapping("/count/failedOnly")
+  public ResponseEntity<QuestionCount> countFailedOnly(@RequestHeader List<Long> ids) {
+    return ResponseEntity.ok(questionService.getCount(new FilterBody(ids, true)));
   }
 
   @GetMapping("/test")
