@@ -53,6 +53,7 @@ const CreateQuizView = () => {
         <CreateButton
           quizSize={quizSize !== -1 ? quizSize : questionCount}
           selectedTags={selectedTags}
+          failedOnly={failedOnly}
         />
       )}
     </>
