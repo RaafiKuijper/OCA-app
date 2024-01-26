@@ -20,14 +20,15 @@ function ViewTagComponent() {
     fetchData();
   }, [fetchCount]);
 
-  const addTag = async (newTag : TagBody) => {
+  const addTag = async (newTag: TagBody) => {
     await axios.post(`http://localhost:8080/api/v1/tags/add`, newTag);
     setFetchCount(fetchCount + 1);
   };
 
-  const deleteTag = async (tagName : string) => {
-    console.log(`Deleting ${tagName}`);
-    await axios.delete(`http://localhost:8080/api/v1/tags/deleteTag/${tagName}`);
+  const deleteTag = async (tagName: string) => {
+    await axios.delete(
+      `http://localhost:8080/api/v1/tags/deleteTag/${tagName}`
+    );
     setFetchCount(fetchCount - 1);
   };
 
@@ -35,7 +36,7 @@ function ViewTagComponent() {
     <>
       <Header text="Tags" />
 
-      <CreateTagComponent addTag={addTag}/>
+      <CreateTagComponent addTag={addTag} />
 
       <div className={classes.createTagView}>
         Tags in database:{" "}
@@ -48,7 +49,7 @@ function ViewTagComponent() {
         ))}
       </div>
 
-      <DeleteTagComponent deleteTag={deleteTag}/>
+      <DeleteTagComponent deleteTag={deleteTag} />
     </>
   );
 }

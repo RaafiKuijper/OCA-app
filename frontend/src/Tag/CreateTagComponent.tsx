@@ -4,7 +4,7 @@ import classes from "../styles/Create-Tag.module.css";
 import TagBody from "./models/TagBody";
 import TagValidationResponse from "./models/TagValidationResponse";
 
-function CreateTagComponent(props : {addTag : (tag: TagBody) => (void)}) {
+function CreateTagComponent(props: { addTag: (tag: TagBody) => void }) {
   const [tagName, setTagName] = useState<string>("");
   const [tagChapter, setTagChapter] = useState<string>("");
   const [tagSummary, setTagSummary] = useState<string>("");
@@ -26,8 +26,6 @@ function CreateTagComponent(props : {addTag : (tag: TagBody) => (void)}) {
       chapter: tagChapter,
       summary: tagSummary,
     };
-
-    console.log(newTag);
 
     const validation = await validateTag(newTag);
 

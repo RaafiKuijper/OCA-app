@@ -19,7 +19,6 @@ const CreateQuizView = () => {
       const headers = {
         ids: selectedTags.join(","),
       };
-      console.log(headers);
       let result;
 
       if (failedOnly) {
@@ -34,7 +33,6 @@ const CreateQuizView = () => {
         );
       }
 
-      console.log(result);
       const data: QuestionCount = result.data;
       setQuestionCount(data.count);
       setQuizSize(data.count);

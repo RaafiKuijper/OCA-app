@@ -22,7 +22,6 @@ function CreateQuestionsFormComponent() {
 
   const handleFormSubmit = () => {
     setCount(count + 1);
-    console.log("After " + count);
   };
 
   return (
