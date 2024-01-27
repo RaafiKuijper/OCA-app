@@ -1,4 +1,4 @@
-package nl.itvitae.ocaapp.seeder;
+package nl.itvitae.ocaapp.seeder.v1;
 
 import java.util.ArrayList;
 import java.util.List;

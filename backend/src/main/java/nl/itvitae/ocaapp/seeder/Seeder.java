@@ -1,34 +1,59 @@
 package nl.itvitae.ocaapp.seeder;
 
-import java.util.Arrays;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import nl.itvitae.ocaapp.fragment.FragmentRepository;
+import nl.itvitae.ocaapp.option.OptionRepository;
 import nl.itvitae.ocaapp.question.Question;
 import nl.itvitae.ocaapp.question.QuestionRepository;
-import nl.itvitae.ocaapp.tag.Tag;
 import nl.itvitae.ocaapp.tag.TagRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
+@Component
+@AllArgsConstructor
 public class Seeder implements CommandLineRunner {
 
-  private final QuestionRepository questionRepository;
   private final TagRepository tagRepository;
+  private final QuestionRepository questionRepository;
+  private final OptionRepository optionRepository;
+  private final FragmentRepository fragmentRepository;
+  private static final int QUESTIONS = 10;
 
   @Override
   public void run(String... args) {
     if (tagRepository.count() == 0) {
-      final List<Tag> tags = Arrays.stream(TagData.values()).map(TagData::tag).toList();
-      for (Tag tag : tags) {
-        tagRepository.save(tag);
-      }
+      seedTags();
+    }
+
+    if (optionRepository.count() == 0) {
+      seedOptions();
+    }
+
+    if (fragmentRepository.count() == 0) {
+      seedFragments();
     }
 
     if (questionRepository.count() == 0) {
-      final List<Question> questions = QuestionData.questionList();
-      for (Question question : questions) {
-        questionRepository.save(question);
-      }
+      seedQuestions();
     }
+  }
+
+  private void seedQuestions() {
+    for (int i = 1; i <= QUESTIONS; i++) {
+      final String text = TextData.getText(i);
+      final String explanation = ExplanationData.getExplanation(i);
+      final Question question = new Question(text, List.of(), explanation, List.of());
+      questionRepository.save(question);
+    }
+  }
+
+  private void seedFragments() {
+  }
+
+  private void seedOptions() {
+  }
+
+  private void seedTags() {
   }
 }

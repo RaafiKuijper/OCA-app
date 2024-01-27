@@ -1,4 +1,4 @@
-package nl.itvitae.ocaapp.seeder;
+package nl.itvitae.ocaapp.seeder.v1;
 
 import nl.itvitae.ocaapp.tag.Tag;
 
