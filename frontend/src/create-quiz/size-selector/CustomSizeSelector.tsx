@@ -23,8 +23,13 @@ const CustomSizeSelector = (props: {
           max={props.questionCount}
           style={{ width: "4em" }}
           onChange={(e) => {
-            setValue(+e.target.value);
-            props.updateValue(+e.target.value);
+            if (
+              +e.target.value >= 1 &&
+              +e.target.value <= props.questionCount
+            ) {
+              setValue(+e.target.value);
+              props.updateValue(+e.target.value);
+            }
           }}
         />
         <InputGroup.Text style={{ width: "6em" }}>Questions</InputGroup.Text>

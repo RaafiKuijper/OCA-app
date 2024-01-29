@@ -50,7 +50,7 @@ function CreateQuestionsFormComponent() {
           }}
         >
           <div>Add Fragment:</div>
-          <Form.Label>
+          <Form.Label style={{ width: "100%" }}>
             {[...Array(fragmentCount)].map((_, index) => (
               <CreateFragmentComponent
                 key={index}
@@ -61,22 +61,24 @@ function CreateQuestionsFormComponent() {
             ))}
 
             {/* add/remove fragments */}
-            <Button
-              className={classes.createQuestionFormAddButton}
-              type="button"
-              onClick={() => setFragmentCount(fragmentCount + 1)}
-            >
-              +
-            </Button>
-            {fragmentCount !== 0 && (
+            <div style={{ marginLeft: "-1em" }}>
               <Button
                 className={classes.createQuestionFormAddButton}
                 type="button"
-                onClick={() => setFragmentCount(fragmentCount - 1)}
+                onClick={() => setFragmentCount(fragmentCount + 1)}
               >
-                -
+                +
               </Button>
-            )}
+              {fragmentCount !== 0 && (
+                <Button
+                  className={classes.createQuestionFormAddButton}
+                  type="button"
+                  onClick={() => setFragmentCount(fragmentCount - 1)}
+                >
+                  -
+                </Button>
+              )}
+            </div>
           </Form.Label>
         </Form.Group>
 
@@ -152,14 +154,12 @@ function CreateQuestionsFormComponent() {
 
         {/* input explanation */}
         <Form.Group>
-          <Form.Label>
-            Explanation:
-            <Form.Control
-              as="textarea"
-              placeholder="explanation"
-              onChange={(e) => setExplanation(e.target.value)}
-            />
-          </Form.Label>
+          <Form.Label>Explanation:</Form.Label>
+          <Form.Control
+            as="textarea"
+            placeholder="explanation"
+            onChange={(e) => setExplanation(e.target.value)}
+          />
         </Form.Group>
         <Button
           className={classes.createQuestionFormSubmitButton}

@@ -11,14 +11,12 @@ function CreateFragmentComponent(props: FragmentProps) {
   return (
     <>
       <div>
-        <Form.Label>
-          Fragment {props.index + 1}:
-          <Form.Control
-            as="textarea"
-            placeholder="fragment"
-            onChange={updateText}
-          />
-        </Form.Label>
+        <Form.Label>Fragment {props.index + 1}:</Form.Label>
+        <Form.Control
+          as="textarea"
+          placeholder="fragment"
+          onChange={updateText}
+        />
       </div>
     </>
   );
